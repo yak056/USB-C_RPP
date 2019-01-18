@@ -1,7 +1,6 @@
 if (navigator.msMaxTouchPoints) {
 
     $('#slider').addClass('ms-touch');
-
     $('#slider').on('scroll', function() {
         $('.slide-image').css('transform','translate3d(-' + (100-$(this).scrollLeft()/6) + 'px,0,0)');
     });
