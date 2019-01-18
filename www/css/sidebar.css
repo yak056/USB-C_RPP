@@ -24,6 +24,24 @@ a:focus {
     transition: all 0.3s;
 }
 
+/* ---------------------------------------------------
+    Button sidebar
+----------------------------------------------------- */
+
+.btn-info{
+    background: #3D5157;
+    border-color: transparent;
+    box-shadow: transparent;
+}
+.btn-info:hover{
+    background: transparent;
+    border-color: transparent;
+}
+
+.btn-info:focus{
+    box-shadow: 0 0 0 .2rem #3D5157;
+}
+
 .navbar {
     padding: 15px 10px;
     background: #fff;
