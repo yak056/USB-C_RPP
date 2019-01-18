@@ -14,6 +14,12 @@
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="css/sidebar.css">
 
+    <!-- Slide_graphic -->
+    <link rel="stylesheet" href="css/slide_graphic.css">
+
+
+
+
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
             integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
@@ -76,23 +82,24 @@
 
     <!-- Page Content  -->
     <div id="content">
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-info">
-                    <i class="fas fa-align-left"></i>
-                    <span>Toggle Sidebar</span>
-                </button>
-                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-align-justify"></i>
-                </button>
-
-
+        <div class="slider-wrap">
+            <div class="slider" id="slider">
+                <div class="holder">
+                    <div class="slide-wrapper">
+                        <div class="slide"><img class="slide-image" src="http://farm8.staticflickr.com/7347/8731666710_34d07e709e_z.jpg" /></div>
+                        <span class="temp">74</span>
+                    </div>
+                    <div class="slide-wrapper">
+                        <div class="slide"><img class="slide-image" src="http://farm8.staticflickr.com/7384/8730654121_05bca33388_z.jpg" /></div>
+                        <span class="temp">64</span>
+                    </div>
+                    <div class="slide-wrapper">
+                        <div class="slide"><img class="slide-image" src="http://farm8.staticflickr.com/7382/8732044638_9337082fc6_z.jpg" /></div>
+                        <span class="temp">82</span>
+                    </div>
+                </div>
             </div>
-        </nav>
+        </div>
     </div>
 </div>
 
@@ -116,6 +123,8 @@
         });
     });
 </script>
+
+<script type="text/javascript" src="js/slide_graphic.js"></script>
 
 </body>
 
