@@ -105,7 +105,8 @@ span {
     text-align: left;
 }
 #sidebar.active span{
-    visibility: hidden;
+    display: none;
+    margin-right: 0;
 }
 #sidebar.active ul li a {
     padding: 20px 10px;
