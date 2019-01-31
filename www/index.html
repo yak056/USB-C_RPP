@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
     <script src="scripts/jquery.touchSwipe.min.js"></script>
 
 
@@ -19,22 +19,52 @@
             <a class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
             <ul class="navbar-primary-menu">
                 <li>
-                    <a href="#"><span class="glyphicon glyphicon-list-alt"></span><span class="nav-label">Dashboard</span></a>
-                    <a href="#"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">Profile</span></a>
-                    <a href="#"><span class="glyphicon glyphicon-cog"></span><span class="nav-label">Settings</span></a>
-                    <a href="#"><span class="glyphicon glyphicon-film"></span><span class="nav-label">Notification</span></a>
-                    <a href="#"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Monitor</span></a>
+                    <a href="#" onclick="changeDiv('connexion_view')"><span class="glyphicon glyphicon-cloud"
+                    ></span><span
+                            class="nav-label">Connexion</span></a>
+                    <a href="#" onclick="changeDiv('all_view')"><span class="glyphicon glyphicon-th"></span><span
+                            class="nav-label">Voir tout</span></a>
+                    <a href="#" onclick="changeDiv('search_view')"><span class="glyphicon glyphicon-search"></span><span
+                            class="nav-label">Recherche</span></a>
+                    <a href="#" onclick="changeDiv('filter_view')"><span class="glyphicon glyphicon-stats"></span><span
+                            class="nav-label">Filtrer</span></a>
+                    <a href="#" onclick="changeDiv('resume_view')"><span class="glyphicon glyphicon-indent-left"></span><span
+                            class="nav-label">Résumé</span></a>
+                    <a href="#" onclick="changeDiv('annotation_view')"><span class="glyphicon glyphicon-pencil"
+                    ></span><span
+                            class="nav-label">Annotations</span></a>
+
                 </li>
             </ul>
         </nav>
         <div class="container-fluid main-content">
             <div class="row no-gutters">
-                <div class="main_view" id="main_view">
-                    <h1>My First Bootstrap Page 2</h1>
+                <div class="main_view" id="connexion_view">
+                    <h1>My connexion_view</h1>
+                    <p>This is some text.</p>
+                </div>
+                <div class="main_view" hidden="true" id="all_view">
+                    <h1>My all-view</h1>
+                    <p>This is some text.</p>
+                </div>
+                <div class="main_view" hidden=true id="search_view">
+                    <h1>My search_view</h1>
+                    <p>This is some text.</p>
+                </div>
+                <div class="main_view" hidden="true" id="filter_view">
+                    <h1>My filter_view</h1>
+                    <p>This is some text.</p>
+                </div>
+                <div class="main_view" hidden="true" id="resume_view">
+                    <h1>My resume_view</h1>
+                    <p>This is some text.</p>
+                </div>
+                <div class="main_view" hidden="true" id="annotation_view">
+                    <h1>My annotation_view</h1>
                     <p>This is some text.</p>
                 </div>
                 <div class="pellicule" id="pellicule">
-                    <h1>My First Bootstrap Page 3</h1>
+                    <h1>My pellicule_view</h1>
                 </div>
             </div>
         </div>
@@ -42,9 +72,10 @@
 </div>
 
 
-
 </body>
 </html>
 
 <script src="scripts/navbar.js"></script>
+<script src="scripts/navbar1.js"></script>
+
 >>>>>>> f4f969c47ed71abc849c4aa74750110de3a93c32
