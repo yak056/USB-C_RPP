@@ -1,43 +1,43 @@
 var sidebar = document.getElementById("sidebar");
+var sidebar_button = document.getElementById("sidebar_button");
 var state="deployed";
 var touchendx, touchstartx;
 
 $(document).ready(function () {
-    $('#mysidebar').on('click', function () {
-        if (state=="deployed"){
-            state="collapsed";
-            $('#sidebar').toggleClass('active', true);
-            console.log("go to collapsed");
+
+    sidebar.addEventListener('touchstart', function (event) {
+        console.log("touch detect " + event.srcElement.id);
+        touchstartx =  event.touches[0].clientX;
+        if (event.srcElement.id == "sidebar_button"){
+            if (state=="deployed"){
+                state="collapsed";
+                $('#sidebar').toggleClass('active', true);
+            }
+            else if (state=="collapsed"){
+                state="deployed";
+                $('#sidebar').toggleClass('active', false);
+            }
+
         }
-        else if (state=="collapsed"){
-            state="deployed";
-            $('#sidebar').toggleClass('active', false);
-            console.log("go to deployed");
+        else {
+
         }
-    });
+    }, false);
+
+    sidebar.addEventListener('touchend', function (event) {
+        touchendx =  event.changedTouches[0].clientX;
+        if (touchendx-touchstartx<0 && event.srcElement.id != "sidebar_button"){
+            if (state=="deployed"){
+                state="collapsed";
+                $('#sidebar').toggleClass('active', true);
+            }
+        }else{
+            if (state=="collapsed"){
+                state="deployed";
+                $('#sidebar').toggleClass('active', false);
+            }
+        }
+    }, false);
 });
 
-sidebar.addEventListener('touchstart', function (event) {
-    console.log("touch detect " + state);
-    touchstartx =  event.touches[0].clientX;
-}, false);
-
-sidebar.addEventListener('touchend', function (event) {
-    console.log("end detected");
-    touchendx =  event.changedTouches[0].clientX;
-    console.log("go to deployed " + touchstartx + " " + touchendx );
-    if (touchendx-touchstartx<0){
-        if (state=="deployed"){
-            state="collapsed";
-            $('#sidebar').toggleClass('active', true);
-            console.log("go to collapsed");
-        }
-    }else{
-        if (state=="collapsed"){
-            state="deployed";
-            $('#sidebar').toggleClass('active', false);
-            console.log("go to deployed");
-        }
-    }
-}, false);
 
