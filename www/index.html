@@ -8,14 +8,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/pellicule.css" />
     <script src="scripts/jquery.touchSwipe.min.js"></script>
 
 
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" id="frame">
     <div class="row no-gutters">
-        <nav class="col navbar-primary">
+        <nav class="navbar-primary">
             <a class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
             <ul class="navbar-primary-menu">
                 <li>
@@ -27,14 +28,13 @@
                 </li>
             </ul>
         </nav>
-        <div class="container-fluid main-content">
-            <div class="row no-gutters">
+        <div class="col container main-content" id="right_panel">
+            <div class="row ">
                 <div class="main_view" id="main_view">
                     <h1>My First Bootstrap Page 2</h1>
                     <p>This is some text.</p>
                 </div>
-                <div class="pellicule" id="pellicule">
-                    <h1>My First Bootstrap Page 3</h1>
+                <div class="row" id="pellicule">
                 </div>
             </div>
         </div>
@@ -47,3 +47,4 @@
 </html>
 
 <script src="scripts/navbar.js"></script>
+<script src="scripts/pellicule.js"></script>

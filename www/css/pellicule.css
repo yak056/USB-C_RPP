@@ -1,0 +1,16 @@
+
+#pellicule {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.img_pellicule{
+    display: inline-block;
+    float: none;
+    height: 100%;
+}
+
+.img_pellicule img{
+    height: 100%;
+    width: auto;
+}
