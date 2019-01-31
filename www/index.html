@@ -20,21 +20,53 @@
             <a class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
             <ul class="navbar-primary-menu">
                 <li>
-                    <a href="#"><span class="glyphicon glyphicon-list-alt"></span><span class="nav-label">Dashboard</span></a>
-                    <a href="#"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">Profile</span></a>
-                    <a href="#"><span class="glyphicon glyphicon-cog"></span><span class="nav-label">Settings</span></a>
-                    <a href="#"><span class="glyphicon glyphicon-film"></span><span class="nav-label">Notification</span></a>
-                    <a href="#"><span class="glyphicon glyphicon-calendar"></span><span class="nav-label">Monitor</span></a>
-                </li>
-            </ul>
+                    <a href="#" onclick="changeDiv('connexion_view')"><span class="glyphicon glyphicon-cloud"
+                    ></span><span
+                            class="nav-label">Connexion</span></a>
+                    <a href="#" onclick="changeDiv('all_view')"><span class="glyphicon glyphicon-th"></span><span
+                    <a href="#" onclick="changeDiv('search_view')"><span class="glyphicon glyphicon-search"></span><span
+                            class="nav-label">Voir tout</span></a>
         </nav>
+            </ul>
+                </li>
+                            class="nav-label">Annotations</span></a>
+
+                    ></span><span
+                    <a href="#" onclick="changeDiv('annotation_view')"><span class="glyphicon glyphicon-pencil"
+                            class="nav-label">Résumé</span></a>
+                            class="nav-label">Filtrer</span></a>
+                    <a href="#" onclick="changeDiv('resume_view')"><span class="glyphicon glyphicon-indent-left"></span><span
+                            class="nav-label">Recherche</span></a>
+                    <a href="#" onclick="changeDiv('filter_view')"><span class="glyphicon glyphicon-stats"></span><span
         <div class="col container main-content" id="right_panel">
             <div class="row ">
                 <div class="main_view" id="main_view">
-                    <h1>My First Bootstrap Page 2</h1>
+                <div class="main_view" id="connexion_view">
+                    <h1>My connexion_view</h1>
                     <p>This is some text.</p>
                 </div>
-                <div class="row" id="pellicule">
+                <div class="main_view" hidden="true" id="all_view">
+                    <h1>My all-view</h1>
+                    <p>This is some text.</p>
+                </div>
+                <div class="main_view" hidden=true id="search_view">
+                    <h1>My search_view</h1>
+                    <p>This is some text.</p>
+                </div>
+                <div class="main_view" hidden="true" id="filter_view">
+                    <h1>My filter_view</h1>
+                    <p>This is some text.</p>
+                </div>
+                <div class="main_view" hidden="true" id="resume_view">
+                    <h1>My resume_view</h1>
+                    <p>This is some text.</p>
+                </div>
+                <div class="main_view" hidden="true" id="annotation_view">
+                    <h1>My annotation_view</h1>
+                    <p>This is some text.</p>
+                </div>
+                <div class="pellicule" id="pellicule">
+                    <h1>My pellicule_view</h1>
                 </div>
             </div>
         </div>
@@ -42,9 +74,12 @@
 </div>
 
 
-
 </body>
 </html>
 
 <script src="scripts/navbar.js"></script>
+<script src="scripts/navbar1.js"></script>
+
+>>>>>>> f4f969c47ed71abc849c4aa74750110de3a93c32
+
 <script src="scripts/pellicule.js"></script>
