@@ -1,6 +1,8 @@
 .row{
     height: 100%;
     padding-left: 20px;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 html, body{
@@ -122,14 +124,20 @@ html, body{
     height: 100%;
 }
 
-.pellicule{
+#pellicule{
     background: #4271ae;
-    height: 15%;
+    height: 20%;
 }
+
 .main_view{
-    height: 85%;
+    height: 80%;
 }
+
 
 .collapsed + .main-content {
     padding-left: 75px;
+}
+
+#frame{
+    height: 100%;
 }
