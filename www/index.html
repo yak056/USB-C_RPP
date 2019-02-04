@@ -9,6 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <link rel="stylesheet" type="text/css" href="css/pellicule.css" />
+    <link rel="stylesheet" type="text/css" href="css/connexion.css" />
     <script src="scripts/jquery.touchSwipe.min.js"></script>
 
 
@@ -19,7 +20,6 @@
         <nav class="navbar-primary">
             <a class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
             <ul class="navbar-primary-menu">
-
                 <li>
                     <a href="#" onclick="changeDiv('connexion_view')" id="ConnexionMenu" ><span class="glyphicon glyphicon-cloud"></span><span class="nav-label">Connexion</span></a>
                     <a href="#" onclick="changeDiv('all_view')"id="SeeAllMenu"><span class="glyphicon glyphicon-th"></span><span class="nav-label">Voir tout</span></a>
@@ -27,16 +27,19 @@
                     <a href="#" onclick="changeDiv('resume_view')" id="ResumeMenu"><span class="glyphicon glyphicon-indent-left"></span><span class="nav-label">Resumé</span></a>
                     <a href="#" onclick="changeDiv('filter_view')"><span class="glyphicon glyphicon-stats" id="FilterMenu"></span><span class="nav-label">Filtrer</span></a>
                     <a href="#" onclick="changeDiv('annotation_view')"><span class="glyphicon glyphicon-pencil" id="NoteMenu"></span><span class="nav-label">Annoter</span></a>
-
                 </li>
             </ul>
-
         </nav>
         <div class="col container main-content" id="right_panel">
             <div class="row ">
                 <div class="main_view" id="connexion_view">
-                    <h1>My connexion_view</h1>
-                    <p>This is some text.</p>
+                    <div id="login">
+                        <form name='form-login'>
+                            <span class="fontawesome-user"></span>
+                            <input type="text" id="ipAddress" placeholder="Adresse IP">
+                            <input type="submit" value="Connect">
+                        </form>
+                    </div>
                 </div>
                 <div class="main_view" hidden="true" id="all_view">
                     <h1>My all-view</h1>
@@ -61,6 +64,7 @@
                 <div class="pellicule" id="pellicule">
                 </div>
             </div>
+
         </div>
     </div>
 </div>
