@@ -1,3 +1,5 @@
+document.getElementById("ConnexionMenu").focus();
+
 $('.btn-expand-collapse').click(function(e) {
     $('.navbar-primary').toggleClass('collapsed');
     $('.btn-expand-collapse').find("span").toggleClass('glyphicon-menu-left').toggleClass('glyphicon-menu-right');
