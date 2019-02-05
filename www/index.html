@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <link rel="stylesheet" type="text/css" href="css/pellicule.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="css/pellicule.css"/>
+    <link rel="stylesheet" type="text/css" href="css/menu_view_all.css"/>
+
     <script src="scripts/jquery.touchSwipe.min.js"></script>
 
 
@@ -19,14 +21,19 @@
         <nav class="navbar-primary">
             <a class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
             <ul class="navbar-primary-menu">
-
                 <li>
-                    <a href="#" onclick="changeDiv('connexion_view')" ><span class="glyphicon glyphicon-cloud"></span><span class="nav-label">connexion</span></a>
-                    <a href="#" onclick="changeDiv('all_view')"><span class="glyphicon glyphicon-th"></span><span class="nav-label">Voir tout</span></a>
-                    <a href="#" onclick="changeDiv('search_view')"><span class="glyphicon glyphicon-search"></span><span class="nav-label">Rechercher</span></a>
-                    <a href="#" onclick="changeDiv('resume_view')"><span class="glyphicon glyphicon-indent-left"></span><span class="nav-label">Resumer</span></a>
-                    <a href="#" onclick="changeDiv('filter_view')"><span class="glyphicon glyphicon-stats"></span><span class="nav-label">Filtrer</span></a>
-                    <a href="#" onclick="changeDiv('annotation_view')"><span class="glyphicon glyphicon-pencil"></span><span class="nav-label">Annoter</span></a>
+                    <a href="#" onclick="changeDiv('connexion_view')"><span
+                            class="glyphicon glyphicon-cloud"></span><span class="nav-label">connexion</span></a>
+                    <a href="#" onclick="changeDiv('all_view')"><span class="glyphicon glyphicon-th"></span><span
+                            class="nav-label">Voir tout</span></a>
+                    <a href="#" onclick="changeDiv('search_view')"><span class="glyphicon glyphicon-search"></span><span
+                            class="nav-label">Rechercher</span></a>
+                    <a href="#" onclick="changeDiv('resume_view')"><span class="glyphicon glyphicon-indent-left"></span><span
+                            class="nav-label">Resumer</span></a>
+                    <a href="#" onclick="changeDiv('filter_view')"><span class="glyphicon glyphicon-stats"></span><span
+                            class="nav-label">Filtrer</span></a>
+                    <a href="#" onclick="changeDiv('annotation_view')"><span
+                            class="glyphicon glyphicon-pencil"></span><span class="nav-label">Annoter</span></a>
 
                 </li>
             </ul>
@@ -38,10 +45,26 @@
                     <h1>My connexion_view</h1>
                     <p>This is some text.</p>
                 </div>
+
+                <!--CODE DE LA VUE DE COMPOSITION-->
+
                 <div class="main_view" hidden="true" id="all_view">
-                    <h1>My all-view</h1>
-                    <p>This is some text.</p>
+                    <div class="container well well-lg" data-spy="affix">
+                        <div class="row">
+                            <div class="col" style="background-color:yellow;">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                    <input id="search" type="text" class="form-control" name="search"
+                                           placeholder="Rechercher">
+                                </div>
+                            </div>
+                            <div class="col" style="background-color:pink;">
+                                <div><button type="button" class="btn btn-success">Créer</button></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="main_view" hidden=true id="search_view">
                     <h1>My search_view</h1>
                     <p>This is some text.</p>
