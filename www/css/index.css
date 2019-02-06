@@ -6,7 +6,7 @@
 }
 
 html, body{
-    height: 100%;
+    height: 100vh;
     line-height: 1px;
 }
 
@@ -28,7 +28,7 @@ html, body{
     -webkit-transition: all 0.1s ease-in-out;
     -moz-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
-    font-size: 40px;
+    font-size: 30px;
 
 }
 
@@ -79,8 +79,8 @@ html, body{
 .navbar-primary-menu li a {
     display: block;
     padding-left: 30px;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     text-align: left;
     border-bottom:solid 1px #444;
     color: #ccc;
@@ -115,7 +115,6 @@ html, body{
 .main-content {
     width: 100%;
     height: 100%;
-    margin-top: -20px;
     padding-left: 175px;
 }
 

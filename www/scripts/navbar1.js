@@ -5,6 +5,7 @@ function changeDiv(page){
     document.getElementById('filter_view').hidden= true;
     document.getElementById('resume_view').hidden= true;
     document.getElementById('annotation_view').hidden= true;
+    document.getElementById('home_view').hidden= true;
     document.getElementById(page).hidden = false;
     console.log(page);
 }
