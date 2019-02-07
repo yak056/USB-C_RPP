@@ -10,9 +10,11 @@ $('.navbar-primary').swipe( {
     swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
         if (direction=="left" && !$('.navbar-primary').hasClass('collapsed')){
             $('.navbar-primary').toggleClass('collapsed');
+            $('.btn-expand-collapse').find("span").toggleClass('glyphicon-menu-left').toggleClass('glyphicon-menu-right');
         }
         if (direction=="right" && $('.navbar-primary').hasClass('collapsed')){
             $('.navbar-primary').toggleClass('collapsed');
+            $('.btn-expand-collapse').find("span").toggleClass('glyphicon-menu-right').toggleClass('glyphicon-menu-left');
         }
     }
 });
