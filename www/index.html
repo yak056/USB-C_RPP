@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="css/connexion.css"/>
     <link rel="stylesheet" type="text/css" href="css/view_all.css"/>
     <script src="scripts/jquery.touchSwipe.min.js"></script>
+    <script src="scripts/structures.js"></script>
 
 
 </head>
@@ -57,9 +58,9 @@
 
 
                 <div class="main_view" hidden="true" id="home_view">
-                    <div class="img_home" id="img_home">
+                    <canvas class="bigImg" id="img_home">
 
-                    </div>
+                    </canvas>
                 </div>
 
                 <!--CODE DE LA VUE DE COMPOSITION-->
@@ -87,30 +88,31 @@
                                     <button type="button" class="btn btn-success align-center">Créer</button>
                                 </span>
                             </div>
+                </div>
+                <div class="main_view" hidden=true id="search_view">
+                    <canvas class="bigImg" id="img_search">
 
                         </div>
                         <div class="row">
                             <div id="yes-drop" class="drag-drop"> #yes-drop</div>
                         </div>
                     </div>
+                    </canvas>
                 </div>
+                <div class="main_view" hidden="true" id="filter_view">
+                    <canvas class="bigImg" id="img_filter">
 
-            </div>
-
-
-            <div class="main_view" hidden=true id="search_view">
-                <div class="img_search" id="img_search">
-
+                    </canvas>
                 </div>
-            </div>
-            <div class="main_view" hidden="true" id="filter_view">
-                <div class="img_filter" id="img_filter">
+                <div class="main_view" hidden="true" id="resume_view">
+                    <canvas class="bigImg" id="img_resume">
 
+                    </canvas>
                 </div>
-            </div>
-            <div class="main_view" hidden="true" id="resume_view">
-                <div class="img_resume" id="img_resume">
+                <div class="main_view" hidden="true" id="annotation_view">
+                    <canvas class="bigImg" id="img_annotation">
 
+                    </canvas>
                 </div>
             </div>
             <div class="main_view" hidden="true" id="annotation_view">
@@ -126,7 +128,8 @@
 </div>
 </div>
 
-
+<script src="scripts/navbar.js"></script>
+<script src="scripts/navigation.js"></script>
 </body>
 </html>
 
@@ -134,3 +137,4 @@
 <script src="scripts/navbar1.js"></script>
 <script src="scripts/pellicule.js"></script>
 <script src="scripts/dnd.js"></script>
+

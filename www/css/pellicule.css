@@ -15,3 +15,7 @@
     height: 100%;
     width: auto;
 }
+
+#pellicule canvas{
+    height: 90%;
+}
