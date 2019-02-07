@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/interactjs@1.3/dist/interact.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
     <link rel="stylesheet" type="text/css" href="css/pellicule.css"/>
     <link rel="stylesheet" type="text/css" href="css/connexion.css"/>
@@ -22,13 +23,21 @@
             <a class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
             <ul class="navbar-primary-menu">
                 <li>
-                    <a href="#" onclick="changeDiv('connexion_view')" id="ConnexionMenu" ><span class="glyphicon glyphicon-cloud"></span><span class="nav-label">Connexion</span></a>
-                    <a href="#" onclick="changeDiv('home_view')"id="HomeMenu"><span class="glyphicon glyphicon-home"></span><span class="nav-label">Accueil</span></a>
-                    <a href="#" onclick="changeDiv('all_view')"id="SeeAllMenu"><span class="glyphicon glyphicon-th"></span><span class="nav-label">Voir tout</span></a>
-                    <a href="#" onclick="changeDiv('search_view')" id="SearchMenu"><span class="glyphicon glyphicon-search"></span><span class="nav-label">Rechercher</span></a>
-                    <a href="#" onclick="changeDiv('resume_view')" id="ResumeMenu"><span class="glyphicon glyphicon-indent-left"></span><span class="nav-label">Resumé</span></a>
-                    <a href="#" onclick="changeDiv('filter_view')"><span class="glyphicon glyphicon-stats" id="FilterMenu"></span><span class="nav-label">Filtrer</span></a>
-                    <a href="#" onclick="changeDiv('annotation_view')"><span class="glyphicon glyphicon-pencil" id="NoteMenu"></span><span class="nav-label">Annoter</span></a>
+                    <a href="#" onclick="changeDiv('connexion_view')" id="ConnexionMenu"><span
+                            class="glyphicon glyphicon-cloud"></span><span class="nav-label">Connexion</span></a>
+                    <a href="#" onclick="changeDiv('home_view')" id="HomeMenu"><span
+                            class="glyphicon glyphicon-home"></span><span class="nav-label">Accueil</span></a>
+                    <a href="#" onclick="changeDiv('all_view')" id="SeeAllMenu"><span
+                            class="glyphicon glyphicon-th"></span><span class="nav-label">Voir tout</span></a>
+                    <a href="#" onclick="changeDiv('search_view')" id="SearchMenu"><span
+                            class="glyphicon glyphicon-search"></span><span class="nav-label">Rechercher</span></a>
+                    <a href="#" onclick="changeDiv('resume_view')" id="ResumeMenu"><span
+                            class="glyphicon glyphicon-indent-left"></span><span class="nav-label">Resumé</span></a>
+                    <a href="#" onclick="changeDiv('filter_view')"><span class="glyphicon glyphicon-stats"
+                                                                         id="FilterMenu"></span><span class="nav-label">Filtrer</span></a>
+                    <a href="#" onclick="changeDiv('annotation_view')"><span class="glyphicon glyphicon-pencil"
+                                                                             id="NoteMenu"></span><span
+                            class="nav-label">Annoter</span></a>
                 </li>
             </ul>
         </nav>
@@ -47,66 +56,74 @@
                 </div>
 
 
-
-                <!--CODE DE LA VUE DE COMPOSITION-->
-
                 <div class="main_view" hidden="true" id="home_view">
                     <div class="img_home" id="img_home">
 
                     </div>
                 </div>
+
+                <!--CODE DE LA VUE DE COMPOSITION-->
+
                 <div class="main_view" hidden="true" id="all_view">
-                    <div class="container well well-lg" data-spy="affix">
+                    <div class="container well " data-spy="affix">
                         <div class="row">
-                            <div class="col-xs-3">
-                                <span class="input-group">
+                            <div class="col-xs-3 ">
+                                <span class="input-group align-center">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                                     <input id="search" type="text" class="form-control" name="search"
                                            placeholder="Rechercher">
                                 </span>
                             </div>
-                            <div class="col-xs-8">
+                            <div class="col-xs-2 ">
+                                <div class="h4 align-center" id="info_dnd"> Creer <br/> diapositive <br/> composée:
+                                </div>
+                            </div>
+                            <div class="col-xs-6 ">
+                                <div id="outer-dropzone" class="dropzone">
+                                </div>
+                            </div>
+                            <div class="col-xs-1 ">
                                 <span>
-                                    <div class="h3" id="info_dnd"> Composer votre vue:</div>
-                                    <div id="outer-dropzone" class="dropzone">
-                                        +
-                                    </div>
+                                    <button type="button" class="btn btn-success align-center">Créer</button>
                                 </span>
                             </div>
-                            <div class="col-xs-1">
-                                <span>
-                                    <button type="button" class="btn btn-success">Créer</button>
-                                </span>
-                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div id="yes-drop" class="drag-drop"> #yes-drop</div>
                         </div>
                     </div>
                 </div>
-                <div class="main_view" hidden=true id="search_view">
-                    <div class="img_search" id="img_search">
 
-                    </div>
-                </div>
-                <div class="main_view" hidden="true" id="filter_view">
-                    <div class="img_filter" id="img_filter">
-
-                    </div>
-                </div>
-                <div class="main_view" hidden="true" id="resume_view">
-                    <div class="img_resume" id="img_resume">
-
-                    </div>
-                </div>
-                <div class="main_view" hidden="true" id="annotation_view">
-                    <div class="img_annotation" id="img_annotation">
-
-                    </div>
-                </div>
-                <div class="pellicule" id="pellicule">
-                </div>
             </div>
 
+
+            <div class="main_view" hidden=true id="search_view">
+                <div class="img_search" id="img_search">
+
+                </div>
+            </div>
+            <div class="main_view" hidden="true" id="filter_view">
+                <div class="img_filter" id="img_filter">
+
+                </div>
+            </div>
+            <div class="main_view" hidden="true" id="resume_view">
+                <div class="img_resume" id="img_resume">
+
+                </div>
+            </div>
+            <div class="main_view" hidden="true" id="annotation_view">
+                <div class="img_annotation" id="img_annotation">
+
+                </div>
+            </div>
+            <div class="pellicule" id="pellicule">
+            </div>
         </div>
+
     </div>
+</div>
 </div>
 
 
@@ -116,3 +133,4 @@
 <script src="scripts/navbar.js"></script>
 <script src="scripts/navbar1.js"></script>
 <script src="scripts/pellicule.js"></script>
+<script src="scripts/dnd.js"></script>

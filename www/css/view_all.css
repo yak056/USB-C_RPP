@@ -1,21 +1,22 @@
 #outer-dropzone {
-    height: 100px;
-    width:  100px;
+    height: 80px;
+    width:  100%;
     touch-action: none;
-    align: center;
+
 }
 
 #info_dnd {
     align: center;
+    display: inline;
 }
 
 .dropzone {
     background-color: #ccc;
     border: dashed 4px ;
     border-radius: 4px;
-    margin: 10px auto 5px;
     width: 80%;
     transition: background-color 0.3s;
+    verticala-lign: middle;
 }
 
 .drop-active {
@@ -29,8 +30,8 @@
 }
 
 .drag-drop {
-    display: inline;
-    min-width: 40px;
+    display: inline-block;
+    width: 40px;
     padding: 2em 0.5em;
     color: #fff;
     background-color: #29e;
