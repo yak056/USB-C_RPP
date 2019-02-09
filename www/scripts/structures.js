@@ -5,6 +5,9 @@ struct.createGraph = function (uri, name, type, list){
     graph.typeFilter = type;
     graph.listFilters = list;
     graph.uri = uri;
+    graph.fabricCanvas = null; //the main canvas where we will edit
+    graph.familyCanvas = []; //list of all the canvas for the graph except the one with annotation
+    graph.jsonObjects = null; // to save object in a json 
     return graph;
 };
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Bootstrap Example</title>
     <meta charset="utf-8">
@@ -7,81 +8,127 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="scripts/jsLibForEdit/fabric.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="scripts/jsLibForEdit/ui/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="scripts/jsLibForEdit/jquery.simple-color.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="scripts/jquery.touchSwipe.min.js"></script>
+    <script src="scripts/structures.js"></script>
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <link rel="stylesheet" type="text/css" href="css/pellicule.css" />
     <link rel="stylesheet" type="text/css" href="css/connexion.css" />
-    <script src="scripts/jquery.touchSwipe.min.js"></script>
-    <script src="scripts/structures.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="css/annotation_view.css" />
 
 </head>
+
 <body>
-<div class="container-fluid" id="frame">
-    <div class="row no-gutters">
-        <nav class="navbar-primary">
-            <a class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
-            <ul class="navbar-primary-menu">
-                <li>
-                    <a href="#" onclick="changeDiv('connexion_view')" id="ConnexionMenu" ><span class="glyphicon glyphicon-cloud"></span><span class="nav-label">Connexion</span></a>
-                    <a href="#" onclick="changeDiv('home_view')"id="HomeMenu"><span class="glyphicon glyphicon-home"></span><span class="nav-label">Accueil</span></a>
-                    <a href="#" onclick="changeDiv('all_view')"id="SeeAllMenu"><span class="glyphicon glyphicon-th"></span><span class="nav-label">Voir tout</span></a>
-                    <a href="#" onclick="changeDiv('search_view')" id="SearchMenu"><span class="glyphicon glyphicon-search"></span><span class="nav-label">Rechercher</span></a>
-                    <a href="#" onclick="changeDiv('resume_view')" id="ResumeMenu"><span class="glyphicon glyphicon-indent-left"></span><span class="nav-label">Resumé</span></a>
-                    <a href="#" onclick="changeDiv('filter_view')"><span class="glyphicon glyphicon-stats" id="FilterMenu"></span><span class="nav-label">Filtrer</span></a>
-                    <a href="#" onclick="changeDiv('annotation_view')"><span class="glyphicon glyphicon-pencil" id="NoteMenu"></span><span class="nav-label">Annoter</span></a>
-                </li>
-            </ul>
-        </nav>
-        <div class="col container main-content" id="right_panel">
-            <div class="row ">
-                <div class="main_view" id="connexion_view">
-                    <div id="login">
-                        <form name='form-login'>
-                            <span class="fontawesome-user"></span>
-                            <input type="text" id="ipAddress" placeholder="Adresse IP" required pattern="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"
-                                   title="L'adresse doit être de la forme 123.456.789.123">
-                            <input type="submit" value="Connect">
-                        </form>
+    <div class="container-fluid" id="frame">
+        <div class="row no-gutters">
+            <nav class="navbar-primary">
+                <a class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+                <ul class="navbar-primary-menu">
+                    <li>
+                        <a href="#" onclick="changeDiv('connexion_view')" id="ConnexionMenu"><span class="glyphicon glyphicon-cloud"></span><span
+                                class="nav-label">Connexion</span></a>
+                        <a href="#" onclick="changeDiv('home_view')" id="HomeMenu"><span class="glyphicon glyphicon-home"></span><span
+                                class="nav-label">Accueil</span></a>
+                        <a href="#" onclick="changeDiv('all_view')" id="SeeAllMenu"><span class="glyphicon glyphicon-th"></span><span
+                                class="nav-label">Voir tout</span></a>
+                        <a href="#" onclick="changeDiv('search_view')" id="SearchMenu"><span class="glyphicon glyphicon-search"></span><span
+                                class="nav-label">Rechercher</span></a>
+                        <a href="#" onclick="changeDiv('resume_view')" id="ResumeMenu"><span class="glyphicon glyphicon-indent-left"></span><span
+                                class="nav-label">Resumé</span></a>
+                        <a href="#" onclick="changeDiv('filter_view')"><span class="glyphicon glyphicon-stats" id="FilterMenu"></span><span
+                                class="nav-label">Filtrer</span></a>
+                        <a href="#" onclick="changeDiv('annotation_view')"><span class="glyphicon glyphicon-pencil" id="NoteMenu"></span><span
+                                class="nav-label">Annoter</span></a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="col container main-content" id="right_panel">
+                <div class="row ">
+                    <div class="main_view" id="connexion_view">
+                        <div id="login">
+                            <form name='form-login'>
+                                <span class="fontawesome-user"></span>
+                                <input type="text" id="ipAddress" placeholder="Adresse IP" required pattern="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"
+                                    title="L'adresse doit être de la forme 123.456.789.123">
+                                <input type="submit" value="Connect">
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div class="main_view" hidden="true" id="home_view">
-                    <canvas class="bigImg" id="img_home">
+                    <div class="main_view" hidden="true" id="home_view">
+                        <div class="BigCanvasContainer">
+                            <canvas class="bigImg" id="img_home">
 
-                    </canvas>
-                </div>
-                <div class="main_view" hidden="true" id="all_view">
-                </div>
-                <div class="main_view" hidden=true id="search_view">
-                    <canvas class="bigImg" id="img_search">
+                            </canvas>
+                        </div>
+                    </div>
+                    <div class="main_view" hidden="true" id="all_view">
+                    </div>
+                    <div class="main_view" hidden=true id="search_view">
+                        <div class="BigCanvasContainer">
+                            <canvas class="bigImg" id="img_search">
 
-                    </canvas>
-                </div>
-                <div class="main_view" hidden="true" id="filter_view">
-                    <canvas class="bigImg" id="img_filter">
+                            </canvas>
+                        </div>
+                    </div>
+                    <div class="main_view" hidden="true" id="filter_view">
+                        <div class="BigCanvasContainer">
+                            <canvas class="bigImg" id="img_filter">
 
-                    </canvas>
-                </div>
-                <div class="main_view" hidden="true" id="resume_view">
-                    <canvas class="bigImg" id="img_resume">
+                            </canvas>
+                        </div>
+                    </div>
+                    <div class="main_view" hidden="true" id="resume_view">
+                        <div class="BigCanvasContainer">
+                            <canvas class="bigImg" id="img_resume">
 
-                    </canvas>
-                </div>
-                <div class="main_view" hidden="true" id="annotation_view">
-                    <canvas class="bigImg" id="img_annotation">
+                            </canvas>
+                        </div>
+                    </div>
+                    <div class="main_view" hidden="true" id="annotation_view">
+                        <div id="imgToModify">
+                            <div class="BigCanvasContainer">
+                                <canvas class="bigImg" id="img_for_annotation">
 
-                    </canvas>
-                </div>
-                <div class="pellicule" id="pellicule">
+                                </canvas>
+
+                            </div>
+                        </div>
+                        <div class="row" id="toolbox">
+                            <div id="toolbar" class="col-sm palette">
+                                <!--<a href="#selection" class="selection" title="Selection (s)">Selection</a>-->
+                                <a href="#rectangle" class="rectangle" title="Rectangle (r)">Rectangle</a>
+                                <a href="#ellipse" class="ellipse" title="Ellipse (e)">Ellipse</a>
+                                <!--<a href="#line" class="line" title="Line (l)">Line</a>-->
+                                <a href="#path" class="path" title="Path (p)">Path</a>
+                                <div class="buttons">
+                                    <button title="Delete (suppr)">Delete</button>
+                                    <button title="Duplicate (d)">Duplicate</button>
+                                </div>
+                                <br clear="both" />
+                            </div>
+                            <div id="styler" class="col-sm palette">
+                                <p>Style</p>
+                                <label>color</label>
+                                <input class="stroke-color" value="#000000" />
+                                <label>Stroke width</label>
+                                <input type="number" class="stroke-width" value="1" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="pellicule" id="pellicule">
+                    </div>
+
                 </div>
             </div>
-
         </div>
-    </div>
-</div>
+        <script src="scripts/toolbox.js"></script>
+        <script src="scripts/navbar.js"></script>
+        <script src="scripts/navigation.js"></script>
 
-<script src="scripts/navbar.js"></script>
-<script src="scripts/navigation.js"></script>
 </body>
+
 </html>
-
-
