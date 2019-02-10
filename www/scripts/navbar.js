@@ -1,3 +1,6 @@
+navbar = {};
+navbar.actualMainView = ""; // in order to know wich is the displayed mainView
+
 document.getElementById("ConnexionMenu").focus();
 
 $('.btn-expand-collapse').click(function(e) {
@@ -19,7 +22,7 @@ $('.navbar-primary').swipe( {
     }
 });
 
-function changeDiv(page){
+navbar.changeDivReal = function(page){
     document.getElementById('connexion_view').hidden= true;
     document.getElementById('all_view').hidden= true;
     document.getElementById('search_view').hidden= true;
@@ -28,5 +31,19 @@ function changeDiv(page){
     document.getElementById('annotation_view').hidden= true;
     document.getElementById('home_view').hidden= true;
     document.getElementById(page).hidden = false;
-    console.log(page);
+    if (page == "home_view") navbar.actualMainView = "BCC_img_home";
+    else if (page == "search_view") navbar.actualMainView = "BCC_img_search";
+    else if (page == "filter_view") navbar.actualMainView = "BCC_img_filter";
+    else if (page == "resume_view") navbar.actualMainView = "BCC_img_resume";
+    else if (page == "annotation_view") navbar.actualMainView = "BCC_img_for_annotation";
+    //navbar.simulEvent(document.getElementById(page), "click");
 }
+navbar.changeDiv = function(page){
+    navbar.changeDivReal(page);
+    var graph = navigation.pellicule.list[i];
+    var image = new Image();
+    image.src = graph.uri;
+    var index = navigation.pellicule.currentIndex
+    navigation.changeImgMainView(image, index);
+}
+

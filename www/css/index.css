@@ -130,7 +130,12 @@ html, body{
     height: 80%;
 }
 
-
+.BigCanvasContainer{
+    height: 50%;
+    width: 50%;
+    border:  1px solid rgb(211, 150, 150);
+    margin: auto;
+}
 .collapsed + .main-content {
     padding-left: 75px;
 }

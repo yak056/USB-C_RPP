@@ -27,19 +27,19 @@
                 <a class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
                 <ul class="navbar-primary-menu">
                     <li>
-                        <a href="#" onclick="changeDiv('connexion_view')" id="ConnexionMenu"><span class="glyphicon glyphicon-cloud"></span><span
+                        <a href="#" onclick="navigation.changeDiv('connexion_view')" id="ConnexionMenu"><span class="glyphicon glyphicon-cloud"></span><span
                                 class="nav-label">Connexion</span></a>
-                        <a href="#" onclick="changeDiv('home_view')" id="HomeMenu"><span class="glyphicon glyphicon-home"></span><span
+                        <a href="#" onclick="navigation.changeDiv('home_view')" id="HomeMenu"><span class="glyphicon glyphicon-home"></span><span
                                 class="nav-label">Accueil</span></a>
-                        <a href="#" onclick="changeDiv('all_view')" id="SeeAllMenu"><span class="glyphicon glyphicon-th"></span><span
+                        <a href="#" onclick="navigation.changeDiv('all_view')" id="SeeAllMenu"><span class="glyphicon glyphicon-th"></span><span
                                 class="nav-label">Voir tout</span></a>
-                        <a href="#" onclick="changeDiv('search_view')" id="SearchMenu"><span class="glyphicon glyphicon-search"></span><span
+                        <a href="#" onclick="navigation.changeDiv('search_view')" id="SearchMenu"><span class="glyphicon glyphicon-search"></span><span
                                 class="nav-label">Rechercher</span></a>
-                        <a href="#" onclick="changeDiv('resume_view')" id="ResumeMenu"><span class="glyphicon glyphicon-indent-left"></span><span
+                        <a href="#" onclick="navigation.changeDiv('resume_view')" id="ResumeMenu"><span class="glyphicon glyphicon-indent-left"></span><span
                                 class="nav-label">Resumé</span></a>
-                        <a href="#" onclick="changeDiv('filter_view')"><span class="glyphicon glyphicon-stats" id="FilterMenu"></span><span
+                        <a href="#" onclick="navigation.changeDiv('filter_view')"><span class="glyphicon glyphicon-stats" id="FilterMenu"></span><span
                                 class="nav-label">Filtrer</span></a>
-                        <a href="#" onclick="changeDiv('annotation_view')"><span class="glyphicon glyphicon-pencil" id="NoteMenu"></span><span
+                        <a href="#" onclick="navigation.changeDiv('annotation_view')"><span class="glyphicon glyphicon-pencil" id="NoteMenu"></span><span
                                 class="nav-label">Annoter</span></a>
                     </li>
                 </ul>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div class="main_view" hidden="true" id="home_view">
-                        <div class="BigCanvasContainer">
+                        <div class="BigCanvasContainer" id="BCC_img_home">
                             <canvas class="bigImg" id="img_home">
 
                             </canvas>
@@ -66,21 +66,21 @@
                     <div class="main_view" hidden="true" id="all_view">
                     </div>
                     <div class="main_view" hidden=true id="search_view">
-                        <div class="BigCanvasContainer">
+                        <div class="BigCanvasContainer" id="BCC_img_search">
                             <canvas class="bigImg" id="img_search">
 
                             </canvas>
                         </div>
                     </div>
                     <div class="main_view" hidden="true" id="filter_view">
-                        <div class="BigCanvasContainer">
+                        <div class="BigCanvasContainer" id="BCC_img_filter">
                             <canvas class="bigImg" id="img_filter">
 
                             </canvas>
                         </div>
                     </div>
                     <div class="main_view" hidden="true" id="resume_view">
-                        <div class="BigCanvasContainer">
+                        <div class="BigCanvasContainer" id="BCC_img_resume">
                             <canvas class="bigImg" id="img_resume">
 
                             </canvas>
@@ -88,7 +88,7 @@
                     </div>
                     <div class="main_view" hidden="true" id="annotation_view">
                         <div id="imgToModify">
-                            <div class="BigCanvasContainer">
+                            <div class="BigCanvasContainer" id="BCC_img_for_annotation">
                                 <canvas class="bigImg" id="img_for_annotation">
 
                                 </canvas>

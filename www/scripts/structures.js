@@ -30,4 +30,7 @@ struct.Pellicule = function(){
         }
         return this.list[this.currentIndex];
     };
+    this.actual = function(){
+        return this.list[this.currentIndex];
+    }
 };
