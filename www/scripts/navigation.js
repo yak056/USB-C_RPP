@@ -1,11 +1,13 @@
 var navigation = {};
 var print = console.log;
-const name = "img/img_";
+/*const name = "img/img_";
 var tab_name = [];
-for (var i=1; i<9; i++){
+for (var i=0; i<9; i++){
     tab_name.push(name+i+".png");
-}
+}*/
 navigation.actualMainView = "";
+navigation.json = JSON.parse(data).pellicule;
+
 var canvasList=["img_home", "img_search", "img_filter", "img_for_annotation", "img_resume"];
 navigation.pellicule = new struct.Pellicule();
 
@@ -28,13 +30,13 @@ navigation.changeDivReal = function(page){
         toolBox.initCanvas(navigation.pellicule.currentIndex);
     }
     //navbar.simulEvent(document.getElementById(page), "click");
-}
+};
 
 navigation.changeDiv = function(page){
     navigation.changeDivReal(page);
     var currIndex = navigation.pellicule.currentIndex;
     navigation.simulEvent(document.getElementById("img_" + currIndex), "click");
-}
+};
 navigation.simulEvent = function(idHTML, eventType){
     if (idHTML.fireEvent){
         idHTML.fireEvent("on" + eventType)
@@ -44,7 +46,7 @@ navigation.simulEvent = function(idHTML, eventType){
         eventObject.initEvent(eventType, true, false);
         idHTML.dispatchEvent(eventObject);
     }
-}
+};
 
 navigation.initCanvasForPellicule = function(id, index, imgUrl){
     var canvas = new fabric.Canvas(document.getElementById(id));
@@ -63,7 +65,7 @@ navigation.initCanvasForPellicule = function(id, index, imgUrl){
     navigation.pellicule.list[index].vignetteCanvas = canvas;
     canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
 
-}
+};
 
 navigation.initCanvasForMainView = function(id, index, imgUrl){
     var canvas = new fabric.Canvas(document.getElementById(id));
@@ -87,11 +89,12 @@ navigation.initCanvasForMainView = function(id, index, imgUrl){
 
     if (id == "img_for_annotation") navigation.pellicule.list[index].designCanvas = canvas;
     else  navigation.pellicule.list[index].familyCanvas.push(canvas);
-}
+};
 //////////////////////////////////////////////////////////////////////////////////////////////////
 navigation.createPellicule = function(){
-    for (var i=0; i<tab_name.length; i++){
-        navigation.pellicule.list.push(struct.createGraph(tab_name[i], null, null, null));
+    for (var i=0; i<navigation.json.length; i++){
+        var graph = navigation.json[i];
+        navigation.pellicule.list.push(struct.createGraph(graph.uri, graph.name, graph.typeFilter, graph.min, graph.max, graph.filterNames));
     }
     const img = document.createElement("img");
 
