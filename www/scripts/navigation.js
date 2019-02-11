@@ -1,12 +1,6 @@
 var navigation = {};
-
-
 var print = console.log;
-/*const name = "img/img_";
-var tab_name = [];
-for (var i=0; i<9; i++){
-    tab_name.push(name+i+".png");
-}*/
+
 navigation.actualMainView = "";
 navigation.json = JSON.parse(data).pellicule;
 
@@ -41,6 +35,7 @@ navigation.changeDiv = function(page){
     var currIndex = navigation.pellicule.currentIndex;
     navigation.simulEvent(document.getElementById("img_" + currIndex), "click");
 };
+
 navigation.simulEvent = function(idHTML, eventType){
     if (idHTML.fireEvent){
         idHTML.fireEvent("on" + eventType)
@@ -57,7 +52,6 @@ navigation.initCanvasForPellicule = function(id, index, imgUrl){
     var height = parseInt(getComputedStyle(document.getElementById("pellicule")).height);
     var width = parseInt(getComputedStyle(document.getElementById("pellicule")).width);
     canvas.setDimensions({width: width * 0.2, height: height * 0.9}, {cssOnly: false});
-    //print(id, index, imgUrl);
     canvas.setBackgroundImage(
         imgUrl, 
         canvas.renderAll.bind(canvas), {
@@ -73,13 +67,9 @@ navigation.initCanvasForPellicule = function(id, index, imgUrl){
 
 navigation.initCanvasForMainView = function(id, index, imgUrl){
     var canvas = new fabric.Canvas(document.getElementById(id));
-    //print(navbar.actualMainView);
     var height = parseInt(getComputedStyle(document.getElementById(navigation.actualMainView)).height);
     var width = parseInt(getComputedStyle(document.getElementById(navigation.actualMainView)).width);
-    //print("in maj canvas  " + height);
-    //print(width, height);
     canvas.setDimensions({width: width , height: height}, {cssOnly: false});
-    //print(id, index, imgUrl);
     canvas.setBackgroundImage(
         imgUrl, 
         canvas.renderAll.bind(canvas), {
@@ -87,10 +77,9 @@ navigation.initCanvasForMainView = function(id, index, imgUrl){
             backgroundImageOpacity: 0.5,
             // should the image be resized to fit the container?
             backgroundImageStretch: true
-        });
-        canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
-
-
+        }
+        );
+    canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
     if (id == "img_for_annotation") navigation.pellicule.list[index].designCanvas = canvas;
     else  navigation.pellicule.list[index].familyCanvas.push(canvas);
 };
@@ -98,9 +87,8 @@ navigation.initCanvasForMainView = function(id, index, imgUrl){
 navigation.createPellicule = function(){
     for (var i=0; i<navigation.json.length; i++){
         var graph = navigation.json[i];
-        navigation.pellicule.list.push(struct.createGraph(graph.uri, graph.nom, graph.typeFilter, graph.min,
+        navigation.pellicule.list.push(struct.createGraph(i, graph.uri, graph.nom, graph.typeFilter, graph.min,
             graph.max, graph.filterNames));
-        console.log( navigation.pellicule.list[i].name);
     }
     const img = document.createElement("img");
 
@@ -113,14 +101,7 @@ navigation.createPellicule = function(){
 
     }
     for (var i = 0; i < navigation.pellicule.list.length; i++){
-        /*var canvas = document.getElementById("img_" + i);
-        var ctx = canvas.getContext('2d');
-        var image = new Image();
-        image.src = navigation.pellicule.list[i].uri;
-        image.onload = navigation.draw_image(image, ctx);*/
         navigation.initCanvasForPellicule("img_" + i, i, navigation.pellicule.list[i].uri);
-
-        //canvas.addEventListener("click", navigation.changeImgMainView(image, i));
         document.getElementById("img_" + i).style.zIndex = "1001";
         document.getElementById("img_" + i).addEventListener("click", navigation.changeImgMainView(navigation.pellicule.list[i].uri, i));
     }
@@ -138,17 +119,9 @@ navigation.maj_img_canvas = function(img, index){
         navigation.pellicule.currentIndex = index;
     }
     for (var i = 0; i < canvasList.length; i++){
-        /*var canvas = document.getElementById(canvasList[i]);
-        var ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        var image = new Image();
-        image.src = img.src;
-        image.onload = navigation.draw_image(image, ctx);*/
-        //print("image  " + img)
         navigation.initCanvasForMainView(canvasList[i], index, img);
     }
     //to wrap canvas in a Fabric canvas
-    print("in click listener index is : " + navigation.pellicule.currentIndex);
     toolBox.initCanvas(index);
 };
 navigation.changeImgMainView = function (img, index) {
@@ -161,14 +134,10 @@ navigation.changeImgMainView = function (img, index) {
 navigation.onswipe = function(direction){
     if (direction=="left"){
         var graph = navigation.pellicule.next();
-        var image = new Image();
-        image.src = graph.uri;
-        navigation.maj_img_canvas(image, null);
+        navigation.maj_img_canvas(graph.uri,navigation.pellicule.currentIndex);
     }else if(direction =="right"){
         var graph = navigation.pellicule.previous();
-        var image = new Image();
-        image.src = graph.uri;
-        navigation.maj_img_canvas(image, null);
+        navigation.maj_img_canvas(graph.uri,navigation.pellicule.currentIndex);
     }
     toolBox.initCanvas(navigation.pellicule.currentIndex);
 };
