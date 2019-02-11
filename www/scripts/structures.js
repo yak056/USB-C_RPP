@@ -5,9 +5,11 @@ struct.createGraph = function (uri, name, type, list){
     graph.typeFilter = type;
     graph.listFilters = list;
     graph.uri = uri;
-    graph.fabricCanvas = null; //the main canvas where we will edit
+    graph.fabricCanvas = null;
+    graph.designCanvas = null;
+    graph.vignetteCanvas = null; //the main canvas 
     graph.familyCanvas = []; //list of all the canvas for the graph except the one with annotation
-    graph.jsonObjects = null; // to save object in a json 
+    graph.drawingJson = null; // to save design shapes in a json 
     return graph;
 };
 

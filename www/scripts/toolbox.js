@@ -12,58 +12,55 @@ $('#styler .stroke-color').simpleColor({
 });
 
 toolBox.initCanvas = function(index){
+    print("in toolbox index is  : " + index);
     var pellicule = navigation.pellicule.list;
-    if (pellicule[index].fabricCanvas == null){
-        pellicule[index].fabricCanvas= new fabric.Canvas(document.getElementById("img_for_annotation"));
-         pellicule[index].fabricCanvas.setBackgroundImage(pellicule[index].uri, pellicule[index].fabricCanvas.renderAll.bind(pellicule[index].fabricCanvas), {
-            // Optionally add an opacity lvl to the image
-            backgroundImageOpacity: 0.5,
-            // should the image be resized to fit the container?
-            backgroundImageStretch: true
-        });
-    }
-    var canvas = pellicule[index].fabricCanvas;
-    canvas.loadFromJSON(pellicule[index].jsonObjects);
+    var canvas = pellicule[index].designCanvas;
+    //canvas.loadFromJSON(pellicule[index].drawingJson);
     if (toolBox.test == 2){
     var rect = new fabric.Rect({
         left: 10,
         top: 10,
         fill: 'red',    
-        width: 20,
-        height: 20,
-        zIndex: 101
+        width: 50,
+        height: 50,
+        zIndex: 10001
       });
       
       // "add" rectangle onto canvas
       canvas.add(rect);
-    }
+      pellicule[index].drawingJson = canvas.toJSON();
+        }
     if (toolBox.test == 4){
         var rect = new fabric.Rect({
-            left: 10,
+            left: 60,
             top: 10,
             fill: 'blue',    
-            width: 20,
-            height: 20,
+            width: 50,
+            height: 50,
             zIndex: 101
           });
           
           // "add" rectangle onto canvas
           canvas.add(rect);
+          pellicule[index].drawingJson = canvas.toJSON();
         }
         if (toolBox.test == 6){
             var rect = new fabric.Rect({
                 left: 10,
-                top: 10,
+                top: 60,
                 fill: 'white',    
-                width: 20,
-                height: 20,
+                width: 50,
+                height: 50,
                 zIndex: 101
               });
               
               // "add" rectangle onto canvas
               canvas.add(rect);
+              pellicule[index].drawingJson = canvas.toJSON();
             }
-    pellicule[index].jsonObjects = JSON.stringify(canvas);
-    print(JSON.stringify(canvas));
-    toolBox.test++;
+    print(pellicule[index].drawingJson);
+    pellicule[index].vignetteCanvas.loadFromJSON(pellicule[index].drawingJson, function() {
+        pellicule[index].vignetteCanvas.renderAll(); 
+     });
+         toolBox.test++;
 }

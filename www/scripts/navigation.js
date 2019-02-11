@@ -23,7 +23,10 @@ navigation.changeDivReal = function(page){
     else if (page == "search_view") navigation.actualMainView = "BCC_img_search";
     else if (page == "filter_view") navigation.actualMainView = "BCC_img_filter";
     else if (page == "resume_view") navigation.actualMainView = "BCC_img_resume";
-    else if (page == "annotation_view") navigation.actualMainView = "BCC_img_for_annotation";
+    else if (page == "annotation_view") {
+        navigation.actualMainView = "BCC_img_for_annotation";
+        toolBox.initCanvas(navigation.pellicule.currentIndex);
+    }
     //navbar.simulEvent(document.getElementById(page), "click");
 }
 
@@ -48,7 +51,7 @@ navigation.initCanvasForPellicule = function(id, index, imgUrl){
     var height = parseInt(getComputedStyle(document.getElementById("pellicule")).height);
     var width = parseInt(getComputedStyle(document.getElementById("pellicule")).width);
     canvas.setDimensions({width: width * 0.2, height: height * 0.9}, {cssOnly: false});
-    print(id, index, imgUrl);
+    //print(id, index, imgUrl);
     canvas.setBackgroundImage(
         imgUrl, 
         canvas.renderAll.bind(canvas), {
@@ -57,19 +60,20 @@ navigation.initCanvasForPellicule = function(id, index, imgUrl){
             // should the image be resized to fit the container?
             backgroundImageStretch: true
         });
-    if (id == "img_for_annotation") navigation.pellicule.list[index].fabricCanvas = canvas;
-    else  navigation.pellicule.list[index].familyCanvas.push(canvas);
+    navigation.pellicule.list[index].vignetteCanvas = canvas;
+    canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
+
 }
 
 navigation.initCanvasForMainView = function(id, index, imgUrl){
     var canvas = new fabric.Canvas(document.getElementById(id));
-    print(navbar.actualMainView);
+    //print(navbar.actualMainView);
     var height = parseInt(getComputedStyle(document.getElementById(navigation.actualMainView)).height);
     var width = parseInt(getComputedStyle(document.getElementById(navigation.actualMainView)).width);
-    print("in maj canvas  " + height);
-    print(width, height);
+    //print("in maj canvas  " + height);
+    //print(width, height);
     canvas.setDimensions({width: width , height: height}, {cssOnly: false});
-    print(id, index, imgUrl);
+    //print(id, index, imgUrl);
     canvas.setBackgroundImage(
         imgUrl, 
         canvas.renderAll.bind(canvas), {
@@ -78,9 +82,10 @@ navigation.initCanvasForMainView = function(id, index, imgUrl){
             // should the image be resized to fit the container?
             backgroundImageStretch: true
         });
+        canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
 
 
-    if (id == "img_for_annotation") navigation.pellicule.list[index].fabricCanvas = canvas;
+    if (id == "img_for_annotation") navigation.pellicule.list[index].designCanvas = canvas;
     else  navigation.pellicule.list[index].familyCanvas.push(canvas);
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,10 +134,11 @@ navigation.maj_img_canvas = function(img, index){
         var image = new Image();
         image.src = img.src;
         image.onload = navigation.draw_image(image, ctx);*/
-        print("image  " + img)
+        //print("image  " + img)
         navigation.initCanvasForMainView(canvasList[i], index, img);
     }
     //to wrap canvas in a Fabric canvas
+    print("in click listener index is : " + navigation.pellicule.currentIndex);
     toolBox.initCanvas(index);
 };
 navigation.changeImgMainView = function(img, index){
