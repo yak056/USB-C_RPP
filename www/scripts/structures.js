@@ -1,9 +1,11 @@
 var struct = {};
-struct.createGraph = function (uri, name, type, list){
+struct.createGraph = function (uri, name, typeFilter, min, max, listFilter){
     var graph = {};
     graph.name = name;
-    graph.typeFilter = type;
-    graph.listFilters = list;
+    graph.typeFilter = typeFilter;
+    graph.listFilters = listFilter;
+    graph.min = min;
+    graph.max = max;
     graph.uri = uri;
     graph.fabricCanvas = null;
     graph.designCanvas = null;
