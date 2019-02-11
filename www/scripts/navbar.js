@@ -50,7 +50,7 @@ navbar.changeDiv = function(page){
 }
 
 
-function hidePellicule(page) {
+navbar.hidePellicule = function(page) {
     switch (page) {
         case 'all_view' :
             document.getElementById('pellicule').hidden = true;

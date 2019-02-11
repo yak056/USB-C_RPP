@@ -7,11 +7,11 @@ var searchBox = document.getElementById("search");
 view_all.createAllViewList = function () {
     const img = document.createElement("img");
     const allviewListHtml = document.getElementById("allviewList");
-    for (var i = 0; i < pellicule.list.length; i++) {
+    for (var i = 0; i < navigation.pellicule.list.length; i++) {
 
         var colImg = document.createElement("div");
         colImg.setAttribute("class", "col-xs-2")
-        img.src = pellicule.list[i].uri;
+        img.src = navigation.pellicule.list[i].uri;
         var divImage = document.createElement("div");
         divImage.setAttribute('class', 'thumbnail img-responsive drag-drop');
         divImage.setAttribute("id", "yes-drop");
@@ -24,7 +24,7 @@ view_all.createAllViewList = function () {
         var divTitle = document.createElement("div");
         divTitle.setAttribute("class", "caption");
 
-        var titre = document.createTextNode(pellicule.list[i].name);
+        var titre = document.createTextNode(navigation.pellicule.list[i].name);
         divTitle.appendChild(titre);
 
         divWrapperImg.appendChild(imgThumbnail);
@@ -45,11 +45,11 @@ view_all.searchView = function () {
     }
     var search = document.getElementById("search").value;
     console.log(search);
-    for (var i = 0; i < pellicule.list.length; i++) {
-        if (pellicule.list[i].name.includes(search)) {
+    for (var i = 0; i < navigation.pellicule.list.length; i++) {
+        if (navigation.pellicule.list[i].name.includes(search)) {
             var colImg = document.createElement("div");
             colImg.setAttribute("class", "col-xs-2")
-            img.src = pellicule.list[i].uri;
+            img.src = navigation.pellicule.list[i].uri;
             var divImage = document.createElement("div");
             divImage.setAttribute('class', 'thumbnail img-responsive drag-drop');
             divImage.setAttribute("id", "yes-drop");
@@ -62,7 +62,7 @@ view_all.searchView = function () {
             var divTitle = document.createElement("div");
             divTitle.setAttribute("class", "caption");
 
-            var titre = document.createTextNode(pellicule.list[i].name);
+            var titre = document.createTextNode(navigation.pellicule.list[i].name);
             divTitle.appendChild(titre);
 
             divWrapperImg.appendChild(imgThumbnail);

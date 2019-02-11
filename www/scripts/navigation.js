@@ -30,7 +30,9 @@ navigation.changeDivReal = function(page){
     else if (page == "annotation_view") {
         navigation.actualMainView = "BCC_img_for_annotation";
         toolBox.initCanvas(navigation.pellicule.currentIndex);
+
     }
+    navbar.hidePellicule(page);
     //navbar.simulEvent(document.getElementById(page), "click");
 };
 
