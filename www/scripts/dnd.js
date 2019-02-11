@@ -1,5 +1,3 @@
-/* The dragging code for '.draggable' from the demo above
- * applies to this demo as well so it doesn't have to be repeated. */
 
 // enable draggables to be dropped into this
 // target elements with the "draggable" class
@@ -33,6 +31,7 @@ interact('.drag-drop')
     });
 
 function dragMoveListener (event) {
+    event.target.paren
     var target = event.target,
         // keep the dragged position in the data-x/data-y attributes
         x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
