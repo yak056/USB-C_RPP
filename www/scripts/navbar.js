@@ -37,9 +37,8 @@ navbar.changeDivReal = function(page){
     else if (page == "resume_view") navbar.actualMainView = "BCC_img_resume";
     else if (page == "annotation_view") navbar.actualMainView = "BCC_img_for_annotation";
     //navbar.simulEvent(document.getElementById(page), "click");
-    console.log(page);
     hidePellicule(page);
-}
+};
 navbar.changeDiv = function(page){
     navbar.changeDivReal(page);
     var graph = navigation.pellicule.list[i];
@@ -47,7 +46,7 @@ navbar.changeDiv = function(page){
     image.src = graph.uri;
     var index = navigation.pellicule.currentIndex
     navigation.changeImgMainView(image, index);
-}
+};
 
 
 navbar.hidePellicule = function(page) {
@@ -62,4 +61,4 @@ navbar.hidePellicule = function(page) {
             document.getElementById('pellicule').hidden = false;
 
     }
-}
+};
