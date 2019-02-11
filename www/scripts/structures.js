@@ -1,10 +1,17 @@
 var struct = {};
-struct.createGraph = function (uri, name, type, list){
+struct.createGraph = function (uri, name, typeFilter, min, max, listFilter){
     var graph = {};
     graph.name = name;
-    graph.typeFilter = type;
-    graph.listFilters = list;
+    graph.typeFilter = typeFilter;
+    graph.listFilters = listFilter;
+    graph.min = min;
+    graph.max = max;
     graph.uri = uri;
+    graph.fabricCanvas = null;
+    graph.designCanvas = null;
+    graph.vignetteCanvas = null; //the main canvas 
+    graph.familyCanvas = []; //list of all the canvas for the graph except the one with annotation
+    graph.drawingJson = null; // to save design shapes in a json 
     return graph;
 };
 
@@ -27,4 +34,7 @@ struct.Pellicule = function(){
         }
         return this.list[this.currentIndex];
     };
+    this.actual = function(){
+        return this.list[this.currentIndex];
+    }
 };
