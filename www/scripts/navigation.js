@@ -98,14 +98,17 @@ navigation.initCanvasForMainView = function(id, index, imgUrl){
 navigation.createPellicule = function(){
     for (var i=0; i<navigation.json.length; i++){
         var graph = navigation.json[i];
-        navigation.pellicule.list.push(struct.createGraph(graph.uri, graph.name, graph.typeFilter, graph.min, graph.max, graph.filterNames));
+        navigation.pellicule.list.push(struct.createGraph(graph.uri, graph.nom, graph.typeFilter, graph.min,
+            graph.max, graph.filterNames));
+        console.log( navigation.pellicule.list[i].name);
     }
     const img = document.createElement("img");
 
     for (var i = 0; i < navigation.pellicule.list.length; i++){
         img.src = navigation.pellicule.list[i].uri;
         const pelliculeHtml = document.getElementById("pellicule");
-        var string = '<div id="vignetteContainer" style=" display:inline-block ; height=100% width=20%"><canvas class="col-xs-2 img_pellicule"' + ' id="img_' + i  +'" ></canvas></div>';
+        var string = '<div id="vignetteContainer" style=" display:inline-block ; height=100% width=20%">' +
+            '<canvas class="col-xs-2 img_pellicule"' + ' id="img_' + i  +'" ></canvas></div>';
         pelliculeHtml.innerHTML += string;
 
     }

@@ -1,9 +1,10 @@
 var view_all = {};
 
 
-var searchBox = document.getElementById("search");
+var searchBox = document.getElementById("search_1");
 
 
+//code à optimiser, pas obligé de faire 2 fonctions on peut en faire qu'un avec les param de la recherche
 view_all.createAllViewList = function () {
     const img = document.createElement("img");
     const allviewListHtml = document.getElementById("allviewList");
@@ -37,13 +38,15 @@ view_all.createAllViewList = function () {
 };
 
 view_all.searchView = function () {
+    console.log("hello");
+
     const img = document.createElement("img");
 
     const allviewListHtml = document.getElementById("allviewList");
     while (allviewListHtml.firstChild) {
         allviewListHtml.removeChild(allviewListHtml.firstChild);
     }
-    var search = document.getElementById("search").value;
+    var search = document.getElementById("search_1").value;
     console.log(search);
     for (var i = 0; i < navigation.pellicule.list.length; i++) {
         if (navigation.pellicule.list[i].name.includes(search)) {
@@ -74,5 +77,7 @@ view_all.searchView = function () {
         }
     }
 };
+
+
 view_all.createAllViewList();
-searchBox.addEventListener('keyup', navigation.searchView);
+searchBox.addEventListener('keyup', view_all.searchView);
