@@ -11,7 +11,6 @@ for (var i = 0; i < navigation.pellicule.list.length; i++) {
     alphabList.push(navigation.pellicule.list[i].name.toLowerCase());
 }
 alphabList = alphabList.sort();
-console.log(alphabList);
 
 //code à optimiser, pas obligé de faire 2 fonctions on peut en faire qu'un avec les param de la recherche
 view_all.createAllViewList = function () {
@@ -25,7 +24,7 @@ view_all.createAllViewList = function () {
             for (var j = 0; j <alphabList.length; j++) {
                 if (navigation.pellicule.list[j].name.toLowerCase() == (alphabList[i])) {
                     var colImg = document.createElement("div");
-                    colImg.setAttribute("class", "col-xs-2")
+                    colImg.setAttribute("class", "col-xs-2");
                     img.src = navigation.pellicule.list[j].uri;
                     var divImage = document.createElement("div");
                     divImage.setAttribute('class', 'thumbnail img-responsive drag-drop');
@@ -99,7 +98,7 @@ view_all.searchView = function () {
         for (var i = 0; i < navigation.pellicule.list.length; i++) {
             if (navigation.pellicule.list[i].name.includes(search)) {
                 var colImg = document.createElement("div");
-                colImg.setAttribute("class", "col-xs-2")
+                colImg.setAttribute("class", "col-xs-2");
                 img.src = navigation.pellicule.list[i].uri;
                 var divImage = document.createElement("div");
                 divImage.setAttribute('class', 'thumbnail img-responsive drag-drop');

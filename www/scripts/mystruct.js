@@ -1,6 +1,7 @@
 var struct = {};
-struct.createGraph = function (uri, name, typeFilter, min, max, listFilter){
+struct.createGraph = function (id, uri, name, typeFilter, min, max, listFilter){
     var graph = {};
+    graph.id = id;
     graph.name = name;
     graph.typeFilter = typeFilter;
     graph.listFilters = listFilter;

@@ -12,7 +12,6 @@ $('#styler .stroke-color').simpleColor({
 });
 
 toolBox.initCanvas = function(index){
-    print("in toolbox index is  : " + index);
     var pellicule = navigation.pellicule.list;
     var canvas = pellicule[index].designCanvas;
     //canvas.loadFromJSON(pellicule[index].drawingJson);
@@ -58,9 +57,8 @@ toolBox.initCanvas = function(index){
               canvas.add(rect);
               pellicule[index].drawingJson = canvas.toJSON();
             }
-    print(pellicule[index].drawingJson);
     pellicule[index].vignetteCanvas.loadFromJSON(pellicule[index].drawingJson, function() {
         pellicule[index].vignetteCanvas.renderAll(); 
      });
          toolBox.test++;
-}
+};
