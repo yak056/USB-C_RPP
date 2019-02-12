@@ -4,21 +4,19 @@ var print = console.log;
 navigation.actualMainView = "";
 navigation.json = JSON.parse(data).pellicule;
 
-var canvasList=["img_home", "img_search", "img_filter", "img_for_annotation", "img_resume"];
+var canvasList=["img_home", "img_filter", "img_for_annotation", "img_resume"];
 navigation.pellicule = new struct.Pellicule();
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 navigation.changeDivReal = function(page){
     document.getElementById('connexion_view').hidden= true;
     document.getElementById('all_view').hidden= true;
-    document.getElementById('search_view').hidden= true;
     document.getElementById('filter_view').hidden= true;
     document.getElementById('resume_view').hidden= true;
     document.getElementById('annotation_view').hidden= true;
     document.getElementById('home_view').hidden= true;
     document.getElementById(page).hidden = false;
     if (page == "home_view") navigation.actualMainView = "BCC_img_home";
-    else if (page == "search_view") navigation.actualMainView = "BCC_img_search";
     else if (page == "filter_view") navigation.actualMainView = "BCC_img_filter";
     else if (page == "resume_view") navigation.actualMainView = "BCC_img_resume";
     else if (page == "annotation_view") {
