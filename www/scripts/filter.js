@@ -35,17 +35,17 @@ filter.createFilterNamed = function(graph){
     var filterlist = document.getElementById("filterList");
     filterlist.innerHTML += "<div>\n" +
         "                                    <p>\n" +
-        "                                        "+ graph.name + "\n" +
+        "                                        My name 2\n" +
         "                                    </p>\n" +
         "                                    <div class=\"form-check\">\n" +
-        "                                        <input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"defaultCheck3\">\n" +
-        "                                        <label class=\"form-check-label\" for=\"defaultCheck1"+ graph.id + "\">\n" +
+        "                                        <input type=\"radio\" value=\"\" id=\"defaultCheck3\">\n" +
+        "                                        <label class=\"form-check-label\" for=\"defaultCheck3\">\n" +
         "                                            Default checkbox\n" +
         "                                        </label>\n" +
         "                                    </div>\n" +
         "                                    <div class=\"form-check\">\n" +
-        "                                        <input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"defaultCheck4\" disabled>\n" +
-        "                                        <label class=\"form-check-label\" for=\"defaultCheck2" + graph.id+ "\">\n" +
+        "                                        <input class=\"form-check-input\" type=\"radio\" value=\"\" id=\"defaultCheck4\">\n" +
+        "                                        <label class=\"form-check-label\" for=\"defaultCheck4\">\n" +
         "                                            Disabled checkbox\n" +
         "                                        </label>\n" +
         "                                    </div>\n" +
