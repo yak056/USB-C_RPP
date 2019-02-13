@@ -12,6 +12,8 @@ filter.init = function(){
     }
     var submitBtn = document.getElementById("submitButton");
     submitBtn.addEventListener("click", filter.getValue);
+    var clearAll = document.getElementById("clearButton");
+    clearAll.addEventListener("click", filter.clearAll);
 };
 
 filter.createDivSlider = function(graph){
@@ -108,6 +110,13 @@ filter.getValue = function(){
     }
     print (res);
     return res;
+};
+
+filter.clearAll = function(){
+    var filterlist = document.getElementById("filterList");
+    filterlist.innerText = "";
+    filter.init();
+    print("envoi requete html");
 };
 
 filter.init();
