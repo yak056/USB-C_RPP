@@ -25,7 +25,6 @@
     <link rel="stylesheet" type="text/css" href="css/filter.css"/>
 
 
-
 </head>
 
 <body>
@@ -99,30 +98,29 @@
                                     <button type="button" class="btn btn-success align-center">Créer</button>
                                 </span>
                             </div>
-
-
                         </div>
                     </div>
                     <div class="row" id="allviewList">
 
                     </div>
                     <div class="row " id="buttonGroupAllView">
-                        <div class="col-xs-3 pull-right" style="background : white" id="order_pellicule">
-                            <div class="">
-                                <h4 >Pellicule</h4>
-                            </div>
-                            <div class="center-block">
-                                <label class="switch">
-                                    <input type="checkbox" name="alpha_1" onchange="view_all.changeOrder(this)" unchecked >
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                            <div class="center-block">
-                                <h4>Alphabetique</h4>
-                            </div>
-                        </div>
+                        <div class="col-xs-1 pull-right centreVerticalement"  id="order_pellicule">
+                            <h4 class="text_info">Alphabetique</h4>
 
+                        </div>
+                        <div class="col-xs-1 pull-right centreVerticalement">
+                            <label class="switch">
+                                <input type="checkbox" name="alpha_1" onchange="view_all.changeOrder(this)"
+                                       unchecked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="col-xs-1 pull-right centreVerticalement">
+                            <h4 class="text_info">Pellicule</h4>
+                        </div>
                     </div>
+
+
                     <!--
                                         <div id="yes-drop" class="drag-drop"> #yes-drop</div>
                     -->
@@ -131,8 +129,8 @@
                     <div class="row" style="padding-top:10px ; height:100%">
                         <div class="col-xs-7" id="filterBox" style="height:100%">
                             <div id="buttonDiv" style="text-align:right ; height:12%">
-                                <button id="submitButton" type="button" class="btn btn-success"> Submit </button>
-                                <button id="clearButton" type="button" class="btn btn-danger"> Clear All </button>
+                                <button id="submitButton" type="button" class="btn btn-success"> Submit</button>
+                                <button id="clearButton" type="button" class="btn btn-danger"> Clear All</button>
                             </div>
                             <div id="filterList" class="row" style="height:85%; overflow: auto">
                             </div>

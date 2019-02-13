@@ -20,9 +20,25 @@ view_all.createAllViewList = function () {
         allviewListHtml.removeChild(allviewListHtml.firstChild);
     }
     if (alphabetic) {
+        var firstChar = "";
         for (var i = 0; i < alphabList.length; i++) {
             for (var j = 0; j <alphabList.length; j++) {
                 if (navigation.pellicule.list[j].name.toLowerCase() == (alphabList[i])) {
+                    if( firstChar != alphabList[i].charAt(0))
+                    {
+                        var rowAlphab = document.createElement("div");
+                        rowAlphab.setAttribute("class", "col-xs-12 letterRow");
+                        firstChar = alphabList[i].charAt(0);
+                        var divAlphab = document.createElement("div");
+                        divAlphab.setAttribute("class", " letterList");
+
+                        var h1FirstCar = document.createElement("h1");
+                        h1FirstCar.innerText=firstChar.toUpperCase();
+                        rowAlphab.appendChild(divAlphab);
+                        divAlphab.appendChild(h1FirstCar);
+                        allviewListHtml.appendChild(rowAlphab);
+                    }
+
                     var colImg = document.createElement("div");
                     colImg.setAttribute("class", "col-xs-2");
                     img.src = navigation.pellicule.list[j].uri;
@@ -39,6 +55,9 @@ view_all.createAllViewList = function () {
                     divTitle.setAttribute("class", "caption");
 
                     var titre = document.createTextNode(navigation.pellicule.list[j].name);
+
+
+
                     divTitle.appendChild(titre);
 
                     divWrapperImg.appendChild(imgThumbnail);
@@ -46,7 +65,10 @@ view_all.createAllViewList = function () {
                     divImage.appendChild(divTitle);
 
                     colImg.appendChild(divImage);
+
+
                     allviewListHtml.appendChild(colImg);
+
                 }
             }
         }
@@ -96,7 +118,7 @@ view_all.searchView = function () {
         console.log("recherche :" + search);
     } else {
         for (var i = 0; i < navigation.pellicule.list.length; i++) {
-            if (navigation.pellicule.list[i].name.includes(search)) {
+            if (navigation.pellicule.list[i].name.toLowerCase().startsWith(search.toLowerCase())) {
                 var colImg = document.createElement("div");
                 colImg.setAttribute("class", "col-xs-2");
                 img.src = navigation.pellicule.list[i].uri;
