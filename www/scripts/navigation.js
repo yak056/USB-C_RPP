@@ -18,7 +18,10 @@ navigation.changeDivReal = function (page) {
     document.getElementById(page).hidden = false;
     if (page == "home_view") navigation.actualMainView = "BCC_img_home";
     else if (page == "filter_view") navigation.actualMainView = "BCC_img_filter";
-    else if (page == "resume_view") navigation.actualMainView = "BCC_img_resume";
+    else if (page == "resume_view") {
+        navigation.actualMainView = "BCC_img_resume";
+        resume.init()
+    }
     else if (page == "annotation_view") {
         navigation.actualMainView = "BCC_img_for_annotation";
         toolBox.initCanvas(navigation.pellicule.currentIndex);
@@ -99,7 +102,7 @@ navigation.createPellicule = function () {
     for (var i = 0; i < navigation.json.length; i++) {
         var graph = navigation.json[i];
         navigation.pellicule.list.push(struct.createGraph(i, graph.uri, graph.nom, graph.typeFilter, graph.min,
-            graph.max, graph.filterNames));
+            graph.max, graph.mean, graph.sd, graph.oneQ, graph.median, graph.threeQ, graph.na, graph.filterEffectives, graph.filterNames));
     }
     const img = document.createElement("img");
 
@@ -129,6 +132,9 @@ navigation.maj_img_canvas = function (img, index) {
     if (index != null) {
         navigation.pellicule.currentIndex = index;
     }
+    if (navigation.actualMainView == "BCC_img_resume"){
+        resume.init();
+    }
     for (var i = 0; i < canvasList.length; i++) {
         navigation.initCanvasForMainView(canvasList[i], index, img);
     }
@@ -136,7 +142,6 @@ navigation.maj_img_canvas = function (img, index) {
     toolBox.initCanvas(index);
 };
 navigation.changeImgMainView = function (img, index) {
-    // pour les problèmes de closure
     return function () {
         navigation.maj_img_canvas(img, index);
     }
