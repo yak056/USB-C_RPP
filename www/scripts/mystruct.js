@@ -1,5 +1,5 @@
 var struct = {};
-struct.createGraph = function (id, uri, name, typeFilter, min, max, listFilter){
+struct.createGraph = function (id, uri, name, typeFilter, min, max, mean, sd, oneQ, median, threeQ, na, filterEffectives,  listFilter){
     var graph = {};
     graph.id = id;
     graph.name = name;
@@ -7,6 +7,15 @@ struct.createGraph = function (id, uri, name, typeFilter, min, max, listFilter){
     graph.listFilters = listFilter;
     graph.min = min;
     graph.max = max;
+    ////////////////////
+    graph.mean = mean;
+    graph.sd = sd;
+    graph.oneQ = oneQ;
+    graph.median = median;
+    graph.threeQ = threeQ;
+    graph.na = na;
+    graph.filterEffectives = filterEffectives;
+    /////////////////////////////
     graph.uri = uri;
     graph.fabricCanvas = null;
     graph.designCanvas = null;
