@@ -1,3 +1,38 @@
+.filterTitle p{
+    color: white;
+    font-size: 20px;
+    text-transform: capitalize;
+    padding-top: 20px;
+    height: auto;
+}
+
+.rangeSlider{
+    height: 40px;
+    padding: 20px;
+}
+
+.minRange{
+    color: white;
+    font-size: 15px;
+    padding-left: -10px;
+}
+.maxRange{
+    color: white;
+    font-size: 15px;
+}
+
+.form-check{
+    padding-left: 20%;
+    color: white;
+    text-transform: capitalize;
+    font-size: 15px;
+    padding-top: 2%;
+}
+
+.checkmark{
+    background-color: #5bc3da;
+}
+
 .ui-state-disabled {
     cursor: default !important;
     pointer-events: none;
