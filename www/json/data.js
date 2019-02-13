@@ -127,4 +127,3 @@ var data =
     '       "filterEffectives" : ["36", "9", "99", "87", "54"]' +
     '       }' +
     ']}';
-console.log(data);
