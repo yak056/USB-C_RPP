@@ -12,7 +12,7 @@ body {
   align-content: center;
 }
 
-input {
+#login input {
   border: none;
   font-family: 'Open Sans', Arial, sans-serif;
   font-size: 16px;
@@ -21,7 +21,7 @@ input {
   -webkit-appearance: none;
 }
 
-p {
+#login p {
   line-height: 1.5em;
 }
 
