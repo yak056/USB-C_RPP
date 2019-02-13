@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div class="main_view" hidden="true" id="all_view">
-                    <div class="container">
+                    <div class="container-fluid">
                         <div class="row well">
                             <div class="col-xs-3 ">
                                 <span class="input-group align-center">
@@ -103,7 +103,24 @@
 
                         </div>
                     </div>
-                    <div class="row"  id="allviewList">
+                    <div class="row" id="allviewList">
+
+                    </div>
+                    <div class="row " id="buttonGroupAllView">
+                        <div class="col-xs-3 pull-right" style="background : white" id="order_pellicule">
+                            <div class="">
+                                <h4 >Pellicule</h4>
+                            </div>
+                            <div class="center-block">
+                                <label class="switch">
+                                    <input type="checkbox" name="alpha_1" onchange="view_all.changeOrder(this)" unchecked >
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="center-block">
+                                <h4>Alphabetique</h4>
+                            </div>
+                        </div>
 
                     </div>
                     <!--
@@ -161,7 +178,7 @@
 
                         </div>
                     </div>
-                    <div class="row" id="toolbox">
+                    <div class="row" id="toolbox">l
                         <div id="toolbar" class="col-sm palette">
                             <!--<a href="#selection" class="selection" title="Selection (s)">Selection</a>-->
                             <a href="#rectangle" class="rectangle" title="Rectangle (r)">Rectangle</a>
