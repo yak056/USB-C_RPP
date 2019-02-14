@@ -27,7 +27,7 @@ toolBox.initCanvas = function(index){
       
       // "add" rectangle onto canvas
       canvas.add(rect);
-      pellicule[index].drawingJson = canvas.toJSON();
+      pellicule[index].drawingJson = canvas.getObjects();
         }
     if (toolBox.test == 4){
         var rect = new fabric.Rect({
@@ -41,7 +41,7 @@ toolBox.initCanvas = function(index){
           
           // "add" rectangle onto canvas
           canvas.add(rect);
-          pellicule[index].drawingJson = canvas.toJSON();
+          pellicule[index].drawingJson = canvas.getObjects();
         }
         if (toolBox.test == 6){
             var rect = new fabric.Rect({
@@ -55,10 +55,12 @@ toolBox.initCanvas = function(index){
               
               // "add" rectangle onto canvas
               canvas.add(rect);
-              pellicule[index].drawingJson = canvas.toJSON();
+              pellicule[index].drawingJson = canvas.getObjects();
             }
-    pellicule[index].vignetteCanvas.loadFromJSON(pellicule[index].drawingJson, function() {
+    
+    /*pellicule[index].vignetteCanvas.loadFromJSON(pellicule[index].drawingJson, function() {
         pellicule[index].vignetteCanvas.renderAll(); 
-     });
+     });*/
+     struct.duplicateAndResizeObjects(pellicule[index], pellicule[index].vignetteCanvas);
          toolBox.test++;
 };
