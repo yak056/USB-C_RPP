@@ -17,84 +17,96 @@
     <script src="scripts/matchEvent.js"></script>
 
 
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <link rel="stylesheet" type="text/css" href="css/view_all.css" />
-    <link rel="stylesheet" type="text/css" href="css/pellicule.css" />
-    <link rel="stylesheet" type="text/css" href="css/connexion.css" />
-    <link rel="stylesheet" type="text/css" href="css/annotation_view.css" />
-    <link rel="stylesheet" type="text/css" href="css/filter.css" />
-    <link rel="stylesheet" type="text/css" href="css/resume.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="css/view_all.css"/>
+    <link rel="stylesheet" type="text/css" href="css/pellicule.css"/>
+    <link rel="stylesheet" type="text/css" href="css/connexion.css"/>
+    <link rel="stylesheet" type="text/css" href="css/annotation_view.css"/>
+    <link rel="stylesheet" type="text/css" href="css/filter.css"/>
+    <link rel="stylesheet" type="text/css" href="css/resume.css"/>
 
 
 </head>
 
 <body>
-    <div class="container-fluid" id="frame">
-        <div class="row no-gutters">
-            <nav class="navbar-primary">
-                <a class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
-                <ul class="navbar-primary-menu">
-                    <li>
-                        <a href="#" onclick="navigation.changeDiv('connexion_view')" id="ConnexionMenu"><span class="glyphicon glyphicon-cloud"></span><span
-                                class="nav-label">Connexion</span></a>
-                        <a href="#" onclick="navigation.changeDiv('home_view')" id="HomeMenu"><span class="glyphicon glyphicon-home"></span><span
-                                class="nav-label">Accueil</span></a>
-                        <a href="#" onclick="navigation.changeDiv('all_view')" id="SeeAllMenu"><span class="glyphicon glyphicon-th"></span><span
-                                class="nav-label">Galerie</span></a>
-                        <a href="#" onclick="navigation.changeDiv('resume_view')" id="ResumeMenu"><span class="glyphicon glyphicon-indent-left"></span><span
-                                class="nav-label">Resumé</span></a>
-                        <a href="#" onclick="navigation.changeDiv('filter_view')"><span class="glyphicon glyphicon-stats"
-                                id="FilterMenu"></span><span class="nav-label">Filtrer</span></a>
-                        <a href="#" onclick="navigation.changeDiv('annotation_view')"><span class="glyphicon glyphicon-pencil"
-                                id="NoteMenu"></span><span class="nav-label">Annoter</span></a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="col container main-content" id="right_panel">
-                <div class="row ">
-                    <div class="main_view" id="connexion_view">
-                        <div id="login">
-                            <form name='form-login'>
-                                <span class="fontawesome-user"></span>
-                                <input type="text" id="ipAddress" placeholder="Adresse IP" required pattern="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"
-                                    title="L'adresse doit être de la forme 123.456.789.123">
-                                <input type="submit" value="Connect">
-                            </form>
-                        </div>
+<div class="container-fluid" id="frame">
+    <div class="row no-gutters">
+        <nav class="navbar-primary">
+            <a class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+            <ul class="navbar-primary-menu">
+                <li>
+                    <a href="#" onclick="navigation.changeDiv('connexion_view')" id="ConnexionMenu"><span
+                            class="glyphicon glyphicon-cloud"></span><span
+                            class="nav-label">Connexion</span></a>
+                    <a href="#" onclick="navigation.changeDiv('home_view')" id="HomeMenu"><span
+                            class="glyphicon glyphicon-home"></span><span
+                            class="nav-label">Accueil</span></a>
+                    <a href="#" onclick="navigation.changeDiv('all_view')" id="SeeAllMenu"><span
+                            class="glyphicon glyphicon-th"></span><span
+                            class="nav-label">Galerie</span></a>
+                    <a href="#" onclick="navigation.changeDiv('resume_view')" id="ResumeMenu"><span
+                            class="glyphicon glyphicon-indent-left"></span><span
+                            class="nav-label">Resumé</span></a>
+                    <a href="#" onclick="navigation.changeDiv('filter_view')"><span class="glyphicon glyphicon-stats"
+                                                                                    id="FilterMenu"></span><span
+                            class="nav-label">Filtrer</span></a>
+                    <a href="#" onclick="navigation.changeDiv('annotation_view')"><span
+                            class="glyphicon glyphicon-pencil"
+                            id="NoteMenu"></span><span class="nav-label">Annoter</span></a>
+                </li>
+            </ul>
+        </nav>
+        <div class="col container main-content" id="right_panel">
+            <div class="row ">
+                <div class="main_view" id="connexion_view">
+                    <div id="login">
+                        <form name='form-login'>
+                            <span class="fontawesome-user"></span>
+                            <input type="text" id="ipAddress" placeholder="Adresse IP" required
+                                   pattern="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"
+                                   title="L'adresse doit être de la forme 123.456.789.123">
+                            <input type="submit" value="Connect">
+                        </form>
                     </div>
-                    <div class="main_view" hidden="true" id="home_view">
-                        <div class="BigCanvasContainer" id="BCC_img_home">
-                            <canvas class="bigImg" id="img_home">
+                </div>
+                <div class="main_view" hidden="true" id="home_view">
+                    <div class="BigCanvasContainer" id="BCC_img_home">
+                        <canvas class="bigImg" id="img_home">
 
-                            </canvas>
-                        </div>
+                        </canvas>
                     </div>
-                    <div class="main_view" hidden="true" id="all_view">
-                        <div class="container-fluid">
-                            <div class="row well">
-                                <div class="col-xs-3 ">
-                                    <span class="input-group align-center">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                                        <input id="search_1" type="text" class="form-control" name="search" placeholder="Rechercher">
-                                    </span>
-                                </div>
-                                <div class="col-xs-2 ">
-                                    <div class="h4 align-center" id="info_dnd"> Creer <br /> diapositive <br />
-                                        composée:
-                                    </div>
-                                </div>
+                </div>
+                <div class="main_view" hidden="true" id="all_view">
+                    <div class="container-fluid">
+                        <div class="row well centreVerticalement">
+                            <div class="col-xs-3 ">
+                                <span class="input-group align-center">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                    <input id="search_1" type="text" class="form-control" name="search"
+                                           placeholder="Rechercher">
+                                </span>
                             </div>
                             <div class="col-xs-1 ">
+                                <div class="h4 align-center" id="info_dnd"> Creer <br/> diapositive <br/> composée:
+                                </div>
+                            </div>
+                            <div class="col-xs-7 ">
+                                <div id="outer-dropzone" class="dropzone">
+                                </div>
+                            </div>
+                            <div class="col-xs-1">
                                 <span>
                                     <button type="button" class="btn btn-success align-center">Créer</button>
                                 </span>
                             </div>
                         </div>
-                        <div class="row" id="allviewList">
+                    </div>
+                    <div class="row" id="allviewList">
 
                     </div>
+
                     <div class="row " id="buttonGroupAllView">
-                        <div class="col-xs-1 pull-right centreVerticalement"  id="order_pellicule">
+                        <div class="col-xs-1 pull-right centreVerticalement" id="order_pellicule">
                             <h4 class="text_info">Alphabetique</h4>
 
                         </div>
@@ -109,98 +121,96 @@
                             <h4 class="text_info">Pellicule</h4>
                         </div>
                     </div>
-
-
                     <!--
                                         <div id="yes-drop" class="drag-drop"> #yes-drop</div>
                     -->
-                    </div>
-                    <div class="main_view" hidden="true" id="filter_view">
-                        <div class="row" style="padding-top:10px ; height:100%">
-                            <div class="col-xs-7" id="filterBox" style="height:100%">
-                                <div id="buttonDiv" style="text-align:right ; height:12%">
-                                    <button id="submitButton" type="button" class="btn btn-success"> Submit </button>
-                                    <button id="clearButton" type="button" class="btn btn-danger"> Clear All </button>
-                                </div>
-                                <div id="filterList" class="row" style="height:85%; overflow: auto">
-                                </div>
+                </div>
+                <div class="main_view" hidden="true" id="filter_view">
+                    <div class="row" style="padding-top:10px ; height:100%">
+                        <div class="col-xs-7" id="filterBox" style="height:100%">
+                            <div id="buttonDiv" style="text-align:right ; height:12%">
+                                <button id="submitButton" type="button" class="btn btn-success"> Submit</button>
+                                <button id="clearButton" type="button" class="btn btn-danger"> Clear All</button>
                             </div>
-                            <div class="col-xs-5" style="height:100% ; position:relative">
-                                <div class="BigCanvasContainer" id="BCC_img_filter">
-                                    <canvas class="bigImg" id="img_filter">
-                                    </canvas>
-                                </div>
+                            <div id="filterList" class="row" style="height:85%; overflow: auto">
+                            </div>
+                        </div>
+                        <div class="col-xs-5" style="height:100% ; position:relative">
+                            <div class="BigCanvasContainer" id="BCC_img_filter">
+                                <canvas class="bigImg" id="img_filter">
+                                </canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="main_view" hidden="true" id="resume_view">
-                        <div class="row" style="padding-top:10px ; height:100%">
-                            <div class="col-xs-8" id="graphView" style="height:100% ; position: relative">
+                </div>
+                <div class="main_view" hidden="true" id="resume_view">
+                    <div class="row" style="padding-top:10px ; height:100%">
+                        <div class="col-xs-8" id="graphView" style="height:100% ; position: relative">
 
-                                <div class="BigCanvasContainer" id="BCC_img_resume">
-                                    <canvas class="bigImg" id="img_resume">
-
-                                    </canvas>
-                                </div>
-                            </div>
-                            <div class="col-xs-4" id="graphResume" style="height:100%; position: relative">
-                                <div style="position: absolute;margin: auto; top:0; bottom: 0; right:0; left:0 ; height: 60%; overflow: auto;">
-                                    <table class="table" >
-                                        <tbody id="resume">
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="main_view" hidden="true" id="annotation_view">
-                        <div id="imgToModify">
-                            <div class="BigCanvasContainer" id="BCC_img_for_annotation">
-                                <canvas class="bigImg" id="img_for_annotation">
+                            <div class="BigCanvasContainer" id="BCC_img_resume">
+                                <canvas class="bigImg" id="img_resume">
 
                                 </canvas>
-
                             </div>
                         </div>
-                        <div class="row" id="toolbox">l
-                            <div id="toolbar" class="col-sm palette">
-                                <!--<a href="#selection" class="selection" title="Selection (s)">Selection</a>-->
-                                <a href="#rectangle" class="rectangle" title="Rectangle (r)">Rectangle</a>
-                                <a href="#ellipse" class="ellipse" title="Ellipse (e)">Ellipse</a>
-                                <!--<a href="#line" class="line" title="Line (l)">Line</a>-->
-                                <a href="#path" class="path" title="Path (p)">Path</a>
-                                <div class="buttons">
-                                    <button title="Delete (suppr)">Delete</button>
-                                    <button title="Duplicate (d)">Duplicate</button>
-                                </div>
-                                <br clear="both" />
+                        <div class="col-xs-4" id="graphResume" style="height:100%; position: relative">
+                            <div style="position: absolute;margin: auto; top:0; bottom: 0; right:0; left:0 ; height: 60%; overflow: auto;">
+                                <table class="table">
+                                    <tbody id="resume">
+                                    </tbody>
+                                </table>
                             </div>
-                            <div id="styler" class="col-sm palette">
-                                <p>Style</p>
-                                <label>color</label>
-                                <input class="stroke-color" value="#000000" />
-                                <label>Stroke width</label>
-                                <input type="number" class="stroke-width" value="1" />
-                            </div>
-
                         </div>
                     </div>
-                    <div class="pellicule" id="pellicule">
-                    </div>
-
                 </div>
+                <div class="main_view" hidden="true" id="annotation_view">
+                    <div id="imgToModify">
+                        <div class="BigCanvasContainer" id="BCC_img_for_annotation">
+                            <canvas class="bigImg" id="img_for_annotation">
+
+                            </canvas>
+
+                        </div>
+                    </div>
+                    <div class="row" id="toolbox">l
+                        <div id="toolbar" class="col-sm palette">
+                            <!--<a href="#selection" class="selection" title="Selection (s)">Selection</a>-->
+                            <a href="#rectangle" class="rectangle" title="Rectangle (r)">Rectangle</a>
+                            <a href="#ellipse" class="ellipse" title="Ellipse (e)">Ellipse</a>
+                            <!--<a href="#line" class="line" title="Line (l)">Line</a>-->
+                            <a href="#path" class="path" title="Path (p)">Path</a>
+                            <div class="buttons">
+                                <button title="Delete (suppr)">Delete</button>
+                                <button title="Duplicate (d)">Duplicate</button>
+                            </div>
+                            <br clear="both"/>
+                        </div>
+                        <div id="styler" class="col-sm palette">
+                            <p>Style</p>
+                            <label>color</label>
+                            <input class="stroke-color" value="#000000"/>
+                            <label>Stroke width</label>
+                            <input type="number" class="stroke-width" value="1"/>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="pellicule" id="pellicule">
+                </div>
+
             </div>
         </div>
     </div>
-    <script src="scripts/mystruct.js" type="text/javascript"></script>
-    <script src="json/data.js" type="text/javascript"></script>
-    <script src="scripts/toolbox.js"></script>
-    <script src="scripts/navbar.js"></script>
-    <script src="scripts/dnd.js"></script>
-    <script src="scripts/navigation.js"></script>
-    <script src="scripts/resume.js"></script>
-    <script src="scripts/view_all.js"></script>
-    <script src="scripts/filter.js"></script>
+</div>
+<script src="scripts/mystruct.js" type="text/javascript"></script>
+<script src="json/data.js" type="text/javascript"></script>
+<script src="scripts/toolbox.js"></script>
+<script src="scripts/navbar.js"></script>
+<script src="scripts/dnd.js"></script>
+<script src="scripts/navigation.js"></script>
+<script src="scripts/resume.js"></script>
+<script src="scripts/view_all.js"></script>
+<script src="scripts/filter.js"></script>
 
 
 </body>

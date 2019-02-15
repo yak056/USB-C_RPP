@@ -5,6 +5,34 @@ var searchBox = document.getElementById("search_1");
 var toggleOrder = document.querySelector("input[name=alpha_1]");
 var alphabetic = false;
 var alphabList = [];
+var modeSelection = false;
+
+var pressTimer;
+
+view_all.setListenerLongPress = function (id) {
+    console.log("coucou  ");
+    var id = id;
+    console.log(document.getElementById(id));
+
+    document.getElementById(id).addEventListener('mouseup', function () {
+        console.log(id);
+
+        clearTimeout(pressTimer);
+        // Clear timeout
+        return false;
+    });
+    document.getElementById(id).addEventListener('mousedown', function () {
+        // Set timeout
+        pressTimer = window.setTimeout(function () {
+            console.log("coucou coucouc ocuoucou");
+            modeSelection = true;
+
+            document.getElementById(id).style.background = 'blue';
+
+        }, 500);
+        return false;
+    });
+};
 
 
 for (var i = 0; i < navigation.pellicule.list.length; i++) {
@@ -22,10 +50,9 @@ view_all.createAllViewList = function () {
     if (alphabetic) {
         var firstChar = "";
         for (var i = 0; i < alphabList.length; i++) {
-            for (var j = 0; j <alphabList.length; j++) {
+            for (var j = 0; j < alphabList.length; j++) {
                 if (navigation.pellicule.list[j].name.toLowerCase() == (alphabList[i])) {
-                    if( firstChar != alphabList[i].charAt(0))
-                    {
+                    if (firstChar != alphabList[i].charAt(0)) {
                         var rowAlphab = document.createElement("div");
                         rowAlphab.setAttribute("class", "col-xs-12 letterRow");
                         firstChar = alphabList[i].charAt(0);
@@ -33,7 +60,7 @@ view_all.createAllViewList = function () {
                         divAlphab.setAttribute("class", " letterList");
 
                         var h1FirstCar = document.createElement("h1");
-                        h1FirstCar.innerText=firstChar.toUpperCase();
+                        h1FirstCar.innerText = firstChar.toUpperCase();
                         rowAlphab.appendChild(divAlphab);
                         divAlphab.appendChild(h1FirstCar);
                         allviewListHtml.appendChild(rowAlphab);
@@ -44,7 +71,8 @@ view_all.createAllViewList = function () {
                     img.src = navigation.pellicule.list[j].uri;
                     var divImage = document.createElement("div");
                     divImage.setAttribute('class', 'thumbnail img-responsive drag-drop');
-                    divImage.setAttribute("id", "yes-drop");
+                    divImage.setAttribute("id", "thumbnail_" + navigation.pellicule.list[i].name);
+
 
                     var divWrapperImg = document.createElement("div");
                     divWrapperImg.setAttribute("class", "imageVA");
@@ -56,18 +84,13 @@ view_all.createAllViewList = function () {
 
                     var titre = document.createTextNode(navigation.pellicule.list[j].name);
 
-
-
                     divTitle.appendChild(titre);
-
                     divWrapperImg.appendChild(imgThumbnail);
                     divImage.appendChild(divWrapperImg);
                     divImage.appendChild(divTitle);
-
                     colImg.appendChild(divImage);
-
-
                     allviewListHtml.appendChild(colImg);
+                    view_all.setListenerLongPress("thumbnail_" + navigation.pellicule.list[i].name);
 
                 }
             }
@@ -80,7 +103,8 @@ view_all.createAllViewList = function () {
             img.src = navigation.pellicule.list[i].uri;
             var divImage = document.createElement("div");
             divImage.setAttribute('class', 'thumbnail img-responsive drag-drop');
-            divImage.setAttribute("id", "yes-drop");
+            divImage.setAttribute("id", "thumbnail_" + navigation.pellicule.list[i].name);
+
 
             var divWrapperImg = document.createElement("div");
             divWrapperImg.setAttribute("class", "imageVA");
@@ -99,6 +123,8 @@ view_all.createAllViewList = function () {
 
             colImg.appendChild(divImage);
             allviewListHtml.appendChild(colImg);
+            view_all.setListenerLongPress("thumbnail_" + navigation.pellicule.list[i].name);
+
         }
     }
 
@@ -124,7 +150,8 @@ view_all.searchView = function () {
                 img.src = navigation.pellicule.list[i].uri;
                 var divImage = document.createElement("div");
                 divImage.setAttribute('class', 'thumbnail img-responsive drag-drop');
-                divImage.setAttribute("id", "yes-drop");
+                divImage.setAttribute("id", "thumbnail_" + navigation.pellicule.list[i].name);
+
 
                 var divWrapperImg = document.createElement("div");
                 divWrapperImg.setAttribute("class", "imageVA");
@@ -140,23 +167,24 @@ view_all.searchView = function () {
                 divWrapperImg.appendChild(imgThumbnail);
                 divImage.appendChild(divWrapperImg);
                 divImage.appendChild(divTitle);
-
                 colImg.appendChild(divImage);
                 allviewListHtml.appendChild(colImg);
+                view_all.setListenerLongPress("thumbnail_" + navigation.pellicule.list[i].name);
+
             }
         }
     }
 
 };
-
-
-view_all.changeOrder =  function(checkbox){
+view_all.changeOrder = function (checkbox) {
     console.log(checkbox.checked);
     alphabetic = checkbox.checked;
     view_all.createAllViewList();
-}
+};
+
 
 view_all.createAllViewList();
 searchBox.addEventListener('keyup', view_all.searchView);
+
 
 

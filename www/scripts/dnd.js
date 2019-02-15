@@ -1,9 +1,12 @@
-
 // enable draggables to be dropped into this
 // target elements with the "draggable" class
 // target elements with the "draggable" class
 
-interact('.drag-drop')
+var main_view = document.querySelector('all_view');
+var zIndexRef;
+interact('.drag-drop', {
+    context: main_view
+})
     .draggable({
         // enable inertial throwing
         inertia: true,
@@ -11,31 +14,29 @@ interact('.drag-drop')
         restrict: {
             restriction: "parent",
             endOnly: true,
-            elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+            elementRect: {top: 0, left: 0, bottom: 1, right: 1}
         },
         // enable autoScroll
         autoScroll: true,
 
+        onstart: dragStartListener,
         // call this function on every dragmove event
         onmove: dragMoveListener,
         // call this function on every dragend event
         onend: function (event) {
-            var textEl = event.target.querySelector('p');
+            document.getElementById("allviewList").style.overflow ='scroll';
 
-            textEl && (textEl.textContent =
-                'moved a distance of '
-                + (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
-                Math.pow(event.pageY - event.y0, 2) | 0))
-                    .toFixed(2) + 'px');
+            event.target.style.zIndex = zIndexRef;
         }
     });
 
-function dragMoveListener (event) {
-    event.target.paren
+function dragMoveListener(event) {
+    var interaction = event.interaction;
     var target = event.target,
         // keep the dragged position in the data-x/data-y attributes
         x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
         y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
 
     // translate the element
     target.style.webkitTransform =
@@ -45,6 +46,21 @@ function dragMoveListener (event) {
     // update the posiion attributes
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
+}
+
+function dragStartListener(event) {
+    document.getElementById("allviewList").style.overflow ='';
+
+    var target = event.target;
+    zIndexRef = target.style.zIndex;
+    console.log(target.style.zIndex);
+    target.style.display = 'none';
+    target.style.zIndex = 9000;
+    event.target.style.position = 'relative';
+    target.style.display = '';
+    console.log(target.style.zIndex);
+
+
 }
 
 
@@ -83,7 +99,6 @@ interact('.dropzone').dropzone({
         event.target.classList.remove('drop-target');
     }
 });
-
 
 
 // this is used later in the resizing and gesture demos
