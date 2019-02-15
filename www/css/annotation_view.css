@@ -59,8 +59,8 @@ div.palette p {
 }
 
 #toolbar a.active {
-	opacity: 0.5;
-	background-color: brown
+	opacity: 1;
+	border: 1px solid orchid;
 }
 
 #toolbar .selection {
@@ -73,10 +73,6 @@ div.palette p {
 
 #toolbar .ellipse {
 	background-image: url(../img/palette_img/ellipse.png);
-}
-
-#toolbar .line {
-	background-image: url(../img/palette_img/line.png);
 }
 
 #toolbar .path {

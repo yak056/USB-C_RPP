@@ -15,6 +15,8 @@ $('#styler .stroke-color').simpleColor({
 
 toolBox.initCanvas = function (index) {
     console.log("//////////////////////////START INIT CANVAS with index : " +  index);
+    $('#BCC_img_for_annotation').off();
+    console.log(document.getElementById("#BCC_img_for_annotation"));
     var pellicule = navigation.pellicule.list;
     var graph = pellicule[index];
     var canvas = graph.designCanvas;
@@ -44,7 +46,7 @@ toolBox.initCanvas = function (index) {
     // = Handling the toolbar =
     // ========================
     // Changes active tool when a click occurs on their icon
-    $('#toolbar a').click(function (event) {
+    $('#toolbar a').not("#toolbar .active").click(function (event) {
         $('#toolbar .active').removeClass('active');
         var tool = $(this);
         console.log("clilck on : " + tool.text().trim());
@@ -61,6 +63,17 @@ toolBox.initCanvas = function (index) {
         }
     });
 
+    $('#toolbar .active').click(function (event) {
+        $('#toolbar .active').removeClass('active');
+        console.log('je tente de desactiver');
+        var tool = $(this);
+        console.log("clilck on : " + tool.text().trim());
+        tool.addClass('active');
+        ACTIVE_TOOL = 'Inactif';
+        canvas.isDrawingMode = false;
+        canvas.enableSelection();
+    });
+
     // ===================================
     // = Handling the creation of shapes =
     // ===================================
@@ -69,14 +82,14 @@ toolBox.initCanvas = function (index) {
     shape = null;
     pointerLocation = {x:0, y:0};
 //here is the bug --> $('canvas'), how to select the good one ?
-    $('canvas')
+    $('#BCC_img_for_annotation')
     .mousedown(function (event) {
         if (canvas.isDrawingMode) {
             return;
         }
-        console.log("in mouse DOWN : case" + ACTIVE_TOOL)
+        console.log("in mouse DOWN : case" + ACTIVE_TOOL);
         creating = true;
-        pointerLocation.x = event.pageX;
+        pointerLocation.x = event.pageX - document.getElementById('BCC_img_for_annotation').getBoundingClientRect().x;
         pointerLocation.y = event.pageY;
         switch (ACTIVE_TOOL) {
             case 'Rectangle':
@@ -88,8 +101,8 @@ toolBox.initCanvas = function (index) {
                     strokeWidth: STYLE.strokeWidth,
                     width: 0,
                     height: 0,
-                    // originX: 'left',
-                    // originY: 'top'
+                    //originX: 'left',
+                    //originY: 'top'
                 });
                 break;
             case 'Ellipse':
@@ -103,28 +116,18 @@ toolBox.initCanvas = function (index) {
                     ry: 1,
                 });
                 break;
-            case 'Line':
-                shape = new fabric.Line(
-                    [pointerLocation.x, pointerLocation.y, pointerLocation.x, pointerLocation.y],
-                    {
-                        fill: STYLE.stroke,
-                        stroke: STYLE.stroke,
-                        strokeWidth: STYLE.strokeWidth,
-                    }
-                );
-                break;
         }
         shape.selectable = false;
         canvas.add(shape);
     })
     .mousemove(function (event) {
         if (creating) {
-            console.log("in mouse MOVE : case" + ACTIVE_TOOL)
+            console.log("in mouse MOVE : case" + ACTIVE_TOOL);
             switch (ACTIVE_TOOL) {
                 case 'Rectangle':
                     var width, height;
                     shape.set({
-                        width: width = event.pageX - pointerLocation.x,
+                        width: width = event.pageX - document.getElementById('BCC_img_for_annotation').getBoundingClientRect().x - pointerLocation.x,
                         height: height = event.pageY - pointerLocation.y,
                         left: pointerLocation.x + width / 2,
                         top: pointerLocation.y + height / 2,
@@ -133,7 +136,7 @@ toolBox.initCanvas = function (index) {
                 case 'Ellipse':
                     var rx, ry;
                     shape.set({
-                        rx: rx = (event.pageX - pointerLocation.x) / 2,
+                        rx: rx = (event.pageX - document.getElementById('BCC_img_for_annotation').getBoundingClientRect().x - pointerLocation.x) / 2,
                         ry: ry = (event.pageY - pointerLocation.y) / 2,
                         // Weirdly, we have to set these as well…
                         width: rx * 2,
@@ -154,7 +157,7 @@ toolBox.initCanvas = function (index) {
     })
     .mouseup(function (event) {
         if (creating) {
-            console.log("in mouse UP : case" + ACTIVE_TOOL)
+            console.log("in mouse UP : case" + ACTIVE_TOOL);
             creating = false;
             shape.remove();
             canvas.add(shape = shape.clone());
@@ -276,7 +279,8 @@ toolBox.initCanvas = function (index) {
 			
 
 
-        }
+        };
+
 
 
 
