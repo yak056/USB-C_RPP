@@ -165,7 +165,7 @@
                 </div>
                 <div class="main_view" hidden="true" id="annotation_view">
                     <div id="imgToModify">
-                        <div class="BigCanvasContainer" id="BCC_img_for_annotation">
+                        <div class="BigCanvasContainerUNSWIPABLE" id="BCC_img_for_annotation">
                             <canvas class="bigImg" id="img_for_annotation">
 
                             </canvas>
@@ -174,14 +174,11 @@
                     </div>
                     <div class="row" id="toolbox">l
                         <div id="toolbar" class="col-sm palette">
-                            <!--<a href="#selection" class="selection" title="Selection (s)">Selection</a>-->
-                            <a href="#rectangle" class="rectangle" title="Rectangle (r)">Rectangle</a>
-                            <a href="#ellipse" class="ellipse" title="Ellipse (e)">Ellipse</a>
-                            <!--<a href="#line" class="line" title="Line (l)">Line</a>-->
-                            <a href="#path" class="path" title="Path (p)">Path</a>
+                            <a href="#rectangle" class="rectangle" title="Rectangle">Rectangle</a>
+                            <a href="#ellipse" class="ellipse" title="Ellipse">Ellipse</a>
+                            <a href="#path" class="path" title="Path">Path</a>
                             <div class="buttons">
                                 <button title="Delete (suppr)">Delete</button>
-                                <button title="Duplicate (d)">Duplicate</button>
                             </div>
                             <br clear="both"/>
                         </div>
@@ -202,6 +199,7 @@
         </div>
     </div>
 </div>
+<script src="scripts/matchEvent.js"></script>
 <script src="scripts/mystruct.js" type="text/javascript"></script>
 <script src="json/data.js" type="text/javascript"></script>
 <script src="scripts/toolbox.js"></script>
