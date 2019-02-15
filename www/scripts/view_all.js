@@ -10,13 +10,9 @@ var modeSelection = false;
 var pressTimer;
 
 view_all.setListenerLongPress = function (id) {
-    console.log("coucou  ");
     var id = id;
-    console.log(document.getElementById(id));
 
     document.getElementById(id).addEventListener('mouseup', function () {
-        console.log(id);
-
         clearTimeout(pressTimer);
         // Clear timeout
         return false;
@@ -24,7 +20,6 @@ view_all.setListenerLongPress = function (id) {
     document.getElementById(id).addEventListener('mousedown', function () {
         // Set timeout
         pressTimer = window.setTimeout(function () {
-            console.log("coucou coucouc ocuoucou");
             modeSelection = true;
 
             document.getElementById(id).style.background = 'blue';
