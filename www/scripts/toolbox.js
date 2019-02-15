@@ -2,7 +2,10 @@ var toolBox = {};
 toolBox.selected = null;
 toolBox.test = 0;
 toolBox.ACTIVE_TOOL = '';
-var print = console.log;
+toolBox.canvas = null;
+toolBox.pellicule = null;
+toolBox.objects = null;
+toolBox.shape = null;
 
 $('#styler .stroke-color').simpleColor({
     boxWidth: 80,
@@ -18,26 +21,27 @@ $('#styler .stroke-color').simpleColor({
 
 toolBox.initCanvas = function (index) {
     $('#BCC_img_for_annotation').off();
-    var pellicule = navigation.pellicule.list;
-    var graph = pellicule[index];
-    var canvas = graph.designCanvas;
+    toolBox.pellicule = navigation.pellicule.list;
+    var graph = toolBox.pellicule[index];
+    toolBox.canvas = graph.designCanvas;
     STYLE = {
         fill: "rgba(0,0,0,0)",
         stroke: "#b3e280",
         strokeWidth: 2,
     };
-    canvas.enableSelection = function () {
-        this.selection = true;
-        var objects = this.getObjects();
-        for (var i = 0; i < objects.length; i++) {
-            objects[i].selectable = true;
+    toolBox.canvas.enableSelection = function () {
+        toolBox.canvas.selection = true;
+        toolBox.objects = toolBox.canvas.getObjects();
+        console.log(toolBox.objects);
+        for (var i = 0; i < toolBox.objects.length; i++) {
+            toolBox.objects[i].selectable = true;
         }
     };
-    canvas.disableSelection = function () {
-        this.selection = false;
-        var objects = this.getObjects();
-        for (var i = 0; i < objects.length; i++) {
-            objects[i].selectable = false;
+    toolBox.canvas.disableSelection = function () {
+        toolBox.canvas.selection = false;
+        toolBox.objects = toolBox.canvas.getObjects();
+        for (var i = 0; i < toolBox.objects.length; i++) {
+            toolBox.objects[i].selectable = false;
         }
     };
 
@@ -53,18 +57,18 @@ toolBox.initCanvas = function (index) {
         if (toolBox.ACTIVE_TOOL !== toolBox.selected) {
             toolBox.ACTIVE_TOOL = tool.text().trim();
             tool.addClass('active');
-            canvas.disableSelection();
+            toolBox.canvas.disableSelection();
         } else {
-            toolBox.ACTIVE_TOOL = '';
-            canvas.enableSelection();
+            toolBox.ACTIVE_TOOL = 'Selection';
+            toolBox.canvas.enableSelection();
         }
-        if (toolBox.ACTIVE_TOOL == 'Path') {
-            canvas.isDrawingMode = true;
-            canvas.freeDrawingLineWidth = STYLE.strokeWidth;
-            canvas.freeDrawingColor = STYLE.stroke;
+        if (toolBox.ACTIVE_TOOL === 'Path') {
+            toolBox.canvas.isDrawingMode = true;
+            toolBox.canvas.freeDrawingLineWidth = STYLE.strokeWidth;
+            toolBox.canvas.freeDrawingColor = STYLE.stroke;
 
         } else {
-            canvas.isDrawingMode = false;
+            toolBox.canvas.isDrawingMode = false;
         }
     });
 
@@ -75,12 +79,11 @@ toolBox.initCanvas = function (index) {
     // ===================================
 
     creating = false;
-    shape = null;
     pointerLocation = {x:0, y:0};
 //here is the bug --> $('canvas'), how to select the good one ?
     $('#BCC_img_for_annotation')
     .mousedown(function (event) {
-        if (canvas.isDrawingMode) {
+        if (toolBox.canvas.isDrawingMode) {
             return;
         }
         creating = true;
@@ -88,7 +91,7 @@ toolBox.initCanvas = function (index) {
         pointerLocation.y = event.pageY;
         switch (toolBox.ACTIVE_TOOL) {
             case 'Rectangle':
-                shape = new fabric.Rect({
+                toolBox.shape = new fabric.Rect({
                     left: pointerLocation.x,
                     top: pointerLocation.y,
                     fill: STYLE.fill,
@@ -99,9 +102,11 @@ toolBox.initCanvas = function (index) {
                     //originX: 'left',
                     //originY: 'top'
                 });
+                toolBox.shape.selectable = false;
+                toolBox.canvas.add(toolBox.shape);
                 break;
             case 'Ellipse':
-                shape = new fabric.Ellipse({
+                toolBox.shape = new fabric.Ellipse({
                     left: pointerLocation.x,
                     top: pointerLocation.y,
                     fill: STYLE.fill,
@@ -110,17 +115,21 @@ toolBox.initCanvas = function (index) {
                     rx: 1,
                     ry: 1,
                 });
+                toolBox.shape.selectable = false;
+                toolBox.canvas.add(toolBox.shape);
+                break;
+            case 'Selection':
+                toolBox.shape = null;
                 break;
         }
-        shape.selectable = false;
-        canvas.add(shape);
+
     })
     .mousemove(function (event) {
         if (creating) {
             switch (toolBox.ACTIVE_TOOL) {
                 case 'Rectangle':
                     var width, height;
-                    shape.set({
+                    toolBox.shape.set({
                         width: width = event.pageX - document.getElementById('BCC_img_for_annotation').getBoundingClientRect().x - pointerLocation.x,
                         height: height = event.pageY - pointerLocation.y,
                         left: pointerLocation.x + width / 2,
@@ -129,34 +138,37 @@ toolBox.initCanvas = function (index) {
                     break;
                 case 'Ellipse':
                     var rx, ry;
-                    shape.set({
+                    toolBox.shape.set({
                         rx: rx = (event.pageX - document.getElementById('BCC_img_for_annotation').getBoundingClientRect().x - pointerLocation.x) / 2,
                         ry: ry = (event.pageY - pointerLocation.y) / 2,
                         // Weirdly, we have to set these as well…
                         width: rx * 2,
                         height: ry * 2,
                     });
-                    shape.left = pointerLocation.x + rx;
-                    shape.top = pointerLocation.y + ry;
+                    toolBox.shape.left = pointerLocation.x + rx;
+                    toolBox.shape.top = pointerLocation.y + ry;
                     break;
                 case 'Line':
-                    shape.set({
+                    toolBox.shape.set({
                         x2: event.pageX,
                         y2: event.pageY,
                     });
                     break;
             }
-            canvas.renderAll();
+            toolBox.canvas.renderAll();
         }
     })
     .mouseup(function (event) {
         if (creating) {
             creating = false;
-            shape.remove();
-            canvas.add(shape = shape.clone());
-            pellicule[index].drawingJson = canvas.getObjects();
-            struct.duplicateAndResizeObjects(pellicule[index], pellicule[index].vignetteCanvas);
-            shape.selectable = false;
+            if (toolBox.shape != null){
+                toolBox.shape.remove();
+                toolBox.canvas.add(toolBox.shape = toolBox.shape.clone());
+                toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
+                struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
+                toolBox.shape.selectable = false;
+                console.log(toolBox.canvas.getObjects());
+            }
         }
     })
 ;
@@ -173,23 +185,23 @@ toolBox.initCanvas = function (index) {
             $('#toolbar button').prop('disabled', true);
 			
 			$('#toolbar button:contains(Delete)').click(function (event) {
-				// Removes a shape
-				var activeObject = canvas.getActiveObject(),
-					activeGroup = canvas.getActiveGroup();
+				// Removes a toolBox.shape
+				var activeObject = toolBox.canvas.getActiveObject(),
+					activeGroup = toolBox.canvas.getActiveGroup();
 				if (activeGroup) {
 					var objectsInGroup = activeGroup.getObjects();
-					canvas.discardActiveGroup();
+                    toolBox.canvas.discardActiveGroup();
 					for (var i = 0; i < objectsInGroup.length; i++) {
-						canvas.remove(objectsInGroup[i]);
+                        toolBox.canvas.remove(objectsInGroup[i]);
                     }
-                    pellicule[index].drawingJson = canvas.getObjects();
+                    toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
 				}
 				else if (activeObject) {
-					canvas.remove(activeObject);
+                    toolBox.canvas.remove(activeObject);
                 }
-                pellicule[index].drawingJson = canvas.getObjects();
-                struct.duplicateAndResizeObjects(pellicule[index], pellicule[index].vignetteCanvas);
-				canvas.fire('selection:cleared');
+                toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
+                struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
+                toolBox.canvas.fire('selection:cleared');
 			});
 
 			// =============================
@@ -197,8 +209,8 @@ toolBox.initCanvas = function (index) {
 			// =============================
 			
 			var applyStyleToSelectedObjects = function (styles) {
-				var activeObject = canvas.getActiveObject(),
-					activeGroup = canvas.getActiveGroup();
+				var activeObject = toolBox.canvas.getActiveObject(),
+					activeGroup = toolBox.canvas.getActiveGroup();
 				if (activeGroup) {
 					var objectsInGroup = activeGroup.getObjects(), styleName;
 					for (styleName in styles) {
@@ -211,10 +223,10 @@ toolBox.initCanvas = function (index) {
 						activeObject[styleName] = styles[styleName];
 					}
 				}
-                canvas.renderAll();
-                pellicule[index].drawingJson = canvas.getObjects();
-                struct.duplicateAndResizeObjects(pellicule[index], pellicule[index].vignetteCanvas);
-                pellicule[index].drawingJson = canvas.getObjects();
+                toolBox.canvas.renderAll();
+                toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
+                struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
+                toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
                 
 			};
             $('#styler .stroke-color').simpleColor({
@@ -233,7 +245,7 @@ toolBox.initCanvas = function (index) {
             });
             
             // Update the styling inspector when a single object is selected
-			canvas.observe('object:selected', function (event) {
+            toolBox.canvas.observe('object:selected', function (event) {
 				// Enable buttons
 				$('#toolbar button').prop('disabled', false);
 				// Apply style to styler inspector
@@ -242,7 +254,7 @@ toolBox.initCanvas = function (index) {
             });
 
             // Update the styling inspector when several objects are selected
-			canvas.observe('selection:created', function (event) {
+            toolBox.canvas.observe('selection:created', function (event) {
 				// Enable buttons
 				$('#toolbar button').prop('disabled', false);
 				var
@@ -264,8 +276,8 @@ toolBox.initCanvas = function (index) {
 				if (selectedStyle.strokeWidth != null)
 					$('#styler .stroke-width').val(selectedStyle.strokeWidth);
 			});
-			
-			canvas.observe('selection:cleared', function (event) {
+
+            toolBox.canvas.observe('selection:cleared', function (event) {
 				$('#toolbar button').prop('disabled', true);
 			});
 			
@@ -277,13 +289,11 @@ toolBox.initCanvas = function (index) {
 
 
 toolBox.initCanvas2 = function(index) {
-    var graph = navigation.pellicule.list[index];
-    var canvas = pellicule[index].designCanvas;
+    var canvas = toolBox.pellicule[index].designCanvas;
+    var rect;
 
-
-    //canvas.loadFromJSON(pellicule[index].drawingJson);
     if (toolBox.test == 2) {
-        var rect = new fabric.Rect({
+        rect = new fabric.Rect({
             left: 10,
             top: 10,
             fill: 'red',
@@ -294,10 +304,10 @@ toolBox.initCanvas2 = function(index) {
 
         // "add" rectangle onto canvas
         canvas.add(rect);
-        pellicule[index].drawingJson = canvas.getObjects();
+        toolBox.pellicule[index].drawingJson = canvas.getObjects();
     }
     if (toolBox.test == 4) {
-        var rect = new fabric.Rect({
+        rect = new fabric.Rect({
             left: 60,
             top: 10,
             fill: 'blue',
@@ -308,10 +318,10 @@ toolBox.initCanvas2 = function(index) {
 
         // "add" rectangle onto canvas
         canvas.add(rect);
-        pellicule[index].drawingJson = canvas.getObjects();
+        toolBox.pellicule[index].drawingJson = canvas.getObjects();
     }
     if (toolBox.test == 6) {
-        var rect = new fabric.Rect({
+        rect = new fabric.Rect({
             left: 10,
             top: 60,
             fill: 'white',
@@ -322,12 +332,9 @@ toolBox.initCanvas2 = function(index) {
 
         // "add" rectangle onto canvas
         canvas.add(rect);
-        pellicule[index].drawingJson = canvas.getObjects();
+        toolBox.pellicule[index].drawingJson = canvas.getObjects();
     }
 
-    /*pellicule[index].vignetteCanvas.loadFromJSON(pellicule[index].drawingJson, function() {
-        pellicule[index].vignetteCanvas.renderAll(); 
-     });*/
-    struct.duplicateAndResizeObjects(pellicule[index], pellicule[index].vignetteCanvas);
+    struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
     toolBox.test++;
 };
