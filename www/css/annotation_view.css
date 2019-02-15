@@ -60,6 +60,7 @@ div.palette p {
 
 #toolbar a.active {
 	opacity: 0.5;
+	background-color: brown
 }
 
 #toolbar .selection {

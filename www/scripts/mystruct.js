@@ -21,10 +21,26 @@ struct.createGraph = function (id, uri, name, typeFilter, min, max, mean, sd, on
     graph.designCanvas = null;
     graph.vignetteCanvas = null; //the main canvas 
     graph.familyCanvas = []; //list of all the canvas for the graph except the one with annotation
-    graph.drawingJson = null; // to save design shapes in a json 
+    graph.drawingJson = []; // to save design shapes in a json 
     return graph;
 };
 
+struct.duplicateAndResizeObjects = function (graph, canvasDest){
+        if (graph.designCanvas){
+        var ratioX = canvasDest.getWidth() / graph.designCanvas.getWidth();
+        var ratioY =  canvasDest.getHeight() / graph.designCanvas.getHeight();
+        for (var i = 0; i < graph.drawingJson.length; i++){
+            var copy = graph.drawingJson[i].clone();
+            copy.scaleX *= ratioX;
+            copy.scaleY *= ratioY; 
+            copy.top *= ratioY 
+            copy.left *= ratioX; 
+            copy.setCoords();
+            canvasDest.add(copy);
+            canvasDest.renderAll();
+        }
+    }
+}
 struct.Pellicule = function(){
     this.list = [];
     this.currentIndex = 0;

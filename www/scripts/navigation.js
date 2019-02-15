@@ -1,4 +1,43 @@
 var navigation = {};
+
+navigation.touchHandler = function (event) {
+    if (navigation.actualMainView == "BCC_img_for_annotation") {
+        var touches = event.changedTouches,
+            first = touches[0],
+            type = "";
+        switch (event.type) {
+            case "touchstart":
+                type = "mousedown";
+                break;
+            case "touchmove":
+                type = "mousemove";
+                break;
+            case "touchend":
+                type = "mouseup";
+                break;
+            default:
+                return;
+        }
+
+        // initMouseEvent(type, canBubble, cancelable, view, clickCount, 
+        //                screenX, screenY, clientX, clientY, ctrlKey, 
+        //                altKey, shiftKey, metaKey, button, relatedTarget);
+
+        var simulatedEvent = document.createEvent("MouseEvent");
+        simulatedEvent.initMouseEvent(type, true, true, window, 1,
+            first.screenX, first.screenY,
+            first.clientX, first.clientY, false,
+            false, false, false, 0 /*left*/ , null);
+
+        first.target.dispatchEvent(simulatedEvent);
+        event.preventDefault();
+    }
+}
+
+navigation.init = function(){
+    document.addEventListener("touchmove", navigation.touchHandler, true);
+}
+navigation.init();
 var print = console.log;
 
 navigation.actualMainView = "";
@@ -21,8 +60,7 @@ navigation.changeDivReal = function (page) {
     else if (page == "resume_view") {
         navigation.actualMainView = "BCC_img_resume";
         resume.init()
-    }
-    else if (page == "annotation_view") {
+    } else if (page == "annotation_view") {
         navigation.actualMainView = "BCC_img_for_annotation";
         toolBox.initCanvas(navigation.pellicule.currentIndex);
 
@@ -66,7 +104,8 @@ navigation.initCanvasForPellicule = function (id, index, imgUrl) {
             backgroundImageStretch: true
         });
     navigation.pellicule.list[index].vignetteCanvas = canvas;
-    canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
+    //canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
+    //struct.duplicateAndResizeObjects(navigation.pellicule.list[index], canvas);
 
 };
 
@@ -90,7 +129,8 @@ navigation.initCanvasForMainView = function (id, index, imgUrl) {
             backgroundImageStretch: true
         }
     );
-    canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
+    //canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
+    struct.duplicateAndResizeObjects(navigation.pellicule.list[index], canvas);
     if (id == "img_for_annotation") navigation.pellicule.list[index].designCanvas = canvas;
     else navigation.pellicule.list[index].familyCanvas.push(canvas);
     document.getElementById(navigation.actualMainView).style.height = side + "px";
@@ -132,14 +172,15 @@ navigation.maj_img_canvas = function (img, index) {
     if (index != null) {
         navigation.pellicule.currentIndex = index;
     }
-    if (navigation.actualMainView == "BCC_img_resume"){
+    if (navigation.actualMainView == "BCC_img_resume") {
         resume.init();
     }
     for (var i = 0; i < canvasList.length; i++) {
         navigation.initCanvasForMainView(canvasList[i], index, img);
     }
     //to wrap canvas in a Fabric canvas
-    toolBox.initCanvas(index);
+    if (navigation.actualMainView == "BCC_img_for_annotation")
+        toolBox.initCanvas(index);
 };
 navigation.changeImgMainView = function (img, index) {
     return function () {
