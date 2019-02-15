@@ -1,6 +1,9 @@
 var toolBox = {};
+toolBox.selected = null;
 toolBox.test = 0;
+toolBox.ACTIVE_TOOL = '';
 var print = console.log;
+
 $('#styler .stroke-color').simpleColor({
     boxWidth: 80,
     boxHeight: 10,
@@ -14,19 +17,15 @@ $('#styler .stroke-color').simpleColor({
 });
 
 toolBox.initCanvas = function (index) {
-    console.log("//////////////////////////START INIT CANVAS with index : " +  index);
     $('#BCC_img_for_annotation').off();
-    console.log(document.getElementById("#BCC_img_for_annotation"));
     var pellicule = navigation.pellicule.list;
     var graph = pellicule[index];
     var canvas = graph.designCanvas;
-    console.log(canvas);
     STYLE = {
         fill: "rgba(0,0,0,0)",
         stroke: "#b3e280",
         strokeWidth: 2,
     };
-    var ACTIVE_TOOL = "";
     canvas.enableSelection = function () {
         this.selection = true;
         var objects = this.getObjects();
@@ -46,33 +45,30 @@ toolBox.initCanvas = function (index) {
     // = Handling the toolbar =
     // ========================
     // Changes active tool when a click occurs on their icon
-    $('#toolbar a').not("#toolbar .active").click(function (event) {
-        $('#toolbar .active').removeClass('active');
+    $('#toolbar a').click(function (event) {
+        event.stopImmediatePropagation();
         var tool = $(this);
-        console.log("clilck on : " + tool.text().trim());
-        tool.addClass('active');
-        ACTIVE_TOOL = tool.text().trim();
-        if (ACTIVE_TOOL == 'Path') {
+        toolBox.selected = tool.text().trim();
+        $('#toolbar .active').removeClass('active');
+        if (toolBox.ACTIVE_TOOL !== toolBox.selected) {
+            toolBox.ACTIVE_TOOL = tool.text().trim();
+            tool.addClass('active');
+            canvas.disableSelection();
+        } else {
+            toolBox.ACTIVE_TOOL = '';
+            canvas.enableSelection();
+        }
+        if (toolBox.ACTIVE_TOOL == 'Path') {
             canvas.isDrawingMode = true;
             canvas.freeDrawingLineWidth = STYLE.strokeWidth;
             canvas.freeDrawingColor = STYLE.stroke;
-            canvas.disableSelection();
+
         } else {
             canvas.isDrawingMode = false;
-            canvas.disableSelection();
         }
     });
 
-    $('#toolbar .active').click(function (event) {
-        $('#toolbar .active').removeClass('active');
-        console.log('je tente de desactiver');
-        var tool = $(this);
-        console.log("clilck on : " + tool.text().trim());
-        tool.addClass('active');
-        ACTIVE_TOOL = 'Inactif';
-        canvas.isDrawingMode = false;
-        canvas.enableSelection();
-    });
+
 
     // ===================================
     // = Handling the creation of shapes =
@@ -87,11 +83,10 @@ toolBox.initCanvas = function (index) {
         if (canvas.isDrawingMode) {
             return;
         }
-        console.log("in mouse DOWN : case" + ACTIVE_TOOL);
         creating = true;
         pointerLocation.x = event.pageX - document.getElementById('BCC_img_for_annotation').getBoundingClientRect().x;
         pointerLocation.y = event.pageY;
-        switch (ACTIVE_TOOL) {
+        switch (toolBox.ACTIVE_TOOL) {
             case 'Rectangle':
                 shape = new fabric.Rect({
                     left: pointerLocation.x,
@@ -122,8 +117,7 @@ toolBox.initCanvas = function (index) {
     })
     .mousemove(function (event) {
         if (creating) {
-            console.log("in mouse MOVE : case" + ACTIVE_TOOL);
-            switch (ACTIVE_TOOL) {
+            switch (toolBox.ACTIVE_TOOL) {
                 case 'Rectangle':
                     var width, height;
                     shape.set({
@@ -157,13 +151,11 @@ toolBox.initCanvas = function (index) {
     })
     .mouseup(function (event) {
         if (creating) {
-            console.log("in mouse UP : case" + ACTIVE_TOOL);
             creating = false;
             shape.remove();
             canvas.add(shape = shape.clone());
             pellicule[index].drawingJson = canvas.getObjects();
             struct.duplicateAndResizeObjects(pellicule[index], pellicule[index].vignetteCanvas);
-            console.log("for adding to vignette : " + index);
             shape.selectable = false;
         }
     })
