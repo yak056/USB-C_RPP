@@ -43,7 +43,7 @@ var print = console.log;
 navigation.actualMainView = "";
 navigation.json = JSON.parse(data).pellicule;
 
-var canvasList = ["img_home", "img_filter", "img_for_annotation", "img_resume"];
+var canvasList = ["img_home", "img_filter", "img_resume", "img_for_annotation"];
 navigation.pellicule = new struct.Pellicule();
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,11 +105,14 @@ navigation.initCanvasForPellicule = function (id, index, imgUrl) {
         });
     navigation.pellicule.list[index].vignetteCanvas = canvas;
     //canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
-    //struct.duplicateAndResizeObjects(navigation.pellicule.list[index], canvas);
+    struct.duplicateAndResizeObjects(navigation.pellicule.list[index], canvas);
 
 };
 
 navigation.initCanvasForMainView = function (id, index, imgUrl) {
+    console.log(id);
+    var divContainer = document.getElementById("BCC_" + id);
+    divContainer.innerHTML = "<canvas class=\"bigImg\" id=\"" + id + "\"></canvas>";
     var canvas = new fabric.Canvas(document.getElementById(id));
     var height = parseInt(getComputedStyle(document.getElementById(navigation.actualMainView)).height);
     var width = parseInt(getComputedStyle(document.getElementById(navigation.actualMainView)).width);
@@ -131,7 +134,8 @@ navigation.initCanvasForMainView = function (id, index, imgUrl) {
     );
     //canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
     struct.duplicateAndResizeObjects(navigation.pellicule.list[index], canvas);
-    if (id == "img_for_annotation") navigation.pellicule.list[index].designCanvas = canvas;
+    if (id == "img_for_annotation"){ navigation.pellicule.list[index].designCanvas = canvas;
+    print(navigation.pellicule.list[index].designCanvas)}
     else navigation.pellicule.list[index].familyCanvas.push(canvas);
     document.getElementById(navigation.actualMainView).style.height = side + "px";
     document.getElementById(navigation.actualMainView).style.width = side + "px";

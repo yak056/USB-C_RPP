@@ -22,7 +22,8 @@ $('#styler .stroke-color').simpleColor({
 });
 
 toolBox.initCanvas = function (index) {
-    $('#BCC_img_for_annotation').off();
+    //$('#BCC_img_for_annotation').off();
+    //console.log(jQuery._data( document.getElementById("BCC_img_for_annotation"), "events" ))
     toolBox.pellicule = navigation.pellicule.list;
     var graph = toolBox.pellicule[index];
     toolBox.canvas = graph.designCanvas;
@@ -32,20 +33,25 @@ toolBox.initCanvas = function (index) {
         strokeWidth: 2,
     };
     toolBox.canvas.enableSelection = function () {
-        toolBox.canvas.selection = true; // permet selection multiple
-        console.log(toolBox.canvas.selection);
-        toolBox.objects = toolBox.canvas.getObjects();
-        console.log(toolBox.objects);
-        for (var i = 0; i < toolBox.objects.length; i++) {
-            toolBox.objects[i].selectable = true;
+        //$('#BCC_img_for_annotation').off();
+        this.selection = true; // permet selection multiple
+        //console.log("in enable selection");
+        var objects = this.getObjects();
+        //console.log(jQuery._data( document.getElementById("BCC_img_for_annotation"), "events" ))
+        for (var i = 0; i < objects.length; i++) {
+            objects[i].selectable = true;
         }
+        print(toolBox.canvas);
+
     };
     toolBox.canvas.disableSelection = function () {
-        toolBox.canvas.selection = false;
-        console.log(toolBox.canvas.selection);
-        toolBox.objects = toolBox.canvas.getObjects();
-        for (var i = 0; i < toolBox.objects.length; i++) {
-            toolBox.objects[i].selectable = false;
+        this.selection = false;
+        //console.log(this);
+        //console.log("in disable selection");
+        //console.log(jQuery._data( document.getElementById("BCC_img_for_annotation"), "events" ))
+        var objects = toolBox.canvas.getObjects();
+        for (var i = 0; i < objects.length; i++) {
+            objects[i].selectable = false;
         }
     };
 
@@ -69,14 +75,21 @@ toolBox.initCanvas = function (index) {
             toolBox.ACTIVE_TOOL = tool.text().trim();
             tool.addClass('active');
             toolBox.canvas.disableSelection();
+            toolBox.initBCCListeners();
+            print(toolBox.ACTIVE_TOOL);
         } else {
             toolBox.ACTIVE_TOOL = 'Selection';
+            $('#BCC_img_for_annotation').off();
             toolBox.canvas.enableSelection();
+            print(toolBox.ACTIVE_TOOL);
         }
         if (toolBox.ACTIVE_TOOL === 'Path') {
+            $('#BCC_img_for_annotation').off();
+            console.log(toolBox.ACTIVE_TOOL)
             toolBox.canvas.isDrawingMode = true;
             toolBox.canvas.freeDrawingLineWidth = STYLE.strokeWidth;
             toolBox.canvas.freeDrawingColor = STYLE.stroke;
+            print(toolBox.ACTIVE_TOOL);
 
         } else {
             toolBox.canvas.isDrawingMode = false;
@@ -92,7 +105,8 @@ toolBox.initCanvas = function (index) {
     toolBox.creating = false;
     toolBox.pointerLocation = {x:0, y:0};
 //here is the bug --> $('canvas'), how to select the good one ?
-    $('#BCC_img_for_annotation canvas')
+toolBox.initBCCListeners = function(){
+$('#BCC_img_for_annotation')
         .mousedown(function (event) {
             if (toolBox.canvas.selection ||toolBox.canvas.isDrawingMode) {
                 return;
@@ -181,7 +195,7 @@ toolBox.initCanvas = function (index) {
                     console.log(toolBox.canvas.getObjects());
                 }
             }
-        })
+        })}
     ;
 
     // Select tool based on url hash value
