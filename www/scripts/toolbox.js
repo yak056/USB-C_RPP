@@ -226,7 +226,7 @@ $('#BCC_img_for_annotation')
         }
         print(toolBox.canvas.getObjects());
         toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
-        struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
+        struct.removeObjectsForVignette(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
         toolBox.canvas.fire('selection:cleared');
     });
 

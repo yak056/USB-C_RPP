@@ -25,6 +25,14 @@ struct.createGraph = function (id, uri, name, typeFilter, min, max, mean, sd, on
     return graph;
 };
 
+struct.removeObjectsForVignette = function(graph, canvasDest){ // only for vignette in Pellicule
+    var objects = canvasDest.getObjects();
+    for (var i = 0; i < objects.length ; i++){
+        canvasDest.remove(objects[i]);
+    }
+    canvasDest.renderAll();
+    struct.duplicateAndResizeObjects(graph, canvasDest);
+}
 struct.duplicateAndResizeObjects = function (graph, canvasDest){   
         if (graph.designCanvas){
         var ratioX = canvasDest.getWidth() / graph.designCanvas.getWidth();
