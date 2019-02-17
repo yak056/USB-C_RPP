@@ -104,13 +104,11 @@ navigation.initCanvasForPellicule = function (id, index, imgUrl) {
             backgroundImageStretch: true
         });
     navigation.pellicule.list[index].vignetteCanvas = canvas;
-    //canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
     struct.duplicateAndResizeObjects(navigation.pellicule.list[index], canvas);
 
 };
 
 navigation.initCanvasForMainView = function (id, index, imgUrl) {
-    console.log(id);
     var divContainer = document.getElementById("BCC_" + id);
     divContainer.innerHTML = "<canvas class=\"bigImg\" id=\"" + id + "\"></canvas>";
     var canvas = new fabric.Canvas(document.getElementById(id));
@@ -135,7 +133,6 @@ navigation.initCanvasForMainView = function (id, index, imgUrl) {
     //canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
     struct.duplicateAndResizeObjects(navigation.pellicule.list[index], canvas);
     if (id == "img_for_annotation")navigation.pellicule.list[index].designCanvas = canvas;
-    //print(navigation.pellicule.list[index].designCanvas)}
     else navigation.pellicule.list[index].familyCanvas.push(canvas);
     document.getElementById(navigation.actualMainView).style.height = side + "px";
     document.getElementById(navigation.actualMainView).style.width = side + "px";

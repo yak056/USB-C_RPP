@@ -18,6 +18,8 @@ struct.createGraph = function (id, uri, name, typeFilter, min, max, mean, sd, on
     /////////////////////////////
     graph.uri = uri;
     graph.fabricCanvas = null;
+    graph.realHeight = null;
+    graph.realWidth = null;
     graph.designCanvas = null;
     graph.vignetteCanvas = null; //the main canvas 
     graph.familyCanvas = []; //list of all the canvas for the graph except the one with annotation
@@ -29,14 +31,16 @@ struct.removeObjectsForVignette = function(graph, canvasDest){ // only for vigne
     var objects = canvasDest.getObjects();
     for (var i = 0; i < objects.length ; i++){
         canvasDest.remove(objects[i]);
+        objects[i] = null;
     }
     canvasDest.renderAll();
     struct.duplicateAndResizeObjects(graph, canvasDest);
 }
 struct.duplicateAndResizeObjects = function (graph, canvasDest){   
         if (graph.designCanvas){
-        var ratioX = canvasDest.getWidth() / graph.designCanvas.getWidth();
-        var ratioY =  canvasDest.getHeight() / graph.designCanvas.getHeight();
+        print("realWidth " + graph.realWidth)
+        var ratioX = canvasDest.getWidth() / graph.realWidth;
+        var ratioY =  canvasDest.getHeight() / graph.realHeight;
         for (var i = 0; i < graph.drawingJson.length; i++){
             var copy = graph.drawingJson[i].clone();
             copy.scaleX *= ratioX;

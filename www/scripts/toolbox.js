@@ -27,6 +27,8 @@ toolBox.initCanvas = function (index) {
     //console.log(jQuery._data( document.getElementById("BCC_img_for_annotation"), "events" ))
     toolBox.pellicule = navigation.pellicule.list;
     var graph = toolBox.pellicule[index];
+    graph.realHeight = graph.designCanvas.getHeight();
+    graph.realWidth = graph.designCanvas.getWidth();
     toolBox.canvas = graph.designCanvas;
     STYLE = {
         fill: "rgba(0,0,0,0)",

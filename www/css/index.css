@@ -146,6 +146,17 @@ html, body{
     left: 0;
     right: 0;
 }
+.BigCanvasContainerUNSWIPABLE{
+    height: 100%;
+    width: 100%;
+    border:  1px solid rgb(211, 150, 150);
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
 .collapsed + .main-content {
     padding-left: 75px;
 }
