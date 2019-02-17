@@ -22,7 +22,8 @@ $('#styler .stroke-color').simpleColor({
 });
 
 toolBox.initCanvas = function (index) {
-    //$('#BCC_img_for_annotation').off();
+    $('#BCC_img_for_annotation').off();
+    $('#toolbar button:contains(Delete)').off();
     //console.log(jQuery._data( document.getElementById("BCC_img_for_annotation"), "events" ))
     toolBox.pellicule = navigation.pellicule.list;
     var graph = toolBox.pellicule[index];
@@ -41,7 +42,7 @@ toolBox.initCanvas = function (index) {
         for (var i = 0; i < objects.length; i++) {
             objects[i].selectable = true;
         }
-        print(toolBox.canvas);
+        //print(toolBox.canvas);
 
     };
     toolBox.canvas.disableSelection = function () {
@@ -76,20 +77,20 @@ toolBox.initCanvas = function (index) {
             tool.addClass('active');
             toolBox.canvas.disableSelection();
             toolBox.initBCCListeners();
-            print(toolBox.ACTIVE_TOOL);
+            //print(toolBox.ACTIVE_TOOL);
         } else {
             toolBox.ACTIVE_TOOL = 'Selection';
             $('#BCC_img_for_annotation').off();
             toolBox.canvas.enableSelection();
-            print(toolBox.ACTIVE_TOOL);
+            //print(toolBox.ACTIVE_TOOL);
         }
         if (toolBox.ACTIVE_TOOL === 'Path') {
             $('#BCC_img_for_annotation').off();
-            console.log(toolBox.ACTIVE_TOOL)
+            //console.log(toolBox.ACTIVE_TOOL)
             toolBox.canvas.isDrawingMode = true;
             toolBox.canvas.freeDrawingLineWidth = STYLE.strokeWidth;
             toolBox.canvas.freeDrawingColor = STYLE.stroke;
-            print(toolBox.ACTIVE_TOOL);
+            //print(toolBox.ACTIVE_TOOL);
 
         } else {
             toolBox.canvas.isDrawingMode = false;
@@ -192,7 +193,7 @@ $('#BCC_img_for_annotation')
                     toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
                     struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
                     toolBox.shape.selectable = false;
-                    console.log(toolBox.canvas.getObjects());
+                    //console.log(toolBox.canvas.getObjects());
                 }
             }
         })}
@@ -219,11 +220,11 @@ $('#BCC_img_for_annotation')
             for (var i = 0; i < objectsInGroup.length; i++) {
                 toolBox.canvas.remove(objectsInGroup[i]);
             }
-            toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
         }
         else if (activeObject) {
             toolBox.canvas.remove(activeObject);
         }
+        print(toolBox.canvas.getObjects());
         toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
         struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
         toolBox.canvas.fire('selection:cleared');
@@ -249,10 +250,6 @@ $('#BCC_img_for_annotation')
             }
         }
         toolBox.canvas.renderAll();
-        toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
-        struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
-        toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
-
     };
     $('#styler .stroke-color').simpleColor({
         boxWidth: 80,

@@ -25,7 +25,7 @@ struct.createGraph = function (id, uri, name, typeFilter, min, max, mean, sd, on
     return graph;
 };
 
-struct.duplicateAndResizeObjects = function (graph, canvasDest){
+struct.duplicateAndResizeObjects = function (graph, canvasDest){   
         if (graph.designCanvas){
         var ratioX = canvasDest.getWidth() / graph.designCanvas.getWidth();
         var ratioY =  canvasDest.getHeight() / graph.designCanvas.getHeight();

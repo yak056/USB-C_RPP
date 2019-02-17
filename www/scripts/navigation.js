@@ -134,8 +134,8 @@ navigation.initCanvasForMainView = function (id, index, imgUrl) {
     );
     //canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
     struct.duplicateAndResizeObjects(navigation.pellicule.list[index], canvas);
-    if (id == "img_for_annotation"){ navigation.pellicule.list[index].designCanvas = canvas;
-    print(navigation.pellicule.list[index].designCanvas)}
+    if (id == "img_for_annotation")navigation.pellicule.list[index].designCanvas = canvas;
+    //print(navigation.pellicule.list[index].designCanvas)}
     else navigation.pellicule.list[index].familyCanvas.push(canvas);
     document.getElementById(navigation.actualMainView).style.height = side + "px";
     document.getElementById(navigation.actualMainView).style.width = side + "px";
