@@ -35,24 +35,36 @@ struct.removeObjectsForVignette = function(graph, canvasDest){ // only for vigne
     }
     canvasDest.renderAll();
     struct.duplicateAndResizeObjects(graph, canvasDest);
-}
+};
 struct.duplicateAndResizeObjects = function (graph, canvasDest){   
         if (graph.designCanvas){
         print("realWidth " + graph.realWidth)
         var ratioX = canvasDest.getWidth() / graph.realWidth;
         var ratioY =  canvasDest.getHeight() / graph.realHeight;
         for (var i = 0; i < graph.drawingJson.length; i++){
-            var copy = graph.drawingJson[i].clone();
+            var obj = graph.drawingJson[i];
+            var copy;
+            /*fabric.Path and fabric.PathGroup object's are async since fabric.js version 1.2.2
+            (https://github.com/kangax/fabric.js/commit/c8cab03aace5510554cd02fa143248ab7497f6c2).
+            So you have to differentiate between async and sync objects. */
+            if (fabric.util.getKlass(obj.type).async) {
+                obj.clone(function (clone) {
+                    copy = clone;
+                });
+            }
+            else {
+                copy = obj.clone();
+            }
             copy.scaleX *= ratioX;
             copy.scaleY *= ratioY; 
-            copy.top *= ratioY 
+            copy.top *= ratioY;
             copy.left *= ratioX; 
             copy.setCoords();
             canvasDest.add(copy);
             canvasDest.renderAll();
         }
     }
-}
+};
 struct.Pellicule = function(){
     this.list = [];
     this.currentIndex = 0;

@@ -195,7 +195,7 @@ $('#BCC_img_for_annotation')
                     toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
                     struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
                     toolBox.shape.selectable = false;
-                    //console.log(toolBox.canvas.getObjects());
+                    console.log(toolBox.canvas.getObjects());
                 }
             }
         })}
