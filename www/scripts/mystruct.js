@@ -36,9 +36,14 @@ struct.removeObjectsForVignette = function(graph, canvasDest){ // only for vigne
     canvasDest.renderAll();
     struct.duplicateAndResizeObjects(graph, canvasDest);
 }
-struct.duplicateAndResizeObjects = function (graph, canvasDest){   
+struct.duplicateAndResizeObjects = function (graph, canvasDest){
+    var objects = canvasDest.getObjects();
+    for (var i = 0; i < objects.length ; i++){
+        canvasDest.remove(objects[i]);
+        objects[i] = null;
+    }
+    canvasDest.renderAll();   
         if (graph.designCanvas){
-        print("realWidth " + graph.realWidth)
         var ratioX = canvasDest.getWidth() / graph.realWidth;
         var ratioY =  canvasDest.getHeight() / graph.realHeight;
         for (var i = 0; i < graph.drawingJson.length; i++){

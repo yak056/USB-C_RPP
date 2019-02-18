@@ -8,20 +8,16 @@ toolBox.objects = null;
 toolBox.shape = null;
 toolBox.creating = false;
 toolBox.pointerLocation = null;
+toolBox.firstTime = 0;
+toolBox.STYLE = {
+    fill: "rgba(0,0,0,0)",
+    stroke: "#b3e280",
+    strokeWidth: 2,
+};
 
-$('#styler .stroke-color').simpleColor({
-    boxWidth: 80,
-    boxHeight: 10,
-    livePreview: true,
-    onSelect: function (hex, element) {
-        STYLE.stroke = '#' + hex;
-        applyStyleToSelectedObjects({
-            stroke: STYLE.stroke
-        });
-    }
-});
 
 toolBox.initCanvas = function (index) {
+    toolBox.firstTime++;
     $('#BCC_img_for_annotation').off();
     $('#toolbar button:contains(Delete)').off();
     //console.log(jQuery._data( document.getElementById("BCC_img_for_annotation"), "events" ))
@@ -30,11 +26,7 @@ toolBox.initCanvas = function (index) {
     graph.realHeight = graph.designCanvas.getHeight();
     graph.realWidth = graph.designCanvas.getWidth();
     toolBox.canvas = graph.designCanvas;
-    STYLE = {
-        fill: "rgba(0,0,0,0)",
-        stroke: "#b3e280",
-        strokeWidth: 2,
-    };
+
     toolBox.canvas.enableSelection = function () {
         //$('#BCC_img_for_annotation').off();
         this.selection = true; // permet selection multiple
@@ -70,6 +62,7 @@ toolBox.initCanvas = function (index) {
     // ========================
     // Changes active tool when a click occurs on their icon
     $('#toolbar a').click(function (event) {
+        toolBox.canvas.off("mouse:up", toolBox.upPath);
         event.stopImmediatePropagation();
         var tool = $(this);
         toolBox.selected = tool.text().trim();
@@ -89,9 +82,10 @@ toolBox.initCanvas = function (index) {
         if (toolBox.ACTIVE_TOOL === 'Path') {
             $('#BCC_img_for_annotation').off();
             //console.log(toolBox.ACTIVE_TOOL)
+            toolBox.initForDrawPath();
             toolBox.canvas.isDrawingMode = true;
-            toolBox.canvas.freeDrawingLineWidth = STYLE.strokeWidth;
-            toolBox.canvas.freeDrawingColor = STYLE.stroke;
+            toolBox.canvas.freeDrawingLineWidth = toolBox.STYLE.strokeWidth;
+            toolBox.canvas.freeDrawingColor = toolBox.STYLE.stroke;
             //print(toolBox.ACTIVE_TOOL);
 
         } else {
@@ -107,6 +101,15 @@ toolBox.initCanvas = function (index) {
 
     toolBox.creating = false;
     toolBox.pointerLocation = {x:0, y:0};
+    toolBox.upPath = function(){
+        console.log("on mouse up in draw path")
+        console.log(toolBox.canvas.getObjects())
+        toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
+        struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
+    }
+    toolBox.initForDrawPath = function(){
+        toolBox.canvas.on("mouse:up", toolBox.upPath)
+    }
 //here is the bug --> $('canvas'), how to select the good one ?
 toolBox.initBCCListeners = function(){
 $('#BCC_img_for_annotation')
@@ -122,9 +125,9 @@ $('#BCC_img_for_annotation')
                     toolBox.shape = new fabric.Rect({
                         left: toolBox.pointerLocation.x,
                         top: toolBox.pointerLocation.y,
-                        fill: STYLE.fill,
-                        stroke: STYLE.stroke,
-                        strokeWidth: STYLE.strokeWidth,
+                        fill: toolBox.STYLE.fill,
+                        stroke: toolBox.STYLE.stroke,
+                        strokeWidth: toolBox.STYLE.strokeWidth,
                         width: 0,
                         height: 0,
                         //originX: 'left',
@@ -137,9 +140,9 @@ $('#BCC_img_for_annotation')
                     toolBox.shape = new fabric.Ellipse({
                         left: toolBox.pointerLocation.x,
                         top: toolBox.pointerLocation.y,
-                        fill: STYLE.fill,
-                        stroke: STYLE.stroke,
-                        strokeWidth: STYLE.strokeWidth,
+                        fill: toolBox.STYLE.fill,
+                        stroke: toolBox.STYLE.stroke,
+                        strokeWidth: toolBox.STYLE.strokeWidth,
                         rx: 1,
                         ry: 1,
                     });
@@ -253,20 +256,25 @@ $('#BCC_img_for_annotation')
         }
         toolBox.canvas.renderAll();
     };
+    if (toolBox.firstTime == 1){
+        toolBox.STYLE.stroke = "#b5a822";
+        toolBox.STYLE.strokeWidth = 3;
     $('#styler .stroke-color').simpleColor({
         boxWidth: 80,
         boxHeight: 10,
         livePreview: true,
         onSelect: function(hex, element) {
-            STYLE.stroke = '#'+hex;
-            applyStyleToSelectedObjects({stroke: STYLE.stroke});
+            console.log(toolBox.STYLE);
+            toolBox.STYLE.stroke = '#'+hex;
+            applyStyleToSelectedObjects({stroke: toolBox.STYLE.stroke});
         }
     });
 
     $('#styler .stroke-width').change(function (event) {
-        STYLE.strokeWidth = parseInt($(this).val());
-        applyStyleToSelectedObjects({strokeWidth: STYLE.strokeWidth});
+        toolBox.STYLE.strokeWidth = parseInt($(this).val());
+        applyStyleToSelectedObjects({strokeWidth: toolBox.STYLE.strokeWidth});
     });
+}
 
     // Update the styling inspector when a single object is selected
     toolBox.canvas.observe('object:selected', function (event) {
@@ -312,53 +320,3 @@ $('#BCC_img_for_annotation')
 
 
 
-toolBox.initCanvas2 = function(index) {
-    toolBox.canvas = toolBox.pellicule[index].designCanvas;
-    var rect;
-
-    if (toolBox.test == 2) {
-        rect = new fabric.Rect({
-            left: 10,
-            top: 10,
-            fill: 'red',
-            width: 50,
-            height: 50,
-            zIndex: 10001
-        });
-
-        // "add" rectangle onto canvas
-        toolBox.canvas.add(rect);
-        toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
-    }
-    if (toolBox.test == 4) {
-        rect = new fabric.Rect({
-            left: 60,
-            top: 10,
-            fill: 'blue',
-            width: 50,
-            height: 50,
-            zIndex: 101
-        });
-
-        // "add" rectangle onto canvas
-        toolBox.canvas.add(rect);
-        toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
-    }
-    if (toolBox.test == 6) {
-        rect = new fabric.Rect({
-            left: 10,
-            top: 60,
-            fill: 'white',
-            width: 50,
-            height: 50,
-            zIndex: 101
-        });
-
-        // "add" rectangle onto canvas
-        toolBox.canvas.add(rect);
-        toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
-    }
-
-    struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
-    toolBox.test++;
-};
