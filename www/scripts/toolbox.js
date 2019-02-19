@@ -70,8 +70,9 @@ toolBox.initCanvas = function (index) {
         }
         if (toolBox.ACTIVE_TOOL === 'Path') {
             toolBox.canvas.isDrawingMode = true;
-            toolBox.canvas.freeDrawingLineWidth = toolBox.STYLE.strokeWidth;
-            toolBox.canvas.freeDrawingColor = toolBox.STYLE.stroke;
+
+            toolBox.canvas.freeDrawingBrush.width  = toolBox.STYLE.strokeWidth;
+            toolBox.canvas.freeDrawingBrush.color = toolBox.STYLE.stroke;
         } else {
             toolBox.canvas.isDrawingMode = false;
         }
@@ -127,8 +128,6 @@ toolBox.initCanvas = function (index) {
     });
     toolBox.canvas.on("mouse:move", function (options) {
         var event = options.e.changedTouches[0];
-        console.log("mouse move BCC");
-        console.log(toolBox.pointerLocation.x);
         if (toolBox.creating) {
             switch (toolBox.ACTIVE_TOOL) {
                 case 'Rectangle':
@@ -229,12 +228,14 @@ toolBox.initCanvas = function (index) {
             onSelect: function (hex, element) {
                 console.log(toolBox.STYLE);
                 toolBox.STYLE.stroke = '#' + hex;
+                toolBox.canvas.freeDrawingBrush.color = toolBox.STYLE.stroke;
                 applyStyleToSelectedObjects({stroke: toolBox.STYLE.stroke});
             }
         });
 
         $('#styler .stroke-width').change(function (event) {
             toolBox.STYLE.strokeWidth = parseInt($(this).val());
+            toolBox.canvas.freeDrawingBrush.width  = toolBox.STYLE.strokeWidth;
             applyStyleToSelectedObjects({strokeWidth: toolBox.STYLE.strokeWidth});
         });
     }
