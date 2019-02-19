@@ -1,5 +1,8 @@
 var filter = {};
 filter.pellicule = navigation.pellicule.list;
+filter.state = "unchanged";
+filter.submitBtn =null;
+filter.clearAllBtn = null;
 filter.init = function(){
     for (var i = 0; i < filter.pellicule.length; i++) {
         var graph = filter.pellicule[i];
@@ -10,10 +13,12 @@ filter.init = function(){
         }
 
     }
-    var submitBtn = document.getElementById("submitButton");
-    submitBtn.addEventListener("click", filter.getValue);
-    var clearAll = document.getElementById("clearButton");
-    clearAll.addEventListener("click", filter.clearAll);
+    filter.submitBtn = document.getElementById("submitButton");
+    filter.submitBtn.addEventListener("click", filter.getValue);
+    $("#submitButton").prop('disabled', true);
+    filter.clearAllBtn = document.getElementById("clearButton");
+    filter.clearAllBtn.addEventListener("click", filter.clearAll);
+    $("#clearButton").prop('disabled', true);
 };
 
 filter.createDivSlider = function(graph){
@@ -67,6 +72,8 @@ filter.createRangeSlider = function(id, min, max) {
             slide: function (event, ui) {
                 document.getElementById("minRangeSlider" + id).innerText = ui.values[0];
                 document.getElementById("maxRangeSlider" + id).innerText = ui.values[1];
+                $("#submitButton").prop('disabled', false);
+                $("#clearButton").prop('disabled', false);
             }
         });
         document.getElementById("minRangeSlider" + id).innerText = $(idRange).slider("values", 0);
@@ -82,6 +89,8 @@ $(function () {
             slide: function (event, ui) {
                 document.getElementById("minRangeSlider0").innerText = ui.values[0];
                 document.getElementById("maxRangeSlider0").innerText = ui.values[1];
+                $("#submitButton").prop('disabled', false);
+                $("#clearButton").prop('disabled', false);
             }
         });
         document.getElementById("minRangeSlider0").innerText = $("#slider-range0").slider("values", 0);
@@ -108,7 +117,7 @@ filter.getValue = function(){
             }
         }
     }
-    print (res);
+    $("#submitButton").prop('disabled', true);// on a submit donc on cache le btn
     return res;
 };
 
@@ -116,7 +125,6 @@ filter.clearAll = function(){
     var filterlist = document.getElementById("filterList");
     filterlist.innerText = "";
     filter.init();
-    print("envoi requete html");
 };
 
 filter.init();
