@@ -157,7 +157,8 @@ toolBox.initCanvas = function (index) {
         }
     });
     toolBox.canvas.on("mouse:up", function (event) {
-        if (toolBox.creating || toolBox.isDrawingMode) {
+        console.log("mouse up");
+        if (toolBox.creating ) {
             toolBox.creating = false;
             if (toolBox.shape != null) {
                 toolBox.shape.remove();
@@ -167,6 +168,11 @@ toolBox.initCanvas = function (index) {
                 toolBox.shape.selectable = false;
                 console.log(toolBox.canvas.getObjects());
             }
+        }
+        else if(toolBox.canvas.isDrawingMode){
+            toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
+            struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
+            console.log(toolBox.canvas.getObjects());
         }
     });
     // Select tool based on url hash value
