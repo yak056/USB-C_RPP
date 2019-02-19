@@ -14,36 +14,30 @@ toolBox.STYLE = {
     stroke: "#b3e280",
     strokeWidth: 2,
 };
-
+toolBox.offsetLeft = 0;
+toolBox.offsetTop = 0;
 
 toolBox.initCanvas = function (index) {
     toolBox.firstTime++;
-    $('#BCC_img_for_annotation').off();
     $('#toolbar button:contains(Delete)').off();
-    //console.log(jQuery._data( document.getElementById("BCC_img_for_annotation"), "events" ))
     toolBox.pellicule = navigation.pellicule.list;
     var graph = toolBox.pellicule[index];
     graph.realHeight = graph.designCanvas.getHeight();
     graph.realWidth = graph.designCanvas.getWidth();
     toolBox.canvas = graph.designCanvas;
+    toolBox.offsetLeft = toolBox.canvas._offset.left;
+    toolBox.offsetTop = toolBox.canvas._offset.top;
 
     toolBox.canvas.enableSelection = function () {
-        //$('#BCC_img_for_annotation').off();
         this.selection = true; // permet selection multiple
-        //console.log("in enable selection");
         var objects = this.getObjects();
-        //console.log(jQuery._data( document.getElementById("BCC_img_for_annotation"), "events" ))
         for (var i = 0; i < objects.length; i++) {
             objects[i].selectable = true;
         }
-        //print(toolBox.canvas);
 
     };
     toolBox.canvas.disableSelection = function () {
         this.selection = false;
-        //console.log(this);
-        //console.log("in disable selection");
-        //console.log(jQuery._data( document.getElementById("BCC_img_for_annotation"), "events" ))
         var objects = toolBox.canvas.getObjects();
         for (var i = 0; i < objects.length; i++) {
             objects[i].selectable = false;
@@ -62,7 +56,6 @@ toolBox.initCanvas = function (index) {
     // ========================
     // Changes active tool when a click occurs on their icon
     $('#toolbar a').click(function (event) {
-        toolBox.canvas.off("mouse:up", toolBox.upPath);
         event.stopImmediatePropagation();
         var tool = $(this);
         toolBox.selected = tool.text().trim();
@@ -71,28 +64,18 @@ toolBox.initCanvas = function (index) {
             toolBox.ACTIVE_TOOL = tool.text().trim();
             tool.addClass('active');
             toolBox.canvas.disableSelection();
-            toolBox.initBCCListeners();
-            //print(toolBox.ACTIVE_TOOL);
         } else {
             toolBox.ACTIVE_TOOL = 'Selection';
-            $('#BCC_img_for_annotation').off();
             toolBox.canvas.enableSelection();
-            //print(toolBox.ACTIVE_TOOL);
         }
         if (toolBox.ACTIVE_TOOL === 'Path') {
-            $('#BCC_img_for_annotation').off();
-            //console.log(toolBox.ACTIVE_TOOL)
-            toolBox.initForDrawPath();
             toolBox.canvas.isDrawingMode = true;
             toolBox.canvas.freeDrawingLineWidth = toolBox.STYLE.strokeWidth;
             toolBox.canvas.freeDrawingColor = toolBox.STYLE.stroke;
-            //print(toolBox.ACTIVE_TOOL);
-
         } else {
             toolBox.canvas.isDrawingMode = false;
         }
     });
-
 
 
     // ===================================
@@ -100,117 +83,99 @@ toolBox.initCanvas = function (index) {
     // ===================================
 
     toolBox.creating = false;
-    toolBox.pointerLocation = {x:0, y:0};
-    toolBox.upPath = function(){
-        console.log("on mouse up in draw path")
-        console.log(toolBox.canvas.getObjects())
-        toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
-        struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
-    }
-    toolBox.initForDrawPath = function(){
-        toolBox.canvas.on("mouse:up", toolBox.upPath)
-    }
-//here is the bug --> $('canvas'), how to select the good one ?
-toolBox.initBCCListeners = function(){
-$('#BCC_img_for_annotation')
-        .mousedown(function (event) {
-            if (toolBox.canvas.selection ||toolBox.canvas.isDrawingMode) {
-                return;
-            }
-            toolBox.creating = true;
-            toolBox.pointerLocation.x = event.pageX - document.getElementById('BCC_img_for_annotation').getBoundingClientRect().x;
-            toolBox.pointerLocation.y = event.pageY;
+    toolBox.pointerLocation = {x: 0, y: 0};
+    toolBox.canvas.on("mouse:down", function (options) {
+        if (toolBox.canvas.selection || toolBox.canvas.isDrawingMode) {
+            return;
+        }
+        toolBox.creating = true;
+        var event = options.e.changedTouches[0];
+        toolBox.pointerLocation.x = event.pageX - toolBox.offsetLeft;
+        toolBox.pointerLocation.y = event.pageY - toolBox.offsetTop;
+
+        switch (toolBox.ACTIVE_TOOL) {
+            case 'Rectangle':
+                toolBox.shape = new fabric.Rect({
+                    left: toolBox.pointerLocation.x,
+                    top: toolBox.pointerLocation.y,
+                    fill: toolBox.STYLE.fill,
+                    stroke: toolBox.STYLE.stroke,
+                    strokeWidth: toolBox.STYLE.strokeWidth,
+                    width: 0,
+                    height: 0,
+                });
+                toolBox.shape.selectable = false;
+                toolBox.canvas.add(toolBox.shape);
+                break;
+            case 'Ellipse':
+                toolBox.shape = new fabric.Ellipse({
+                    left: toolBox.pointerLocation.x,
+                    top: toolBox.pointerLocation.y,
+                    fill: toolBox.STYLE.fill,
+                    stroke: toolBox.STYLE.stroke,
+                    strokeWidth: toolBox.STYLE.strokeWidth,
+                    rx: 1,
+                    ry: 1,
+                });
+                toolBox.shape.selectable = false;
+                toolBox.canvas.add(toolBox.shape);
+                break;
+            case 'Selection':
+                toolBox.shape = null;
+                break;
+        }
+    });
+    toolBox.canvas.on("mouse:move", function (options) {
+        var event = options.e.changedTouches[0];
+        console.log("mouse move BCC");
+        console.log(toolBox.pointerLocation.x);
+        if (toolBox.creating) {
             switch (toolBox.ACTIVE_TOOL) {
                 case 'Rectangle':
-                    toolBox.shape = new fabric.Rect({
-                        left: toolBox.pointerLocation.x,
-                        top: toolBox.pointerLocation.y,
-                        fill: toolBox.STYLE.fill,
-                        stroke: toolBox.STYLE.stroke,
-                        strokeWidth: toolBox.STYLE.strokeWidth,
-                        width: 0,
-                        height: 0,
-                        //originX: 'left',
-                        //originY: 'top'
+                    var width, height;
+                    toolBox.shape.set({
+                        width: width = event.pageX - toolBox.pointerLocation.x - toolBox.offsetLeft,
+                        height: height = event.pageY - toolBox.pointerLocation.y - toolBox.offsetTop,
+                        left: toolBox.pointerLocation.x + width / 2,
+                        top: toolBox.pointerLocation.y + height / 2,
                     });
-                    toolBox.shape.selectable = false;
-                    toolBox.canvas.add(toolBox.shape);
+                    console.log(toolBox.shape);
                     break;
                 case 'Ellipse':
-                    toolBox.shape = new fabric.Ellipse({
-                        left: toolBox.pointerLocation.x,
-                        top: toolBox.pointerLocation.y,
-                        fill: toolBox.STYLE.fill,
-                        stroke: toolBox.STYLE.stroke,
-                        strokeWidth: toolBox.STYLE.strokeWidth,
-                        rx: 1,
-                        ry: 1,
+                    var rx, ry;
+                    toolBox.shape.set({
+                        rx: rx = (event.pageX - toolBox.offsetLeft - toolBox.pointerLocation.x) / 2,
+                        ry: ry = (event.pageY - toolBox.offsetTop - toolBox.pointerLocation.y) / 2,
+                        // Weirdly, we have to set these as well…
+                        width: rx * 2,
+                        height: ry * 2,
                     });
-                    toolBox.shape.selectable = false;
-                    toolBox.canvas.add(toolBox.shape);
-                    break;
-                case 'Selection':
-                    toolBox.shape = null;
+                    toolBox.shape.left = toolBox.pointerLocation.x + rx;
+                    toolBox.shape.top = toolBox.pointerLocation.y + ry;
                     break;
             }
-
-        })
-        .mousemove(function (event) {
-            if (toolBox.creating) {
-                switch (toolBox.ACTIVE_TOOL) {
-                    case 'Rectangle':
-                        var width, height;
-                        toolBox.shape.set({
-                            width: width = event.pageX - document.getElementById('BCC_img_for_annotation').getBoundingClientRect().x - toolBox.pointerLocation.x,
-                            height: height = event.pageY - toolBox.pointerLocation.y,
-                            left: toolBox.pointerLocation.x + width / 2,
-                            top: toolBox.pointerLocation.y + height / 2,
-                        });
-                        break;
-                    case 'Ellipse':
-                        var rx, ry;
-                        toolBox.shape.set({
-                            rx: rx = (event.pageX - document.getElementById('BCC_img_for_annotation').getBoundingClientRect().x - toolBox.pointerLocation.x) / 2,
-                            ry: ry = (event.pageY - toolBox.pointerLocation.y) / 2,
-                            // Weirdly, we have to set these as well…
-                            width: rx * 2,
-                            height: ry * 2,
-                        });
-                        toolBox.shape.left = toolBox.pointerLocation.x + rx;
-                        toolBox.shape.top = toolBox.pointerLocation.y + ry;
-                        break;
-                    case 'Line':
-                        toolBox.shape.set({
-                            x2: event.pageX,
-                            y2: event.pageY,
-                        });
-                        break;
-                }
-                toolBox.canvas.renderAll();
+            toolBox.canvas.renderAll();
+        }
+    });
+    toolBox.canvas.on("mouse:up", function (event) {
+        if (toolBox.creating || toolBox.isDrawingMode) {
+            toolBox.creating = false;
+            if (toolBox.shape != null) {
+                toolBox.shape.remove();
+                toolBox.canvas.add(toolBox.shape = toolBox.shape.clone());
+                toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
+                struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
+                toolBox.shape.selectable = false;
+                console.log(toolBox.canvas.getObjects());
             }
-        })
-        .mouseup(function (event) {
-            if (toolBox.creating) {
-                toolBox.creating = false;
-                if (toolBox.shape != null){
-                    toolBox.shape.remove();
-                    toolBox.canvas.add(toolBox.shape = toolBox.shape.clone());
-                    toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
-                    struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
-                    toolBox.shape.selectable = false;
-                    console.log(toolBox.canvas.getObjects());
-                }
-            }
-        })}
-    ;
-
+        }
+    });
     // Select tool based on url hash value
     var tool = window.location.hash.substring(1);
     // By default, the selection tool is active
     if (tool.length == 0) tool = 'rectangle';
     // Simulate a click on the selected tool
     $('#toolbar a.' + tool).click();
-
 
 
     $('#toolbar button').prop('disabled', true);
@@ -225,11 +190,9 @@ $('#BCC_img_for_annotation')
             for (var i = 0; i < objectsInGroup.length; i++) {
                 toolBox.canvas.remove(objectsInGroup[i]);
             }
-        }
-        else if (activeObject) {
+        } else if (activeObject) {
             toolBox.canvas.remove(activeObject);
         }
-        print(toolBox.canvas.getObjects());
         toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
         struct.removeObjectsForVignette(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
         toolBox.canvas.fire('selection:cleared');
@@ -256,25 +219,25 @@ $('#BCC_img_for_annotation')
         }
         toolBox.canvas.renderAll();
     };
-    if (toolBox.firstTime == 1){
+    if (toolBox.firstTime == 1) {
         toolBox.STYLE.stroke = "#b5a822";
         toolBox.STYLE.strokeWidth = 3;
-    $('#styler .stroke-color').simpleColor({
-        boxWidth: 80,
-        boxHeight: 10,
-        livePreview: true,
-        onSelect: function(hex, element) {
-            console.log(toolBox.STYLE);
-            toolBox.STYLE.stroke = '#'+hex;
-            applyStyleToSelectedObjects({stroke: toolBox.STYLE.stroke});
-        }
-    });
+        $('#styler .stroke-color').simpleColor({
+            boxWidth: 80,
+            boxHeight: 10,
+            livePreview: true,
+            onSelect: function (hex, element) {
+                console.log(toolBox.STYLE);
+                toolBox.STYLE.stroke = '#' + hex;
+                applyStyleToSelectedObjects({stroke: toolBox.STYLE.stroke});
+            }
+        });
 
-    $('#styler .stroke-width').change(function (event) {
-        toolBox.STYLE.strokeWidth = parseInt($(this).val());
-        applyStyleToSelectedObjects({strokeWidth: toolBox.STYLE.strokeWidth});
-    });
-}
+        $('#styler .stroke-width').change(function (event) {
+            toolBox.STYLE.strokeWidth = parseInt($(this).val());
+            applyStyleToSelectedObjects({strokeWidth: toolBox.STYLE.strokeWidth});
+        });
+    }
 
     // Update the styling inspector when a single object is selected
     toolBox.canvas.observe('object:selected', function (event) {
@@ -312,7 +275,6 @@ $('#BCC_img_for_annotation')
     toolBox.canvas.observe('selection:cleared', function (event) {
         $('#toolbar button').prop('disabled', true);
     });
-
 
 
 };
