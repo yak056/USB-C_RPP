@@ -2,6 +2,8 @@
     height: 80px;
     width: 100%;
     touch-action: none;
+    vertical-align: center;
+
 
 }
 
@@ -173,4 +175,8 @@ input:checked + .slider:before {
     background-color: #D62929;
 }
 
+.vignette_dropZone {
+    height: 60px;
+    margin: 3px ;
+}
 
