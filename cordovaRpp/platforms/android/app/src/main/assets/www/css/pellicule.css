@@ -1,0 +1,30 @@
+
+#pellicule {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.img_pellicule{
+    display: inline-block;
+    float: none;
+    height: 100%;
+    width: 13%;
+}
+
+.img_pellicule img{
+    height: 100%;
+    width: auto;
+}
+
+#pellicule canvas{
+    height: 90%;
+}
+
+.canvas-container{
+    height: 100%;
+    width: 100%
+}
+.upper-canvas{
+    height: 100%;
+    width: 100%
+}

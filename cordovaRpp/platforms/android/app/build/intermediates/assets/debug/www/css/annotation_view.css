@@ -1,0 +1,127 @@
+#annotation_view{
+    border: 1px solid palegreen;
+}
+
+#imgToModify{
+    height: 75%;
+    border: 1px solid rgb(24, 196, 24);
+    text-align: center;
+}
+
+#img_annotation{
+    margin-top: 10%;
+    border: 1px solid pink;
+}
+#toolbox{
+    height: 25%;
+    border: 1px solid blueviolet;
+
+}
+
+
+
+div.palette {
+    font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	background-color: rgba(202,202,202,0.7);
+	cursor: default;
+	position: absolute;
+	opacity: 0.7;
+    z-index: 100;
+}
+
+div.palette:hover {
+	opacity: 1;
+}
+
+div.palette p {
+	margin: 0 0 5px;
+	text-align: center;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+/* @end */
+
+/* @group Toolbar */
+
+
+
+#toolbar a {
+	margin: 0 5px 0 0;
+	text-indent: -1000px;
+	width: 50px;
+	height: 50px;
+	display: block;
+	float: left;
+	overflow: hidden;
+	cursor: default;
+	opacity: 0.5;
+}
+
+#toolbar a.active {
+	opacity: 1;
+	border: 1px solid orchid;
+}
+
+#toolbar .selection {
+	background-image: url(../img/palette_img/selection.png);
+}
+
+#toolbar .rectangle {
+	background-image: url(../img/palette_img/rectangle.png);
+}
+
+#toolbar .ellipse {
+	background-image: url(../img/palette_img/ellipse.png);
+}
+
+#toolbar .path {
+	background-image: url(../img/palette_img/path.png);
+	margin-right: 0;
+}
+
+#toolbar div.buttons {
+	float: left;
+	padding-left: 5px;
+}
+
+#toolbar .buttons button {
+	display: block;
+	width: 85px;
+	height: 23px;
+	margin-bottom: 5px;
+}
+
+#toolbar .buttons button:last-child {
+	margin-bottom: 0;
+}
+
+/* @end */
+
+
+/* @group Styler */
+
+#styler {
+	left: 70%;
+}
+
+#styler p {
+	margin: 0 0 5px;
+	text-align: center;
+	font-size: 12px;
+}
+
+#styler label {
+	text-align: left;
+	font-size: 12px;
+	display: block;
+	margin: 7px 0 0;
+}
+
+#styler input.stroke-width {
+	width: 76px;
+}
+
+
+
+/* @end */

@@ -1,0 +1,10 @@
+#resume > tr {
+    height: 12px;
+}
+
+#resume > tr > td{
+    color: white;
+    font-size: 20px;
+    text-transform: capitalize;
+    padding-top: 15px;
+}
