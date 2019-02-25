@@ -166,13 +166,13 @@ toolBox.initCanvas = function (index) {
                 toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
                 struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
                 toolBox.shape.selectable = false;
-                console.log(toolBox.canvas.getObjects());
             }
+            connection.sendPost();
         }
         else if(toolBox.canvas.isDrawingMode){
             toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
             struct.duplicateAndResizeObjects(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
-            console.log(toolBox.canvas.getObjects());
+            connection.sendPost();
         }
     });
     // Select tool based on url hash value
@@ -199,8 +199,10 @@ toolBox.initCanvas = function (index) {
             toolBox.canvas.remove(activeObject);
         }
         toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
-        struct.removeObjectsForVignette(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
+        struct.removeObjectsForVignette(toolBox.pellicule[index], t            console.log(toolBox.canvas.getObjects());
+        oolBox.pellicule[index].vignetteCanvas);
         toolBox.canvas.fire('selection:cleared');
+        connection.sendPost();
     });
 
     // =============================

@@ -9,7 +9,6 @@ var modeSelection = false;
 
 var pressTimer;
 
-
 view_all.setListenerLongPress = function (id) {
     var id = id;
 
@@ -22,11 +21,8 @@ view_all.setListenerLongPress = function (id) {
         // Set timeout
         pressTimer = window.setTimeout(function () {
             modeSelection = true;
-            var image = document.getElementById("img_"+id).cloneNode(false);
-            image.setAttribute("class", "vignette_dropZone");
 
-            document.getElementById("outer-dropzone").appendChild(image);
-            document.getElementById(id).style.background = '#4e4';
+            document.getElementById(id).style.background = 'blue';
 
         }, 500);
         return false;
@@ -69,8 +65,8 @@ view_all.createAllViewList = function () {
                     colImg.setAttribute("class", "col-xs-2");
                     img.src = navigation.pellicule.list[j].uri;
                     var divImage = document.createElement("div");
-                    divImage.setAttribute('class', 'thumbnail img-responsive ');
-                    divImage.setAttribute("id", "" + navigation.pellicule.list[i].name);
+                    divImage.setAttribute('class', 'thumbnail img-responsive drag-drop');
+                    divImage.setAttribute("id", "thumbnail_" + navigation.pellicule.list[i].name);
 
 
                     var divWrapperImg = document.createElement("div");
@@ -78,8 +74,6 @@ view_all.createAllViewList = function () {
 
                     var imgThumbnail = document.createElement("img");
                     imgThumbnail.setAttribute("src", img.src);
-                    imgThumbnail.setAttribute("id", "img_" + navigation.pellicule.list[i].name );
-
                     var divTitle = document.createElement("div");
                     divTitle.setAttribute("class", "caption");
 
@@ -91,7 +85,7 @@ view_all.createAllViewList = function () {
                     divImage.appendChild(divTitle);
                     colImg.appendChild(divImage);
                     allviewListHtml.appendChild(colImg);
-                    view_all.setListenerLongPress("" + navigation.pellicule.list[i].name);
+                    view_all.setListenerLongPress("thumbnail_" + navigation.pellicule.list[i].name);
 
                 }
             }
@@ -103,8 +97,8 @@ view_all.createAllViewList = function () {
             colImg.setAttribute("class", "col-xs-2")
             img.src = navigation.pellicule.list[i].uri;
             var divImage = document.createElement("div");
-            divImage.setAttribute('class', 'thumbnail img-responsive ');
-            divImage.setAttribute("id", "" + navigation.pellicule.list[i].name);
+            divImage.setAttribute('class', 'thumbnail img-responsive drag-drop');
+            divImage.setAttribute("id", "thumbnail_" + navigation.pellicule.list[i].name);
 
 
             var divWrapperImg = document.createElement("div");
@@ -112,9 +106,6 @@ view_all.createAllViewList = function () {
 
             var imgThumbnail = document.createElement("img");
             imgThumbnail.setAttribute("src", img.src);
-            imgThumbnail.setAttribute("id", "img_" + navigation.pellicule.list[i].name );
-
-
             var divTitle = document.createElement("div");
             divTitle.setAttribute("class", "caption");
 
@@ -127,7 +118,7 @@ view_all.createAllViewList = function () {
 
             colImg.appendChild(divImage);
             allviewListHtml.appendChild(colImg);
-            view_all.setListenerLongPress("" + navigation.pellicule.list[i].name);
+            view_all.setListenerLongPress("thumbnail_" + navigation.pellicule.list[i].name);
 
         }
     }
@@ -153,8 +144,8 @@ view_all.searchView = function () {
                 colImg.setAttribute("class", "col-xs-2");
                 img.src = navigation.pellicule.list[i].uri;
                 var divImage = document.createElement("div");
-                divImage.setAttribute('class', 'thumbnail img-responsive ');
-                divImage.setAttribute("id", "" + navigation.pellicule.list[i].name);
+                divImage.setAttribute('class', 'thumbnail img-responsive drag-drop');
+                divImage.setAttribute("id", "thumbnail_" + navigation.pellicule.list[i].name);
 
 
                 var divWrapperImg = document.createElement("div");
@@ -162,8 +153,6 @@ view_all.searchView = function () {
 
                 var imgThumbnail = document.createElement("img");
                 imgThumbnail.setAttribute("src", img.src);
-                imgThumbnail.setAttribute("id", "img_" + navigation.pellicule.list[i].name );
-
                 var divTitle = document.createElement("div");
                 divTitle.setAttribute("class", "caption");
 
@@ -175,7 +164,7 @@ view_all.searchView = function () {
                 divImage.appendChild(divTitle);
                 colImg.appendChild(divImage);
                 allviewListHtml.appendChild(colImg);
-                view_all.setListenerLongPress("" + navigation.pellicule.list[i].name);
+                view_all.setListenerLongPress("thumbnail_" + navigation.pellicule.list[i].name);
 
             }
         }

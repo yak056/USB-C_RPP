@@ -183,6 +183,7 @@ navigation.maj_img_canvas = function (img, index) {
     //to wrap canvas in a Fabric canvas
     if (navigation.actualMainView == "BCC_img_for_annotation")
         toolBox.initCanvas(index);
+    connection.sendPost();
 };
 navigation.changeImgMainView = function (img, index) {
     return function () {
