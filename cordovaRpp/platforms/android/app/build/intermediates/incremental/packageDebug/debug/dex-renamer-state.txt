@@ -1,4 +1,4 @@
-#Mon Feb 25 18:28:31 CET 2019
-base.0=/home/chris/Bureau/cordovaRpp/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0
+#Tue Feb 26 10:30:23 CET 2019
+base.0=/home/chris/Bureau/USB-C_RPP/cordovaRpp/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0
 path.0=classes.dex
 renamed.0=classes.dex

@@ -2,7 +2,7 @@ var connection = {};
 connection.url = null;
 
 document.getElementById("connectButton").addEventListener("click", function(){
-    connection.url = "http://" + document.getElementById("ipAddress").value;
+    connection.url = "http://" + document.getElementById("ipAddress").value + ":4040";
     console.log(connection.url);
     connection.sendHello();
     
