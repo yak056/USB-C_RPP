@@ -138,6 +138,13 @@ navigation.initCanvasForMainView = function (id, index, imgUrl) {
     document.getElementById(navigation.actualMainView).style.height = side + "px";
     document.getElementById(navigation.actualMainView).style.width = side + "px";
 
+    if(id != "img_for_annotation"){
+        canvas.selection = false;
+        canvas.forEachObject(function(o) {
+        o.selectable = false;
+        }); 
+    }
+
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////
 navigation.createPellicule = function () {

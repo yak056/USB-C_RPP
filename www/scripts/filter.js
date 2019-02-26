@@ -19,6 +19,11 @@ filter.init = function () {
     filter.clearAllBtn = document.getElementById("clearButton");
     filter.clearAllBtn.addEventListener("click", filter.clearAll);
     $("#clearButton").prop('disabled', true);
+    for (var i = 0; i < filter.pellicule.length; i++) {
+        var graph = filter.pellicule[i];
+        if (graph.typeFilter == "nominal" || graph.typeFilter == "logical") {
+        filter.initCB(graph);
+    }}
 };
 
 filter.createDivSlider = function (graph) {
@@ -53,8 +58,14 @@ filter.createCheckbox = function (graph) {
 
     return innerHtml;
 };
+
+filter.initCB = function(graph){
+    return function(graph){
+        filter.initListenersChekbox(graph)
+    }(graph);
+}
 filter.initListenersChekbox = function (graph) {
-    return function(){
+    return function(graph){
     for (var i = 0; i < graph.listFilters.length; i++) {
         document.getElementById("CheckBox" + graph.id + "_" + i).addEventListener("click", function (e) {
             console.log("hange")
@@ -62,13 +73,13 @@ filter.initListenersChekbox = function (graph) {
             $("#clearButton").prop('disabled', false);
         });
     }
-}();
+}(graph);
 };
 filter.createFilterNamed = function (graph) {
     var filterlist = document.getElementById("filterList");
     filterlist.innerHTML += "<div class=\"filterTitle\"><p>" + graph.name + "</p></div>";
     filterlist.innerHTML += filter.createCheckbox(graph);
-    filter.initListenersChekbox(graph);
+
 };
 
 filter.createRangeSlider = function (id, min, max) {
