@@ -49,7 +49,11 @@ distantScreen.initCanvasForMainView = function (id, index, imgUrl) {
             backgroundImageStretch: true
         }
     );
-    //canvas.loadFromJSON(navigation.pellicule.list[index].drawingJson);
+        var json = JSON.parse(distantScreen.graph.jsonCanvas);
+        console.log(json.objects);
+        //canvas.loadFromJSON(json);
+        distantScreen.duplicateAndResizeObjects(json.objects, distantScreen.graph.height, distantScreen.graph.width, canvas);
+    
     //struct.duplicateAndResizeObjects(navigation.pellicule.list[index], canvas);
     //if (id == "img_for_annotation")navigation.pellicule.list[index].designCanvas = canvas;
     //else navigation.pellicule.list[index].familyCanvas.push(canvas);
@@ -58,6 +62,40 @@ distantScreen.initCanvasForMainView = function (id, index, imgUrl) {
 
 
 };
+distantScreen.duplicateAndResizeObjects = function (listObjects, heightOrigin ,widthOrigin, canvasDest) {
+    /*for (var i = 0; i < objects.length; i++) {
+        canvasDest.remove(objects[i]);
+        objects[i] = null;
+    }
+    canvasDest.renderAll();*/
+        var ratioX = canvasDest.getWidth() / heightOrigin;
+        var ratioY = canvasDest.getHeight() / widthOrigin;
+        console.log(listObjects);
+        //for (var i = 0; i < listObjects.length; i++) {
+        fabric.util.enlivenObjects(listObjects, function(objects){
+            objects.forEach(function(obj){
+                obj.scaleX *= ratioX;
+                obj.scaleY *= ratioY;
+                obj.top *= ratioY;
+                obj.left *= ratioX;
+                obj.setCoords();
+                canvasDest.add(obj);
+                canvasDest.renderAll();
+            })
+
+            });
+            /*if (fabric.util.getKlass(obj.type).async) {
+                obj.clone(function (clone) {
+                    copy = clone;
+                });
+            } else {
+                copy = obj.clone();
+            }*/
+            //copy = obj.clone();
+
+        //}
+};
+
 distantScreen.start();
 console.log("hhhhhhhhhhhh");
 distantScreen.initCanvasForMainView("img_resume", 0, "img/id.png");

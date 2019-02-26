@@ -5,7 +5,7 @@ resume.init = function(){
     if (distantScreen.graph.resume.typeFilter == "numeric" || distantScreen.graph.resume.typeFilter == "integer" || distantScreen.graph.resume.typeFilter == "ordered") {
         resume.createResumeForNumber(distantScreen.graph.resume);
     } else if (distantScreen.graph.resume.typeFilter == "nominal" || distantScreen.graph.resume.typeFilter == "logical") {
-        resume.createResumeForNominal(distantScreen.graph);
+        resume.createResumeForNominal(distantScreen.graph.resume);
     }
 };
 
