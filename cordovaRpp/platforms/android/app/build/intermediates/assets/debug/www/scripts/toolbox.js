@@ -199,8 +199,7 @@ toolBox.initCanvas = function (index) {
             toolBox.canvas.remove(activeObject);
         }
         toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
-        struct.removeObjectsForVignette(toolBox.pellicule[index], t            console.log(toolBox.canvas.getObjects());
-        oolBox.pellicule[index].vignetteCanvas);
+        struct.removeObjectsForVignette(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
         toolBox.canvas.fire('selection:cleared');
         connection.sendPost();
     });
