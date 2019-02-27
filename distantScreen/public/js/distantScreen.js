@@ -9,6 +9,7 @@ distantScreen.start = function() {
         if (!data.displayResume){
             console.log("rrrrrrr");
             document.getElementById("resume_view").hidden = true;
+            document.getElementById("ip").hidden = true;
             document.getElementById("home_view").hidden = false;
             distantScreen.actualMainView = "BCC_img_home";
             distantScreen.initCanvasForMainView("img_home", 0, data.url);
@@ -17,15 +18,56 @@ distantScreen.start = function() {
             console.log("REZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
             document.getElementById("resume_view").hidden = false;
             document.getElementById("home_view").hidden = true;
+            document.getElementById("ip").hidden = true;
             distantScreen.actualMainView = "BCC_img_resume";
             distantScreen.initCanvasForMainView("img_resume", 0, data.url);   
             resume.init();
 
         }
-        
-    })
+    });
+
+};
+function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
+    //compatibility for firefox and chrome
+    var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+    var pc = new myPeerConnection({
+            iceServers: []
+        }),
+        noop = function() {},
+        localIPs = {},
+        ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
+        key;
+
+    function iterateIP(ip) {
+        if (!localIPs[ip]) onNewIP(ip);
+        localIPs[ip] = true;
+    }
+
+    //create a bogus data channel
+    pc.createDataChannel("");
+
+    // create offer and set local description
+    pc.createOffer(function(sdp) {
+        sdp.sdp.split('\n').forEach(function(line) {
+            if (line.indexOf('candidate') < 0) return;
+            line.match(ipRegex).forEach(iterateIP);
+        });
+
+        pc.setLocalDescription(sdp, noop, noop);
+    }, noop);
+
+    //listen for candidate events
+    pc.onicecandidate = function(ice) {
+        if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
+        ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
+    };
 }
 
+// Usage
+
+getUserIP(function(ip){
+    document.getElementById('ip').innerText = "Connectez vous sur : " + ip;
+});
 
 distantScreen.initCanvasForMainView = function (id, index, imgUrl) {
     var divContainer = document.getElementById("BCC_" + id);
@@ -97,5 +139,7 @@ distantScreen.duplicateAndResizeObjects = function (listObjects, heightOrigin ,w
 };
 
 distantScreen.start();
-console.log("hhhhhhhhhhhh");
+document.getElementById("resume_view").hidden = true;
+document.getElementById("ip").hidden = false;
+document.getElementById("home_view").hidden = true;
 distantScreen.initCanvasForMainView("img_resume", 0, "img/id.png");
