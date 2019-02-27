@@ -3,7 +3,7 @@
 }
 
 #imgToModify{
-    height: 75%;
+    height: 95%;
     border: 1px solid rgb(24, 196, 24);
     text-align: center;
 }
@@ -25,7 +25,7 @@ div.palette {
 	background-color: rgba(202,202,202,0.7);
 	cursor: default;
 	position: absolute;
-	opacity: 0.7;
+	opacity: 1;
     z-index: 100;
 }
 
@@ -49,34 +49,32 @@ div.palette p {
 #toolbar a {
 	margin: 0 5px 0 0;
 	text-indent: -1000px;
-	width: 50px;
-	height: 50px;
-	display: block;
+	width: 100px;
+	height: 100px;
 	float: left;
 	overflow: hidden;
 	cursor: default;
-	opacity: 0.5;
+	opacity: 0.2;
 }
 
 #toolbar a.active {
 	opacity: 1;
-	border: 1px solid orchid;
-}
-
-#toolbar .selection {
-	background-image: url(../img/palette_img/selection.png);
+	border: transparent;
 }
 
 #toolbar .rectangle {
-	background-image: url(../img/palette_img/rectangle.png);
+	background-image: url(../img/palette_img/rectangle.svg);
+	background-size: 100% 100%;
 }
 
 #toolbar .ellipse {
-	background-image: url(../img/palette_img/ellipse.png);
+	background-image: url(../img/palette_img/ellipse.svg);
+	background-size: 100% 100%;
 }
 
 #toolbar .path {
-	background-image: url(../img/palette_img/path.png);
+	background-image: url(../img/palette_img/draw.svg);
+	background-size: 100% 100%;
 	margin-right: 0;
 }
 
@@ -86,10 +84,17 @@ div.palette p {
 }
 
 #toolbar .buttons button {
+	background-image: url(../img/palette_img/delete.svg);
+	background-size: 100% 100%;
+	background-color: transparent;
+	border: none; /* Remove borders */
 	display: block;
-	width: 85px;
-	height: 23px;
-	margin-bottom: 5px;
+	width: 100px;
+	height: 100px;
+}
+
+#toolbar .buttons button:active {
+	background-color: orchid;
 }
 
 #toolbar .buttons button:last-child {

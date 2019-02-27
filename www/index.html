@@ -163,33 +163,36 @@
                         </div>
                     </div>
                 </div>
-                <div class="main_view" hidden="true" id="annotation_view">
-                    <div id="imgToModify">
-                        <div class="BigCanvasContainerUNSWIPABLE" id="BCC_img_for_annotation">
-                            <canvas class="bigImg" id="img_for_annotation">
+                <div class=" main_view" hidden="true" id="annotation_view">
+                    <div class="col-xs-2">
+                        <div class="" style="padding-left: 0">
 
-                            </canvas>
+                            <div id="toolbox">
+                                <div id="styler" class="col-sm palette" style="position: relative; left:0">
+                                    <p>Style</p>
+                                    <label>color</label>
+                                    <input class="stroke-color" value="#b5a822"/>
+                                    <label>Stroke width</label>
+                                    <input type="number" class="stroke-width" value="3"/>
+                                </div>
+                                <div id="toolbar" class="col-sm palette">
+                                    <a href="#rectangle" class="rectangle" title="Rectangle">Rectangle</a>
+                                    <a href="#ellipse" class="ellipse" title="Ellipse">Ellipse</a>
+                                    <a href="#path" class="path" title="Path">Path</a>
+                                    <div class="buttons">
+                                        <button title="Delete (suppr)"></button>
+                                    </div>
+                                </div>
+
+                            </div>
 
                         </div>
                     </div>
-                    <div class="row" id="toolbox">l
-                        <div id="toolbar" class="col-sm palette">
-                            <a href="#rectangle" class="rectangle" title="Rectangle">Rectangle</a>
-                            <a href="#ellipse" class="ellipse" title="Ellipse">Ellipse</a>
-                            <a href="#path" class="path" title="Path">Path</a>
-                            <div class="buttons">
-                                <button title="Delete (suppr)">Delete</button>
-                            </div>
-                            <br clear="both"/>
+                    <div id="imgToModify" class="col-xs-10">
+                        <div class="BigCanvasContainerUNSWIPABLE" id="BCC_img_for_annotation">
+                            <canvas class="bigImg" id="img_for_annotation">
+                            </canvas>
                         </div>
-                        <div id="styler" class="col-sm palette">
-                            <p>Style</p>
-                            <label>color</label>
-                            <input class="stroke-color" value="#b5a822"/>
-                            <label>Stroke width</label>
-                            <input type="number" class="stroke-width" value="3"/>
-                        </div>
-
                     </div>
                 </div>
                 <div class="pellicule" id="pellicule">

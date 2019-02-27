@@ -28,6 +28,8 @@ toolBox.initCanvas = function (index) {
     toolBox.offsetLeft = toolBox.canvas._offset.left;
     toolBox.offsetTop = toolBox.canvas._offset.top;
 
+
+
     toolBox.canvas.enableSelection = function () {
         this.selection = true; // permet selection multiple
         var objects = this.getObjects();
@@ -185,7 +187,7 @@ toolBox.initCanvas = function (index) {
 
     $('#toolbar button').prop('disabled', true);
 
-    $('#toolbar button:contains(Delete)').click(function (event) {
+    $('#toolbar button:contains("")').click(function (event) { // moche a changer select buttin delete
         // Removes a toolBox.shape
         var activeObject = toolBox.canvas.getActiveObject(),
             activeGroup = toolBox.canvas.getActiveGroup();
@@ -229,12 +231,18 @@ toolBox.initCanvas = function (index) {
         toolBox.STYLE.stroke = "#b5a822";
         toolBox.STYLE.strokeWidth = 3;
         $('#styler .stroke-color').simpleColor({
-            boxWidth: 80,
-            boxHeight: 10,
+            cellWidth: 50,
+            cellHeight: 50,
+            colors: ['#ff0000', '#ff0087', '#ff875f', '#ffd700',
+                '#00005f', '#005faf', '#00afaf', '#00ff00',
+                '#080808', '#808080', '#c0c0c0', '#ffffff'],
+            columns: 4.1,
+            boxWidth: 100,
+            boxHeight: 100,
             livePreview: true,
             onSelect: function (hex, element) {
-                console.log(toolBox.STYLE);
-                toolBox.STYLE.stroke = '#' + hex;
+                console.log("STYLE : " + hex);
+                toolBox.STYLE.stroke = hex;
                 toolBox.canvas.freeDrawingBrush.color = toolBox.STYLE.stroke;
                 applyStyleToSelectedObjects({stroke: toolBox.STYLE.stroke});
             }
@@ -255,6 +263,7 @@ toolBox.initCanvas = function (index) {
         $('#styler .stroke-color').setColor(event.target.stroke);
         $('#styler .stroke-width').val(event.target.strokeWidth);
     });
+
 
     // Update the styling inspector when several objects are selected
     toolBox.canvas.observe('selection:created', function (event) {
@@ -283,8 +292,6 @@ toolBox.initCanvas = function (index) {
     toolBox.canvas.observe('selection:cleared', function (event) {
         $('#toolbar button').prop('disabled', true);
     });
-
-
 };
 
 
