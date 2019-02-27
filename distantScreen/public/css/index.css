@@ -11,7 +11,9 @@ html, body{
     line-height: 1px;
 }
 
-
+#frame{
+    padding: 0px;
+}
 .navbar-button{
     background-color: darkslategray;
     padding-top: 10px;
