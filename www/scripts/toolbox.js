@@ -248,7 +248,7 @@ toolBox.initCanvas = function (index) {
             }
         });
 
-        $('#styler .stroke-width').change(function (event) {
+        $('#slider .stroke-width').change(function (event) {
             toolBox.STYLE.strokeWidth = parseInt($(this).val());
             toolBox.canvas.freeDrawingBrush.width  = toolBox.STYLE.strokeWidth;
             applyStyleToSelectedObjects({strokeWidth: toolBox.STYLE.strokeWidth});

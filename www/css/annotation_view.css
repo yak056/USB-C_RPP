@@ -1,10 +1,5 @@
-#annotation_view{
-    border: 1px solid palegreen;
-}
-
 #imgToModify{
     height: 95%;
-    border: 1px solid rgb(24, 196, 24);
     text-align: center;
 }
 
@@ -14,23 +9,53 @@
 }
 #toolbox{
     height: 25%;
-    border: 1px solid blueviolet;
-
 }
 
 
 
 div.palette {
     font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
-	background-color: rgba(202,202,202,0.7);
+	background-color: transparent;
 	cursor: default;
 	position: absolute;
 	opacity: 1;
     z-index: 100;
+	padding-top: 25%;
 }
 
 div.palette:hover {
 	opacity: 1;
+}
+
+.stroke-width{
+	-webkit-appearance: none;
+	width: 500%;
+	height: 15px;
+	border-radius: 5px;
+	outline: none;
+	opacity: 1;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+
+}
+
+#slider{
+	padding-top: 25%;
+	padding-bottom: 25%;
+}
+
+#id_slider{
+	padding-bottom: 10%;
+	color: white;
+	font-size: 15px;
+
+}
+.stroke-width::-moz-range-thumb {
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	background: #5bc3da;
+	cursor: pointer;
 }
 
 div.palette p {
@@ -76,6 +101,12 @@ div.palette p {
 	background-image: url(../img/palette_img/draw.svg);
 	background-size: 100% 100%;
 	margin-right: 0;
+	opacity: 1;
+}
+#toolbar .path.active {
+	background-image: url(../img/palette_img/draw_selected.svg);
+	background-size: 100% 100%;
+	margin-right: 0;
 }
 
 #toolbar div.buttons {
@@ -108,6 +139,7 @@ div.palette p {
 
 #styler {
 	left: 70%;
+	width: 200px;
 }
 
 #styler p {
@@ -116,16 +148,7 @@ div.palette p {
 	font-size: 12px;
 }
 
-#styler label {
-	text-align: left;
-	font-size: 12px;
-	display: block;
-	margin: 7px 0 0;
-}
 
-#styler input.stroke-width {
-	width: 76px;
-}
 
 
 
