@@ -141,15 +141,16 @@ filter.getValue = function () {
         }
     }
     $("#submitButton").prop('disabled', true); // on a submit donc on cache le btn
-    if (Object.keys(res).includes("sexe")){
-        print("Change to femme");
-        navigation.changeJson(data_femme);
-        //connection.sendNewImage("sexe");
-
-    }
-    else if (Object.keys(res).includes("scoreTricheTotal")){
-        navigation.changeJson(data_medianScoreTricheTotal);
-        //connection.sendNewImage("scoreTricheTotal");
+    var keys = Object.keys(res);
+    for(var i=0; i<keys.length; i++){
+        if (keys[i] == "sexe"){
+            navigation.changeJson(data_femme);
+            break;
+        }
+        else if(keys[i] == "scoreTricheTotal"){
+            navigation.changeJson(data_medianScoreTricheTotal);
+            break;
+        }
     }
     return res;
 };

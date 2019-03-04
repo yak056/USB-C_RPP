@@ -120,7 +120,6 @@ navigation.initCanvasForPellicule = function (id, index, imgUrl) {
 };
 
 navigation.initCanvasForMainView = function (id, index, imgUrl) {
-    print(imgUrl + " " + id + " " + index);
     imgUrl = navigation.pellicule.list[index].uri;
     var divContainer = document.getElementById("BCC_" + id);
     divContainer.innerHTML = "<canvas class=\"bigImg\" id=\"" + id + "\"></canvas>";

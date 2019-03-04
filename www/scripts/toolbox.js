@@ -189,7 +189,6 @@ toolBox.initCanvas = function (index) {
 
     document.getElementById("deleteBtn").addEventListener("click", function (event) { // moche a changer select buttin delete
         // Removes a toolBox.shape
-        print("in delete");
         var objects = toolBox.canvas.getObjects();
         for( var i=0; i < objects.length; i++){
             toolBox.canvas.remove(objects[i]);
