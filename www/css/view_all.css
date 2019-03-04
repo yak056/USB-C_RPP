@@ -2,6 +2,10 @@
     height: 80px;
     width: 100%;
     touch-action: none;
+    align: center;
+    verticala-lign: middle;
+
+
 
 }
 
@@ -27,6 +31,10 @@
     background-color: #29e;
     border-color: #fff;
     border-style: solid;
+}
+
+.caption{
+    font-size: 15px;
 }
 
 .drag-drop col-xs-2 img_pellicule {
@@ -173,4 +181,7 @@ input:checked + .slider:before {
     background-color: #D62929;
 }
 
-
+.vignette_dropZone {
+    height: 60px;
+    margin: 3px ;
+}
