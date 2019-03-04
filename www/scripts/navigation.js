@@ -37,15 +37,25 @@ navigation.touchHandler = function (event) {
 
 navigation.init = function(){
     document.addEventListener("touchmove", navigation.touchHandler, true);
-}
+};
 navigation.init();
 var print = console.log;
 
 navigation.actualMainView = "";
 navigation.json = JSON.parse(data).pellicule;
 
-var canvasList = ["img_home", "img_filter", "img_resume", "img_for_annotation"];
 navigation.pellicule = new struct.Pellicule();
+
+navigation.changeJson = function(new_data){
+    var json = JSON.parse(new_data).pellicule;
+    navigation.json[3].uri = json[3].uri;
+    navigation.pellicule.list[3].uri = json[3].uri;
+    navigation.modifyVignette();
+    navigation.changeDiv('filter_view');
+};
+
+var canvasList = ["img_home", "img_filter", "img_resume", "img_for_annotation"];
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 navigation.changeDivReal = function (page) {
@@ -100,7 +110,7 @@ navigation.initCanvasForPellicule = function (id, index, imgUrl) {
         imgUrl,
         canvas.renderAll.bind(canvas), {
             // Optionally add an opacity lvl to the image
-            backgroundImageOpacity: 0.5,
+            backgroundImageOpacity: 1,
             // should the image be resized to fit the container?
             backgroundImageStretch: true
         });
@@ -110,6 +120,8 @@ navigation.initCanvasForPellicule = function (id, index, imgUrl) {
 };
 
 navigation.initCanvasForMainView = function (id, index, imgUrl) {
+    print(imgUrl + " " + id + " " + index);
+    imgUrl = navigation.pellicule.list[index].uri;
     var divContainer = document.getElementById("BCC_" + id);
     divContainer.innerHTML = "<canvas class=\"bigImg\" id=\"" + id + "\"></canvas>";
     var canvas = new fabric.Canvas(document.getElementById(id));
@@ -126,7 +138,7 @@ navigation.initCanvasForMainView = function (id, index, imgUrl) {
         imgUrl,
         canvas.renderAll.bind(canvas), {
             // Optionally add an opacity lvl to the image
-            backgroundImageOpacity: 0.5,
+            backgroundImageOpacity: 1,
             // should the image be resized to fit the container?
             backgroundImageStretch: true
         }
@@ -215,6 +227,19 @@ $('.BigCanvasContainer').swipe({
         navigation.onswipe(direction);
     }
 });
+
+navigation.modifyVignette = function(){
+    var canvasPellicule = navigation.pellicule.list[3].vignetteCanvas;
+    canvasPellicule.setBackgroundImage(
+        navigation.pellicule.list[3].uri,
+        canvasPellicule.renderAll.bind(canvasPellicule), {
+            // Optionally add an opacity lvl to the image
+            backgroundImageOpacity: 1,
+            // should the image be resized to fit the container?
+            backgroundImageStretch: true
+        }
+    );
+};
 
 
 navigation.createPellicule();

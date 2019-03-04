@@ -6,7 +6,7 @@ document.getElementById("connectButton").addEventListener("click", function(){
     console.log(connection.url);
     connection.sendHello();
     
-})
+});
 connection.sendHello = function(){
     $.ajax({
         url : connection.url,
@@ -41,6 +41,21 @@ connection.sendPost = function(){
             console.log("bad beat")
         } 
      });
+};
+
+connection.sendNewImage = function(img){
+    $.ajax({
+        url : connection.url,
+        type : 'POST',
+        dataType: "json",
+        data : JSON.stringify({image : img}),
+        success : function(code_html, statut){
+            console.log("good");// success est toujours en place, bien sûr !
+        },
+        error : function(resultat, statut, erreur){
+            console.log("bad beat")
+        }
+    });
 }
 
 

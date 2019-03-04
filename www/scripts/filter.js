@@ -63,7 +63,7 @@ filter.initCB = function(graph){
     return function(graph){
         filter.initListenersChekbox(graph)
     }(graph);
-}
+};
 filter.initListenersChekbox = function (graph) {
     return function(graph){
     for (var i = 0; i < graph.listFilters.length; i++) {
@@ -141,12 +141,23 @@ filter.getValue = function () {
         }
     }
     $("#submitButton").prop('disabled', true); // on a submit donc on cache le btn
+    if (Object.keys(res).includes("sexe")){
+        print("Change to femme");
+        navigation.changeJson(data_femme);
+        //connection.sendNewImage("sexe");
+
+    }
+    else if (Object.keys(res).includes("scoreTricheTotal")){
+        navigation.changeJson(data_medianScoreTricheTotal);
+        //connection.sendNewImage("scoreTricheTotal");
+    }
     return res;
 };
 
 filter.clearAll = function () {
     var filterlist = document.getElementById("filterList");
     filterlist.innerText = "";
+    navigation.changeJson(data);
     filter.init();
 };
 
