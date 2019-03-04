@@ -86,7 +86,7 @@ distantScreen.initCanvasForMainView = function (id, index, imgUrl) {
         imgUrl,
         canvas.renderAll.bind(canvas), {
             // Optionally add an opacity lvl to the image
-            backgroundImageOpacity: 0.5,
+            backgroundImageOpacity: 1,
             // should the image be resized to fit the container?
             backgroundImageStretch: true
         }

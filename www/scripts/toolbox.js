@@ -185,11 +185,20 @@ toolBox.initCanvas = function (index) {
     $('#toolbar a.' + tool).click();
 
 
-    $('#toolbar button').prop('disabled', true);
+    $('#toolbar button').prop('disabled', false);
 
-    $('#toolbar button:contains("")').click(function (event) { // moche a changer select buttin delete
+    document.getElementById("deleteBtn").addEventListener("click", function (event) { // moche a changer select buttin delete
         // Removes a toolBox.shape
-        var activeObject = toolBox.canvas.getActiveObject(),
+        print("in delete");
+        var objects = toolBox.canvas.getObjects();
+        for( var i=0; i < objects.length; i++){
+            toolBox.canvas.remove(objects[i]);
+        }
+        toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
+        struct.removeObjectsForVignette(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
+        //toolBox.canvas.fire('selection:cleared');
+        connection.sendPost();
+        /*var activeObject = toolBox.canvas.getObjects(),
             activeGroup = toolBox.canvas.getActiveGroup();
         if (activeGroup) {
             var objectsInGroup = activeGroup.getObjects();
@@ -203,7 +212,7 @@ toolBox.initCanvas = function (index) {
         toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
         struct.removeObjectsForVignette(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
         toolBox.canvas.fire('selection:cleared');
-        connection.sendPost();
+        connection.sendPost();*/
     });
 
     // =============================
@@ -290,7 +299,7 @@ toolBox.initCanvas = function (index) {
     });
 
     toolBox.canvas.observe('selection:cleared', function (event) {
-        $('#toolbar button').prop('disabled', true);
+        $('#toolbar button').prop('disabled', false);
     });
 };
 
