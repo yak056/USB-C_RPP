@@ -91,4 +91,10 @@ struct.Pellicule = function () {
     this.actual = function () {
         return this.list[this.currentIndex];
     }
+    this.getNumber = function (name) {
+        for(var i = 0; i<this.list.length; i++){
+            if (this.list[i].name == name){
+                return i;
+            }
+        }};
 };
