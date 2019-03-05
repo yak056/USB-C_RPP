@@ -5,6 +5,8 @@
     <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="Content-Security-Policy" connect-src="*" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"></link>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -111,7 +113,7 @@
                         </div>
                         <div class="col-xs-1 pull-right centreVerticalement">
                             <label class="switch">
-                                <input type="checkbox" name="alpha_1" onchange="view_all.changeOrder(this)"
+                                <input id="toggleViewAll" type="checkbox" name="alpha_1" onchange="view_all.changeOrder(this)"
                                        unchecked>
                                 <span class="slider round"></span>
                             </label>
@@ -205,8 +207,9 @@
     </div>
 </div>
 <script src="scripts/matchEvent.js"></script>
-<script src="scripts/connection.js"></script>
 <script src="scripts/mystruct.js" type="text/javascript"></script>
+<script src="scripts/rppConnection.js"></script>
+<script src="scripts/connection.js"></script>
 <script src="json/data.js" type="text/javascript"></script>
 <script src="json/data_femme.js" type="text/javascript"></script>
 <script src="json/data_medianScoreTricheTotal.js" type="text/javascript"></script>

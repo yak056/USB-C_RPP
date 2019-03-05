@@ -1,5 +1,6 @@
 var navigation = {};
 
+navigation.onClickFilterCount = 0;
 
 navigation.touchHandler = function (event) {
     if (navigation.actualMainView == "BCC_img_for_annotation") {
@@ -57,6 +58,7 @@ navigation.changeJson = function(new_data){
 var canvasList = ["img_home", "img_filter", "img_resume", "img_for_annotation"];
 
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 navigation.changeDivReal = function (page) {
     document.getElementById('connexion_view').hidden = true;
@@ -67,13 +69,23 @@ navigation.changeDivReal = function (page) {
     document.getElementById('home_view').hidden = true;
     document.getElementById(page).hidden = false;
     if (page == "home_view") navigation.actualMainView = "BCC_img_home";
-    else if (page == "filter_view") navigation.actualMainView = "BCC_img_filter";
+    else if (page == "filter_view") {
+        navigation.actualMainView = "BCC_img_filter";
+        navigation.onClickFilterCount++;
+        if (navigation.onClickFilterCount == 1){
+            filter.init();
+        }
+    }
     else if (page == "resume_view") {
         navigation.actualMainView = "BCC_img_resume";
         resume.init()
     } else if (page == "annotation_view") {
         navigation.actualMainView = "BCC_img_for_annotation";
         toolBox.initCanvas(navigation.pellicule.currentIndex);
+    }
+    else if (page == "all_view") {
+        view_all.createAllViewList();
+        view_all.sortPellicule();
 
     }
     navbar.hidePellicule(page);
@@ -84,6 +96,8 @@ navigation.changeDiv = function (page) {
     var currIndex = navigation.pellicule.currentIndex;
     navigation.simulEvent(document.getElementById("img_" + currIndex), "click");
 };
+
+
 
 navigation.simulEvent = function (idHTML, eventType) {
     if (idHTML.fireEvent) {
@@ -106,6 +120,7 @@ navigation.initCanvasForPellicule = function (id, index, imgUrl) {
     }, {
         cssOnly: false
     });
+    console.log(imgUrl);
     canvas.setBackgroundImage(
         imgUrl,
         canvas.renderAll.bind(canvas), {
@@ -120,7 +135,9 @@ navigation.initCanvasForPellicule = function (id, index, imgUrl) {
 };
 
 navigation.initCanvasForMainView = function (id, index, imgUrl) {
+
     imgUrl = navigation.pellicule.list[index].uri;
+
     var divContainer = document.getElementById("BCC_" + id);
     divContainer.innerHTML = "<canvas class=\"bigImg\" id=\"" + id + "\"></canvas>";
     var canvas = new fabric.Canvas(document.getElementById(id));
@@ -159,11 +176,12 @@ navigation.initCanvasForMainView = function (id, index, imgUrl) {
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////
 navigation.createPellicule = function () {
-    for (var i = 0; i < navigation.json.length; i++) {
+    /*for (var i = 0; i < navigation.json.length; i++) {
         var graph = navigation.json[i];
         navigation.pellicule.list.push(struct.createGraph(i, graph.uri, graph.nom, graph.typeFilter, graph.min,
             graph.max, graph.mean, graph.sd, graph.oneQ, graph.median, graph.threeQ, graph.na, graph.filterEffectives, graph.filterNames));
-    }
+    }*/
+    navigation.pellicule = rpp_connection.pellicule;
     const img = document.createElement("img");
 
     for (var i = 0; i < navigation.pellicule.list.length; i++) {
@@ -241,4 +259,4 @@ navigation.modifyVignette = function(){
 };
 
 
-navigation.createPellicule();
+//navigation.createPellicule();

@@ -61,7 +61,7 @@ view_all.removeSelectedId = function (id) {
             idSelected.splice(i, 1);
         }
     }
-}
+};
 
 
 view_all.setListenerLongPress = function (id) {
@@ -69,8 +69,8 @@ view_all.setListenerLongPress = function (id) {
 
     document.getElementById(id).addEventListener('click', function () {
 
-        var number = navigation.pellicule.getNumber(id);
-        navigation.pellicule.currentIndex = number;
+        var number = rpp_connection.pellicule.getNumber(id);
+        rpp_connection.pellicule.currentIndex = number;
         console.log(navigation.actualMainView);
         var page = "";
         if (navigation.actualMainView == "BCC_img_home") page = "home_view";
@@ -80,7 +80,7 @@ view_all.setListenerLongPress = function (id) {
             resume.init()
         } else if (navigation.actualMainView == "BCC_img_for_annotation") {
             page = "annotation_view";
-            toolBox.initCanvas(navigation.pellicule.currentIndex);
+            toolBox.initCanvas(rpp_connection.pellicule.currentIndex);
 
         } else if (navigation.actualMainView == null) {
             console.log("cooucou");
@@ -126,11 +126,14 @@ view_all.setListenerLongPress = function (id) {
 }
 ;
 
+view_all.sortPellicule = function(){
+    for (var i = 0; i < rpp_connection.pellicule.list.length; i++) {
+        alphabList.push(rpp_connection.pellicule.list[i].name.toLowerCase());
+    }
+    alphabList = alphabList.sort();
+};
 
-for (var i = 0; i < navigation.pellicule.list.length; i++) {
-    alphabList.push(navigation.pellicule.list[i].name.toLowerCase());
-}
-alphabList = alphabList.sort();
+
 
 //code à optimiser, pas obligé de faire 2 fonctions on peut en faire qu'un avec les param de la recherche
 view_all.createAllViewList = function () {
@@ -139,11 +142,13 @@ view_all.createAllViewList = function () {
     while (allviewListHtml.firstChild) {
         allviewListHtml.removeChild(allviewListHtml.firstChild);
     }
+
     if (alphabetic) {
         var firstChar = "";
         for (var i = 0; i < alphabList.length; i++) {
             for (var j = 0; j < alphabList.length; j++) {
-                if (navigation.pellicule.list[j].name.toLowerCase() == (alphabList[i])) {
+                console.log(rpp_connection.pellicule.list[j].name);
+                if (rpp_connection.pellicule.list[j].name.toLowerCase() == (alphabList[i])) {
                     if (firstChar != alphabList[i].charAt(0)) {
                         var rowAlphab = document.createElement("div");
                         rowAlphab.setAttribute("class", "col-xs-12 letterRow");
@@ -160,10 +165,10 @@ view_all.createAllViewList = function () {
 
                     var colImg = document.createElement("div");
                     colImg.setAttribute("class", "col-xs-2");
-                    img.src = navigation.pellicule.list[j].uri;
+                    img.src = rpp_connection.pellicule.list[j].uri;
                     var divImage = document.createElement("div");
                     divImage.setAttribute('class', 'thumbnail img-responsive ');
-                    divImage.setAttribute("id", "" + navigation.pellicule.list[i].name);
+                    divImage.setAttribute("id", "" + rpp_connection.pellicule.list[i].name);
 
 
                     var divWrapperImg = document.createElement("div");
@@ -171,13 +176,13 @@ view_all.createAllViewList = function () {
 
                     var imgThumbnail = document.createElement("img");
                     imgThumbnail.setAttribute("src", img.src);
-                    imgThumbnail.setAttribute("id", "img_" + navigation.pellicule.list[i].name);
+                    imgThumbnail.setAttribute("id", "img_" + rpp_connection.pellicule.list[i].name);
 
 
                     var divTitle = document.createElement("div");
                     divTitle.setAttribute("class", "caption");
 
-                    var titre = document.createTextNode(navigation.pellicule.list[j].name);
+                    var titre = document.createTextNode(rpp_connection.pellicule.list[j].name);
 
                     divTitle.appendChild(titre);
                     divWrapperImg.appendChild(imgThumbnail);
@@ -185,20 +190,20 @@ view_all.createAllViewList = function () {
                     divImage.appendChild(divTitle);
                     colImg.appendChild(divImage);
                     allviewListHtml.appendChild(colImg);
-                    view_all.setListenerLongPress("" + navigation.pellicule.list[i].name);
+                    view_all.setListenerLongPress("" + rpp_connection.pellicule.list[i].name);
 
                 }
             }
         }
     } else {
-        for (var i = 0; i < navigation.pellicule.list.length; i++) {
+        for (var i = 0; i < rpp_connection.pellicule.list.length; i++) {
 
             var colImg = document.createElement("div");
             colImg.setAttribute("class", "col-xs-2")
-            img.src = navigation.pellicule.list[i].uri;
+            img.src = rpp_connection.pellicule.list[i].uri;
             var divImage = document.createElement("div");
             divImage.setAttribute('class', 'thumbnail img-responsive ');
-            divImage.setAttribute("id", "" + navigation.pellicule.list[i].name);
+            divImage.setAttribute("id", "" + rpp_connection.pellicule.list[i].name);
 
 
             var divWrapperImg = document.createElement("div");
@@ -206,13 +211,13 @@ view_all.createAllViewList = function () {
 
             var imgThumbnail = document.createElement("img");
             imgThumbnail.setAttribute("src", img.src);
-            imgThumbnail.setAttribute("id", "img_" + navigation.pellicule.list[i].name);
+            imgThumbnail.setAttribute("id", "img_" + rpp_connection.pellicule.list[i].name);
 
 
             var divTitle = document.createElement("div");
             divTitle.setAttribute("class", "caption");
 
-            var titre = document.createTextNode(navigation.pellicule.list[i].name);
+            var titre = document.createTextNode(rpp_connection.pellicule.list[i].name);
             divTitle.appendChild(titre);
 
             divWrapperImg.appendChild(imgThumbnail);
@@ -229,7 +234,6 @@ view_all.createAllViewList = function () {
             view_all.createOthers();
         }
     }
-
 };
 
 view_all.createOthers = function () {
@@ -265,7 +269,7 @@ view_all.createOthers = function () {
         colImg.appendChild(divImage);
         allviewListHtml.appendChild(colImg);
     }
-}
+};
 
 view_all.searchView = function () {
     const img = document.createElement("img");
@@ -280,14 +284,14 @@ view_all.searchView = function () {
         view_all.createAllViewList();
         console.log("recherche :" + search);
     } else {
-        for (var i = 0; i < navigation.pellicule.list.length; i++) {
+        for (var i = 0; i < rpp_connection.pellicule.list.length; i++) {
             var length = search.length;
             console.log( "search" + search);
-            console.log("chaine recherchée" + navigation.pellicule.list[i].name.toLowerCase().substring(0, length));
-            if (navigation.pellicule.list[i].name.toLowerCase().substring(0, length) == search.toLowerCase()) {
+            console.log("chaine recherchée" + rpp_connection.pellicule.list[i].name.toLowerCase().substring(0, length));
+            if (rpp_connection.pellicule.list[i].name.toLowerCase().substring(0, length) == search.toLowerCase()) {
                 var colImg = document.createElement("div");
                 colImg.setAttribute("class", "col-xs-2");
-                img.src = navigation.pellicule.list[i].uri;
+                img.src = rpp_connection.pellicule.list[i].uri;
                 var divImage = document.createElement("div");
                 divImage.setAttribute('class', 'thumbnail img-responsive ');
                 divImage.setAttribute("id", "" + navigation.pellicule.list[i].name);
@@ -298,12 +302,12 @@ view_all.searchView = function () {
 
                 var imgThumbnail = document.createElement("img");
                 imgThumbnail.setAttribute("src", img.src);
-                imgThumbnail.setAttribute("id", "img_" + navigation.pellicule.list[i].name);
+                imgThumbnail.setAttribute("id", "img_" + rpp_connection.pellicule.list[i].name);
 
                 var divTitle = document.createElement("div");
                 divTitle.setAttribute("class", "caption");
 
-                var titre = document.createTextNode(navigation.pellicule.list[i].name);
+                var titre = document.createTextNode(rpp_connection.pellicule.list[i].name);
                 divTitle.appendChild(titre);
 
                 divWrapperImg.appendChild(imgThumbnail);
@@ -311,12 +315,11 @@ view_all.searchView = function () {
                 divImage.appendChild(divTitle);
                 colImg.appendChild(divImage);
                 allviewListHtml.appendChild(colImg);
-                view_all.setListenerLongPress("" + navigation.pellicule.list[i].name);
+                view_all.setListenerLongPress("" + rpp_connection.pellicule.list[i].name);
 
             }
         }
     }
-
 };
 view_all.changeOrder = function (checkbox) {
     console.log(checkbox.checked);
@@ -324,6 +327,5 @@ view_all.changeOrder = function (checkbox) {
     view_all.createAllViewList();
 };
 
-
-view_all.createAllViewList();
 searchBox.addEventListener('keyup', view_all.searchView);
+

@@ -1,12 +1,13 @@
 var struct = {};
-struct.createGraph = function (id, uri, name, typeFilter, min, max, mean, sd, oneQ, median, threeQ, na, filterEffectives, listFilter) {
+struct.createGraph = function (dfname, id, uri, name, typeFilter, min, max, mean, sd, oneQ, median, threeQ, na) {
     var graph = {};
     graph.id = id;
     graph.name = name;
     graph.typeFilter = typeFilter;
-    graph.listFilters = listFilter;
+    graph.listFilters = [];
     graph.min = min;
     graph.max = max;
+    graph.dataFrame = dfname;
     ////////////////////
     graph.mean = mean;
     graph.sd = sd;
@@ -14,7 +15,7 @@ struct.createGraph = function (id, uri, name, typeFilter, min, max, mean, sd, on
     graph.median = median;
     graph.threeQ = threeQ;
     graph.na = na;
-    graph.filterEffectives = filterEffectives;
+    graph.filterEffectives = [];
     /////////////////////////////
     graph.uri = uri;
     graph.fabricCanvas = null;
@@ -35,7 +36,8 @@ struct.removeObjectsForVignette = function (graph, canvasDest) { // only for vig
     }
     canvasDest.renderAll();
     struct.duplicateAndResizeObjects(graph, canvasDest);
-}
+};
+
 struct.duplicateAndResizeObjects = function (graph, canvasDest) {
     var objects = canvasDest.getObjects();
     for (var i = 0; i < objects.length; i++) {

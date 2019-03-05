@@ -1,14 +1,18 @@
 var filter = {};
-filter.pellicule = navigation.pellicule.list;
+filter.pellicule = rpp_connection.pellicule.list;
 filter.state = "unchanged";
 filter.submitBtn = null;
 filter.clearAllBtn = null;
 filter.init = function () {
+    console.log(filter.pellicule[0].typeFilter);
+
     for (var i = 0; i < filter.pellicule.length; i++) {
         var graph = filter.pellicule[i];
         if (graph.typeFilter == "numeric" || graph.typeFilter == "integer" || graph.typeFilter == "ordered") {
+            console.log("ok");
             filter.createDivSlider(graph);
         } else if (graph.typeFilter == "nominal" || graph.typeFilter == "logical") {
+            console.log("ok2");
             filter.createFilterNamed(graph);
         }
 
