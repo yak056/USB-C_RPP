@@ -1,21 +1,22 @@
 var struct = {};
 struct.createGraph = function (dfname, id, uri, name, typeFilter, min, max, mean, sd, oneQ, median, threeQ, na) {
+    // Transform the data from R++ in a "graph" in the application
     var graph = {};
     graph.id = id;
     graph.name = name;
-    graph.typeFilter = typeFilter;
-    graph.listFilters = [];
+    graph.typeFilter = typeFilter; // numeric, ordered, ordered, nominal, logical
+    graph.listFilters = []; // list of the modalities if nominal or logical
     graph.min = min;
     graph.max = max;
-    graph.dataFrame = dfname;
+    graph.dataFrame = dfname; // name of the data frame
     ////////////////////
     graph.mean = mean;
     graph.sd = sd;
-    graph.oneQ = oneQ;
+    graph.oneQ = oneQ; // 1st quarter
     graph.median = median;
-    graph.threeQ = threeQ;
+    graph.threeQ = threeQ; // 3rd quarter
     graph.na = na;
-    graph.filterEffectives = [];
+    graph.filterEffectives = []; // count of the modalities
     /////////////////////////////
     graph.uri = uri;
     graph.fabricCanvas = null;
@@ -28,7 +29,8 @@ struct.createGraph = function (dfname, id, uri, name, typeFilter, min, max, mean
     return graph;
 };
 
-struct.removeObjectsForVignette = function (graph, canvasDest) { // only for vignette in Pellicule
+struct.removeObjectsForVignette = function (graph, canvasDest) {
+    // only for vignette in Pellicule remove all drawing Objects
     var objects = canvasDest.getObjects();
     for (var i = 0; i < objects.length; i++) {
         canvasDest.remove(objects[i]);
@@ -39,6 +41,7 @@ struct.removeObjectsForVignette = function (graph, canvasDest) { // only for vig
 };
 
 struct.duplicateAndResizeObjects = function (graph, canvasDest) {
+    // Duplicate the drawing objects to resize them in their new fabric canvas container (canvasDest)
     var objects = canvasDest.getObjects();
     for (var i = 0; i < objects.length; i++) {
         canvasDest.remove(objects[i]);
@@ -71,10 +74,12 @@ struct.duplicateAndResizeObjects = function (graph, canvasDest) {
         }
     }
 };
+
 struct.Pellicule = function () {
+    // set the Pellicule that contains all the graphs from R++.
     this.list = [];
-    this.currentIndex = 0;
-    this.next = function () {
+    this.currentIndex = 0; // current index displayed in the application
+    this.next = function () { // get the next graph. Display the 1st one if we are at the end of the list
         if (this.list.length - 1 > this.currentIndex) {
             this.currentIndex++;
         } else {
@@ -82,7 +87,7 @@ struct.Pellicule = function () {
         }
         return this.list[this.currentIndex];
     };
-    this.previous = function () {
+    this.previous = function () { // get the previous graph. Display the last graph if we are at the beginning of the list
         if (0 < this.currentIndex) {
             this.currentIndex--;
         } else {
@@ -90,10 +95,10 @@ struct.Pellicule = function () {
         }
         return this.list[this.currentIndex];
     };
-    this.actual = function () {
+    this.actual = function () { // get the graph at the current index.
         return this.list[this.currentIndex];
-    }
-    this.getNumber = function (name) {
+    };
+    this.getNumber = function (name) { // get the index of the given name of graph (useful for all_view)
         for(var i = 0; i<this.list.length; i++){
             if (this.list[i].name == name){
                 return i;

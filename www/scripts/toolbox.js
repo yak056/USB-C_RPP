@@ -11,8 +11,8 @@ toolBox.pointerLocation = null;
 toolBox.firstTime = 0;
 toolBox.STYLE = {
     fill: "rgba(0,0,0,0)",
-    stroke: "#b3e280",
-    strokeWidth: 2,
+    stroke: "#ff0000",
+    strokeWidth: 3,
 };
 toolBox.offsetLeft = 0;
 toolBox.offsetTop = 0;
@@ -28,15 +28,12 @@ toolBox.initCanvas = function (index) {
     toolBox.offsetLeft = toolBox.canvas._offset.left;
     toolBox.offsetTop = toolBox.canvas._offset.top;
 
-
-
     toolBox.canvas.enableSelection = function () {
-        this.selection = true; // permet selection multiple
+        this.selection = true; // allows selection on group of objects
         var objects = this.getObjects();
         for (var i = 0; i < objects.length; i++) {
-            objects[i].selectable = true;
+            objects[i].selectable = true; // Drawing objects can be selected
         }
-
     };
     toolBox.canvas.disableSelection = function () {
         this.selection = false;
@@ -187,31 +184,15 @@ toolBox.initCanvas = function (index) {
 
     $('#toolbar button').prop('disabled', false);
 
-    document.getElementById("deleteBtn").addEventListener("click", function (event) { // moche a changer select buttin delete
-        // Removes a toolBox.shape
+    document.getElementById("deleteBtn").addEventListener("click", function (event) {
+        // Removes all the drawing shapes when click occurs on Delete button
         var objects = toolBox.canvas.getObjects();
         for( var i=0; i < objects.length; i++){
             toolBox.canvas.remove(objects[i]);
         }
         toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
         struct.removeObjectsForVignette(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
-        //toolBox.canvas.fire('selection:cleared');
         connection.sendPost();
-        /*var activeObject = toolBox.canvas.getObjects(),
-            activeGroup = toolBox.canvas.getActiveGroup();
-        if (activeGroup) {
-            var objectsInGroup = activeGroup.getObjects();
-            toolBox.canvas.discardActiveGroup();
-            for (var i = 0; i < objectsInGroup.length; i++) {
-                toolBox.canvas.remove(objectsInGroup[i]);
-            }
-        } else if (activeObject) {
-            toolBox.canvas.remove(activeObject);
-        }
-        toolBox.pellicule[index].drawingJson = toolBox.canvas.getObjects();
-        struct.removeObjectsForVignette(toolBox.pellicule[index], toolBox.pellicule[index].vignetteCanvas);
-        toolBox.canvas.fire('selection:cleared');
-        connection.sendPost();*/
     });
 
     // =============================
@@ -236,8 +217,7 @@ toolBox.initCanvas = function (index) {
         toolBox.canvas.renderAll();
     };
     if (toolBox.firstTime == 1) {
-        toolBox.STYLE.stroke = "#b5a822";
-        toolBox.STYLE.strokeWidth = 3;
+        // set the palette of colors for the drawings
         $('#styler .stroke-color').simpleColor({
             cellWidth: 50,
             cellHeight: 50,
@@ -249,7 +229,6 @@ toolBox.initCanvas = function (index) {
             boxHeight: 100,
             livePreview: true,
             onSelect: function (hex, element) {
-                console.log("STYLE : " + hex);
                 toolBox.STYLE.stroke = hex;
                 toolBox.canvas.freeDrawingBrush.color = toolBox.STYLE.stroke;
                 applyStyleToSelectedObjects({stroke: toolBox.STYLE.stroke});
@@ -257,6 +236,7 @@ toolBox.initCanvas = function (index) {
         });
 
         $('#slider .stroke-width').change(function (event) {
+            // Change the stroke on slide
             toolBox.STYLE.strokeWidth = parseInt($(this).val());
             toolBox.canvas.freeDrawingBrush.width  = toolBox.STYLE.strokeWidth;
             applyStyleToSelectedObjects({strokeWidth: toolBox.STYLE.strokeWidth});
@@ -265,7 +245,7 @@ toolBox.initCanvas = function (index) {
 
     // Update the styling inspector when a single object is selected
     toolBox.canvas.observe('object:selected', function (event) {
-        // Enable buttons
+        // Disable buttons
         $('#toolbar button').prop('disabled', false);
         // Apply style to styler inspector
         $('#styler .stroke-color').setColor(event.target.stroke);
@@ -275,7 +255,7 @@ toolBox.initCanvas = function (index) {
 
     // Update the styling inspector when several objects are selected
     toolBox.canvas.observe('selection:created', function (event) {
-        // Enable buttons
+        // Disable buttons
         $('#toolbar button').prop('disabled', false);
         var
             selectedObjects = event.target.getObjects(),

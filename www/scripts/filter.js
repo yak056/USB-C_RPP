@@ -1,36 +1,37 @@
 var filter = {};
-filter.pellicule = rpp_connection.pellicule.list;
-filter.state = "unchanged";
+filter.pellicule = rpp_connection.pellicule.list; // get the data in the pellicule
+filter.state = "unchanged"; // get the state of the filters
 filter.submitBtn = null;
 filter.clearAllBtn = null;
-filter.init = function () {
-    console.log(filter.pellicule[0].typeFilter);
 
+filter.init = function () {
+    /* Initialize the filters according to their type. Numeric, integer, ordered are displayed with range sliders
+    but nominal and logical are displayed with checkboxes.
+     */
     for (var i = 0; i < filter.pellicule.length; i++) {
         var graph = filter.pellicule[i];
         if (graph.typeFilter == "numeric" || graph.typeFilter == "integer" || graph.typeFilter == "ordered") {
-            console.log("ok");
             filter.createDivSlider(graph);
         } else if (graph.typeFilter == "nominal" || graph.typeFilter == "logical") {
-            console.log("ok2");
             filter.createFilterNamed(graph);
         }
-
     }
     filter.submitBtn = document.getElementById("submitButton");
-    filter.submitBtn.addEventListener("click", filter.getValue);
-    $("#submitButton").prop('disabled', true);
+    filter.submitBtn.addEventListener("click", filter.getValue); // retrieve the values that have changed
+    $("#submitButton").prop('disabled', true); // Until a value changed, the button is disabled
     filter.clearAllBtn = document.getElementById("clearButton");
-    filter.clearAllBtn.addEventListener("click", filter.clearAll);
-    $("#clearButton").prop('disabled', true);
+    filter.clearAllBtn.addEventListener("click", filter.clearAll); // Clear all filters after a click on clear All
+    $("#clearButton").prop('disabled', true); // Until a value changed, the button is disabled
     for (var i = 0; i < filter.pellicule.length; i++) {
         var graph = filter.pellicule[i];
         if (graph.typeFilter == "nominal" || graph.typeFilter == "logical") {
-        filter.initCB(graph);
-    }}
+            filter.initCB(graph); // Initialize checkbox listeners
+        }
+    }
 };
 
 filter.createDivSlider = function (graph) {
+    // Create the div for the range slider associated to the graph
     var filterlist = document.getElementById("filterList");
     filterlist.innerHTML += " <div class=\"filterTitle\">\n" +
         "                                    <p>" + graph.name + "</p>\n" +
@@ -50,6 +51,7 @@ filter.createDivSlider = function (graph) {
 };
 
 filter.createCheckbox = function (graph) {
+    // Creation of the checkboxes of the corresponding graph. Display the name and all of the modalities
     var innerHtml = "";
     for (var i = 0; i < graph.listFilters.length; i++) {
         innerHtml += "  <div class=\"form-check\" id=\"DivCheckBox" + graph.id + "_" + i + "\">\n" +
@@ -57,29 +59,31 @@ filter.createCheckbox = function (graph) {
             "               <label class=\"checkBoxLabel\" for=\"CheckBox" + graph.id + "_" + i + "\">" + graph.listFilters[i] + "</label>\n" +
             "               <span class=\"checkmark\"></span>\n" +
             "           </div>";
-
     }
-
     return innerHtml;
 };
 
-filter.initCB = function(graph){
-    return function(graph){
+filter.initCB = function (graph) {
+    // Initialization of the checkbox listeners ( closure for JS)
+    return function (graph) {
         filter.initListenersChekbox(graph)
     }(graph);
 };
+
 filter.initListenersChekbox = function (graph) {
-    return function(graph){
-    for (var i = 0; i < graph.listFilters.length; i++) {
-        document.getElementById("CheckBox" + graph.id + "_" + i).addEventListener("click", function (e) {
-            console.log("hange")
-            $("#submitButton").prop('disabled', false);
-            $("#clearButton").prop('disabled', false);
-        });
-    }
-}(graph);
+    // Initialization of the checkbox listeners. On click, change the state of the submit and clearAll buttons
+    return function (graph) {
+        for (var i = 0; i < graph.listFilters.length; i++) {
+            document.getElementById("CheckBox" + graph.id + "_" + i).addEventListener("click", function (e) {
+                $("#submitButton").prop('disabled', false);
+                $("#clearButton").prop('disabled', false);
+            });
+        }
+    }(graph);
 };
+
 filter.createFilterNamed = function (graph) {
+    // Create the div for the graph if it has checkboxes
     var filterlist = document.getElementById("filterList");
     filterlist.innerHTML += "<div class=\"filterTitle\"><p>" + graph.name + "</p></div>";
     filterlist.innerHTML += filter.createCheckbox(graph);
@@ -87,8 +91,10 @@ filter.createFilterNamed = function (graph) {
 };
 
 filter.createRangeSlider = function (id, min, max) {
+    /*Create the range slider for the graph id. The range slider allows to set the min and max. It is initialized
+    by the min and max value of the graph.
+     */
     var idRange = "#slider-range" + id;
-
     $(function () {
         $(idRange).slider({
             orientation: "horizontal",
@@ -108,7 +114,7 @@ filter.createRangeSlider = function (id, min, max) {
         document.getElementById("maxRangeSlider" + id).innerText = $(idRange).slider("values", 1);
     });
 };
-
+// #TODO check que cette fonction ne sert à rien. Seulement pour les tests du RS
 $(function () {
     $("#slider-range0").slider({
         orientation: "horizontal",
@@ -126,6 +132,7 @@ $(function () {
 });
 
 filter.getValue = function () {
+    // get all the changed value from the range sliders and checkboxes to make a request to R++
     var res = {};
     for (var i = 0; i < filter.pellicule.length; i++) {
         var graph = filter.pellicule[i];
@@ -144,25 +151,14 @@ filter.getValue = function () {
             }
         }
     }
-    $("#submitButton").prop('disabled', true); // on a submit donc on cache le btn
-    var keys = Object.keys(res);
-    for(var i=0; i<keys.length; i++){
-        if (keys[i] == "sexe"){
-            navigation.changeJson(data_femme);
-            break;
-        }
-        else if(keys[i] == "scoreTricheTotal"){
-            navigation.changeJson(data_medianScoreTricheTotal);
-            break;
-        }
-    }
+    $("#submitButton").prop('disabled', true); // Submit is done so we disable the button
     return res;
 };
 
 filter.clearAll = function () {
+    // On clear All, all the range sliders and checkboxes are reset to their initial state.
     var filterlist = document.getElementById("filterList");
     filterlist.innerText = "";
-    navigation.changeJson(data);
     filter.init();
 };
 
