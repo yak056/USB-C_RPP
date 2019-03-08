@@ -1,0 +1,24 @@
+Le dépôt git comporte deux branches : 
+	master : contient une version sans connection avec R++
+	connexion_rpp : contient une version qui communique avec l'api REST de R++
+Ces deux dépôts contiennent aussi un folder pour l' écran distant et un pour l'appli cordova.
+Celui avec l'appli cordova ne sera pas fonctionnel et il faudra le reconstruire sur son PC avec cordova mais cela donne au moins une idée de la structute de l'appli (notamment le fichier config.xml).
+
+
+
+Manuel d'utlilisation
+
+
+I] L'application tablette
+	C'est un site web construit à l'aide du framework Apache Cordova. Pour builder l'appli il faut auparavant installer Cordova sur son PC.
+La commande "cordova create app" permet de créer une appli par défaut.
+	L'idée est ensuite de supprimer le dossier "www" et de le remplacer par celui de notre application (cf notre github). Il pourrait y avoir des problèmes dûs au fichier config.xml présent à la racine du projet cordova. Ne pas hésiter à copier celui présent dans notre projet.
+
+II] Lancer l'application
+	Il y a trois parties pour cette application.
+Premièrement l'application sur tablette qui aura été préalablement installée avec cordova.
+Ensuite il y l'écran distant qui est en fait une page web. Il faut au préalable lancer avec node le serveur index.js présent à la racine du dossier distantScreen (commande "node index.js"). Ensuite on ouvre la page web présente dans distantScreen pour afficher l'écran distant.
+Pour finir il faut lancer l'application R++ sur le même PC où l'on a lancé l'écran distant.
+Enfin pour connecter la tablette à R++ et à l'écran distant il suffit de saisir l'adresse précisée sur l'écran distant.
+
+Attention la tablette et le PC doivent être sur le même réseau local. 
