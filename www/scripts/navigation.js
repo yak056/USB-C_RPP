@@ -1,6 +1,6 @@
 var navigation = {};
 
-
+// #################### TOUCH HANDLER ###########################################
 navigation.touchHandler = function (event) {
     if (navigation.actualMainView == "BCC_img_for_annotation") {
         var touches = event.changedTouches,
@@ -36,12 +36,15 @@ navigation.touchHandler = function (event) {
 }
 
 navigation.init = function(){
+    // changes touchmove event with the touchHandlers defined previously
     document.addEventListener("touchmove", navigation.touchHandler, true);
 };
 navigation.init();
 var print = console.log;
 
-navigation.actualMainView = "";
+// ###########################  NAVIGATION  ################################
+
+navigation.actualMainView = ""; // actual main view
 navigation.json = JSON.parse(data).pellicule;
 
 navigation.pellicule = new struct.Pellicule();
@@ -59,6 +62,7 @@ var canvasList = ["img_home", "img_filter", "img_resume", "img_for_annotation"];
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 navigation.changeDivReal = function (page) {
+    // Change the page and init what should be init
     document.getElementById('connexion_view').hidden = true;
     document.getElementById('all_view').hidden = true;
     document.getElementById('filter_view').hidden = true;
@@ -76,16 +80,18 @@ navigation.changeDivReal = function (page) {
         toolBox.initCanvas(navigation.pellicule.currentIndex);
 
     }
-    navbar.hidePellicule(page);
+    navbar.hidePellicule(page);// hide the pellicule if we have to hide it on page
 };
 
 navigation.changeDiv = function (page) {
+        // Change page and simulate a click on current graph
     navigation.changeDivReal(page);
     var currIndex = navigation.pellicule.currentIndex;
     navigation.simulEvent(document.getElementById("img_" + currIndex), "click");
 };
 
 navigation.simulEvent = function (idHTML, eventType) {
+        // Simulate event for loading the image when we change the menu selection (resume, annotation, ...)
     if (idHTML.fireEvent) {
         idHTML.fireEvent("on" + eventType)
     } else {
@@ -96,6 +102,7 @@ navigation.simulEvent = function (idHTML, eventType) {
 };
 
 navigation.initCanvasForPellicule = function (id, index, imgUrl) {
+        // Initialize the canvas for each graph for the pellicule
     var canvas = new fabric.Canvas(document.getElementById(id));
     var height = parseInt(getComputedStyle(document.getElementById("pellicule")).height);
     var width = parseInt(getComputedStyle(document.getElementById("pellicule")).width);
@@ -120,6 +127,7 @@ navigation.initCanvasForPellicule = function (id, index, imgUrl) {
 };
 
 navigation.initCanvasForMainView = function (id, index, imgUrl) {
+    // Initialize the canvas for the main view
     imgUrl = navigation.pellicule.list[index].uri;
     var divContainer = document.getElementById("BCC_" + id);
     divContainer.innerHTML = "<canvas class=\"bigImg\" id=\"" + id + "\"></canvas>";
@@ -152,13 +160,14 @@ navigation.initCanvasForMainView = function (id, index, imgUrl) {
     if(id != "img_for_annotation"){
         canvas.selection = false;
         canvas.forEachObject(function(o) {
-        o.selectable = false;
+        o.selectable = false;  // delete the selectable property on all canvas except the one from annotation
         }); 
     }
 
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////
 navigation.createPellicule = function () {
+        // Create the pellicule with the graphs loaded from R++
     for (var i = 0; i < navigation.json.length; i++) {
         var graph = navigation.json[i];
         navigation.pellicule.list.push(struct.createGraph(i, graph.uri, graph.nom, graph.typeFilter, graph.min,
@@ -189,6 +198,7 @@ navigation.draw_image = function (image, ctx) {
 };
 
 navigation.maj_img_canvas = function (img, index) {
+        // update the index, init Resume if needed and init the Canvas
     if (index != null) {
         navigation.pellicule.currentIndex = index;
     }
@@ -210,6 +220,7 @@ navigation.changeImgMainView = function (img, index) {
 };
 
 navigation.onswipe = function (direction) {
+        // go to next or previous graph on swipe
     if (direction == "left") {
         var graph = navigation.pellicule.next();
         navigation.maj_img_canvas(graph.uri, navigation.pellicule.currentIndex);
@@ -228,6 +239,7 @@ $('.BigCanvasContainer').swipe({
 });
 
 navigation.modifyVignette = function(){
+    // to deal with hard coded filter
     var canvasPellicule = navigation.pellicule.list[3].vignetteCanvas;
     canvasPellicule.setBackgroundImage(
         navigation.pellicule.list[3].uri,

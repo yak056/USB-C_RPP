@@ -1,9 +1,12 @@
 var filter = {};
-filter.pellicule = navigation.pellicule.list;
-filter.state = "unchanged";
+filter.pellicule = navigation.pellicule.list;  // get the data in the pellicule
+filter.state = "unchanged";// get the state of the filters
 filter.submitBtn = null;
 filter.clearAllBtn = null;
 filter.init = function () {
+        /* Initialize the filters according to their type. Numeric, integer, ordered are displayed with range sliders
+    but nominal and logical are displayed with checkboxes.
+     */
     for (var i = 0; i < filter.pellicule.length; i++) {
         var graph = filter.pellicule[i];
         if (graph.typeFilter == "numeric" || graph.typeFilter == "integer" || graph.typeFilter == "ordered") {
@@ -14,19 +17,20 @@ filter.init = function () {
 
     }
     filter.submitBtn = document.getElementById("submitButton");
-    filter.submitBtn.addEventListener("click", filter.getValue);
-    $("#submitButton").prop('disabled', true);
+    filter.submitBtn.addEventListener("click", filter.getValue); // retrieve the values that have changed
+    $("#submitButton").prop('disabled', true); // Until a value changed, the button is disabled
     filter.clearAllBtn = document.getElementById("clearButton");
-    filter.clearAllBtn.addEventListener("click", filter.clearAll);
-    $("#clearButton").prop('disabled', true);
+    filter.clearAllBtn.addEventListener("click", filter.clearAll); // Clear all filters after a click on clear All
+    $("#clearButton").prop('disabled', true);// Until a value changed, the button is disabled
     for (var i = 0; i < filter.pellicule.length; i++) {
         var graph = filter.pellicule[i];
         if (graph.typeFilter == "nominal" || graph.typeFilter == "logical") {
-        filter.initCB(graph);
+        filter.initCB(graph); // Initialize checkbox listeners
     }}
 };
 
 filter.createDivSlider = function (graph) {
+        // Create the div for the range slider associated to the graph
     var filterlist = document.getElementById("filterList");
     filterlist.innerHTML += " <div class=\"filterTitle\">\n" +
         "                                    <p>" + graph.name + "</p>\n" +
@@ -46,6 +50,7 @@ filter.createDivSlider = function (graph) {
 };
 
 filter.createCheckbox = function (graph) {
+        // Creation of the checkboxes of the corresponding graph. Display the name and all of the modalities
     var innerHtml = "";
     for (var i = 0; i < graph.listFilters.length; i++) {
         innerHtml += "  <div class=\"form-check\" id=\"DivCheckBox" + graph.id + "_" + i + "\">\n" +
@@ -60,11 +65,13 @@ filter.createCheckbox = function (graph) {
 };
 
 filter.initCB = function(graph){
+        // Initialization of the checkbox listeners ( closure for JS)
     return function(graph){
         filter.initListenersChekbox(graph)
     }(graph);
 };
 filter.initListenersChekbox = function (graph) {
+        // Initialization of the checkbox listeners. On click, change the state of the submit and clearAll buttons
     return function(graph){
     for (var i = 0; i < graph.listFilters.length; i++) {
         document.getElementById("CheckBox" + graph.id + "_" + i).addEventListener("click", function (e) {
@@ -76,6 +83,7 @@ filter.initListenersChekbox = function (graph) {
 }(graph);
 };
 filter.createFilterNamed = function (graph) {
+        // Create the div for the graph if it has checkboxes
     var filterlist = document.getElementById("filterList");
     filterlist.innerHTML += "<div class=\"filterTitle\"><p>" + graph.name + "</p></div>";
     filterlist.innerHTML += filter.createCheckbox(graph);
@@ -83,6 +91,9 @@ filter.createFilterNamed = function (graph) {
 };
 
 filter.createRangeSlider = function (id, min, max) {
+        /*Create the range slider for the graph id. The range slider allows to set the min and max. It is initialized
+    by the min and max value of the graph.
+     */
     var idRange = "#slider-range" + id;
 
     $(function () {
@@ -122,6 +133,7 @@ $(function () {
 });
 
 filter.getValue = function () {
+        // get all the changed value from the range sliders and checkboxes to make a request to R++
     var res = {};
     for (var i = 0; i < filter.pellicule.length; i++) {
         var graph = filter.pellicule[i];
@@ -156,6 +168,7 @@ filter.getValue = function () {
 };
 
 filter.clearAll = function () {
+        // On clear All, all the range sliders and checkboxes are reset to their initial state.
     var filterlist = document.getElementById("filterList");
     filterlist.innerText = "";
     navigation.changeJson(data);

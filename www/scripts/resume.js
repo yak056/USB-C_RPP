@@ -1,6 +1,7 @@
 var resume = {};
 
 resume.init = function(){
+     // Initialize the Resume for the actual graph according to the type of data
     resume.graph = navigation.pellicule.actual();
     if (resume.graph.typeFilter == "numeric" || resume.graph.typeFilter == "integer" || resume.graph.typeFilter == "ordered") {
         resume.createResumeForNumber(resume.graph);
@@ -10,6 +11,7 @@ resume.init = function(){
 };
 
 resume.createResumeForNumber = function(graph){
+    // Display the resume for numeric, integer and ordered graphs : mean, sd, min, 1Q, median, 3Q, max and NA
     var table = document.getElementById("resume");
     table.innerHTML = "";
     table.innerHTML = "<tr><td id='mean'>mean</td><td>" + graph.mean + "</td></tr><tr><td id='sd'>sd</td><td>" + graph.sd +"</td></tr>"+

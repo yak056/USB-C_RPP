@@ -1,12 +1,13 @@
 var connection = {};
 connection.url = null;
-
+// retrieves the url in the form
 document.getElementById("connectButton").addEventListener("click", function(){
     connection.url = "http://" + document.getElementById("ipAddress").value + ":4040";
     console.log(connection.url);
     connection.sendHello();
     
 });
+// test to check connection with distant screen
 connection.sendHello = function(){
     $.ajax({
         url : connection.url,
@@ -28,6 +29,7 @@ connection.sendHello = function(){
         } 
      });
 }
+// send info to change graph on distant screen
 connection.sendPost = function(){
     $.ajax({
         url : connection.url,
@@ -42,7 +44,7 @@ connection.sendPost = function(){
         } 
      });
 };
-
+// send img to distant screen
 connection.sendNewImage = function(img){
     $.ajax({
         url : connection.url,
@@ -58,7 +60,7 @@ connection.sendNewImage = function(img){
     });
 }
 
-
+// prepare the data to send to dustant screen
 connection.makeData = function(){
     var graph = navigation.pellicule.actual();
     var url = graph.uri;
@@ -74,7 +76,7 @@ connection.makeData = function(){
         resume : connection.getResumeData(graph)
     }
 }
-
+// prepare the data if filter page
 connection.getResumeData = function(graph){
     return (navigation.actualMainView == "BCC_img_resume") ? {
         min : graph.min,
