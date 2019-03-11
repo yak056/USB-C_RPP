@@ -1,27 +1,43 @@
+// ===================================
+// = Javascript de la vue galerie =
+// ===================================
 var view_all = {};
 
 
+
+
+// ===================================
+// = Declaration des variables       =
+// ===================================
+
+//récupération des node des objet de l'interface
 var searchBox = document.getElementById("search_1");
 var toggleOrder = document.querySelector("input[name=alpha_1]");
-document.getElementById('createGraphique').addEventListener('click', function () {
-    if (nbSelected > 0) {
-        view_all.createGraphique();
-        view_all.createAllViewList();
-    }
-});
+
+//var pour ordre alphabetic
 var alphabetic = false;
 var alphabList = [];
 
 //var de gestion du mode selection
-var modeSelection = false;
 var nbSelected = 0;
 var idSelected = [];
 var ignorClick = false;
-//var d'affichage des graphiques créer
+var modeSelection = false;
+
+//var des graphique en fusion
 var createdGraphique = [];
 
 
 var pressTimer;
+
+
+
+
+// ===================================
+// = Declaration des fonctions       =
+// ===================================
+
+//creer un graphique par la fusion de plusieurs graphique
 view_all.createGraphique = function () {
     var listImage = [];
     var widht = 0;
@@ -45,16 +61,8 @@ view_all.createGraphique = function () {
 
 
 };
-/*document.getElementById('allviewList').addEventListener('click', function () {
-    if (modeSelection) {
-        modeSelection = false;
-        for (i = 0; i < idSelected.length; i++) {
-            document.getElementById(idSelected[i]).style.background = '#fff';
-        }
-        idSelected = [];
-    }
-});*/
 
+//enleve un graphique selectionné de la zone de fusion
 view_all.removeSelectedId = function (id) {
     for (i = 0; i < idSelected.length; i++) {
         if (idSelected[i] == id) {
@@ -63,7 +71,7 @@ view_all.removeSelectedId = function (id) {
     }
 };
 
-
+//Met en place les differents listenner sur les graphique( par id)
 view_all.setListenerLongPress = function (id) {
     var id = id;
 
@@ -125,7 +133,7 @@ view_all.setListenerLongPress = function (id) {
      ;*/
 }
 ;
-
+//Classe la pellicule par liste alphabetique
 view_all.sortPellicule = function(){
     for (var i = 0; i < rpp_connection.pellicule.list.length; i++) {
         alphabList.push(rpp_connection.pellicule.list[i].name.toLowerCase());
@@ -133,9 +141,7 @@ view_all.sortPellicule = function(){
     alphabList = alphabList.sort();
 };
 
-
-
-//code à optimiser, pas obligé de faire 2 fonctions on peut en faire qu'un avec les param de la recherche
+//Creer la vue de liste de graphique soit par ordre alphabetique soit pellicule
 view_all.createAllViewList = function () {
     const img = document.createElement("img");
     const allviewListHtml = document.getElementById("allviewList");
@@ -235,7 +241,7 @@ view_all.createAllViewList = function () {
         }
     }
 };
-
+//Affiche les graphiques fusionnés
 view_all.createOthers = function () {
     const allviewListHtml = document.getElementById("allviewList");
 
@@ -270,7 +276,7 @@ view_all.createOthers = function () {
         allviewListHtml.appendChild(colImg);
     }
 };
-
+//Affiche les graphique correspondant à la recherche
 view_all.searchView = function () {
     const img = document.createElement("img");
 
@@ -321,11 +327,34 @@ view_all.searchView = function () {
         }
     }
 };
+//Change l'ordre de la liste des graphiques
 view_all.changeOrder = function (checkbox) {
     console.log(checkbox.checked);
     alphabetic = checkbox.checked;
     view_all.createAllViewList();
 };
 
+// ===================================
+// = Ajout des events                =
+// ===================================
+
+//Met le listenner sur le bouton de creation de fusion de grpahique
+document.getElementById('createGraphique').addEventListener('click', function () {
+    if (nbSelected > 0) {
+        view_all.createGraphique();
+        view_all.createAllViewList();
+    }
+});
+/*document.getElementById('allviewList').addEventListener('click', function () {
+    if (modeSelection) {
+        modeSelection = false;
+        for (i = 0; i < idSelected.length; i++) {
+            document.getElementById(idSelected[i]).style.background = '#fff';
+        }
+        idSelected = [];
+    }
+});*/
+
+//Met le listenner sur la searchbox lors du lever de touche
 searchBox.addEventListener('keyup', view_all.searchView);
 

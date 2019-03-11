@@ -1,9 +1,11 @@
-// enable draggables to be dropped into this
-// target elements with the "draggable" class
-// target elements with the "draggable" class
+// ===================================
+// = Javascript permettant le drag =
+// = and drop                      =
+// ===================================
 
 var main_view = document.querySelector('all_view');
 var zIndexRef;
+//function sur les objet draggable
 interact('.drag-drop', {
     context: main_view
 })
@@ -29,7 +31,7 @@ interact('.drag-drop', {
             event.target.style.zIndex = zIndexRef;
         }
     });
-
+//fonction lors du drag
 function dragMoveListener(event) {
     var interaction = event.interaction;
     var target = event.target,
@@ -47,7 +49,7 @@ function dragMoveListener(event) {
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
 }
-
+// fonction lors du début de drag
 function dragStartListener(event) {
     document.getElementById("allviewList").style.overflow ='';
 
@@ -63,7 +65,7 @@ function dragStartListener(event) {
 
 }
 
-
+//fonction de la zone de dépot (drop)
 interact('.dropzone').dropzone({
     // only accept elements matching this CSS selector
     accept: '.drag-drop',
@@ -101,5 +103,5 @@ interact('.dropzone').dropzone({
 });
 
 
-// this is used later in the resizing and gesture demos
+// Ecouter les objets draggable sur la fenêtre entière
 window.dragMoveListener = dragMoveListener;
